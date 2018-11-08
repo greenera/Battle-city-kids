@@ -1,2 +1,2 @@
-# RS022-battle-citty-lite
-Battle Citty Lite
+# RS022-battle-city-lite
+Battle City Lite
