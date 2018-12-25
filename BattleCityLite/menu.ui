@@ -15,57 +15,57 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="label">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>200</height>
-      </size>
-     </property>
+    <widget class="QLabel" name="label_5">
      <property name="text">
-      <string>                                                       Here will be picture</string>
+      <string/>
      </property>
-    </widget>
-   </item>
-   <item alignment="Qt::AlignHCenter">
-    <widget class="QRadioButton" name="radioButton">
-     <property name="text">
-      <string>Option1</string>
+     <property name="pixmap">
+      <pixmap>../../battle-city-name.jpg</pixmap>
      </property>
-    </widget>
-   </item>
-   <item alignment="Qt::AlignHCenter">
-    <widget class="QRadioButton" name="radioButton_2">
-     <property name="text">
-      <string>Option2</string>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+     <property name="margin">
+      <number>10</number>
      </property>
     </widget>
    </item>
-   <item alignment="Qt::AlignHCenter">
-    <widget class="QRadioButton" name="radioButton_3">
+   <item>
+    <widget class="QPushButton" name="play_button">
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
      <property name="text">
-      <string>SpecialOption3</string>
+      <string>PLAY</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="pushButton_2">
+     <property name="text">
+      <string>EXIT</string>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QLabel" name="label_4">
      <property name="text">
-      <string>Here will be some &quot;logo&quot;</string>
+      <string/>
      </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Here will be some text</string>
+     <property name="pixmap">
+      <pixmap>../../battle-city-logo.jpg</pixmap>
      </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="label_3">
-     <property name="text">
-      <string>Here also text</string>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="margin">
+      <number>10</number>
      </property>
     </widget>
    </item>

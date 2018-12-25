@@ -1,8 +1,11 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include <npc.h>
+#include <QTimer>
 #include <QFile>
+#include "boost.h"
+#include "tank.h"
+#include "npc.h"
 
 #define NUMOFLEVELS 1
 
@@ -37,8 +40,9 @@ public:
     //Player players[2]; //TODO Ivana: napravi klasu
     int numOfLifes;
 
-    //QVector<Boost> boosts; //TODO Matija: napravi klasu
-
+    QScopedPointer<Tank> _player;
+    QVector<Boost> _powerups;
+    QScopedPointer<QTimer> _levelTicker;
 };
 
 #endif // GAME_H

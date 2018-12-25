@@ -30,14 +30,16 @@ SOURCES += \
     tank.cpp \
     npc.cpp \
     game.cpp \
-    menu.cpp
+    menu.cpp \
+    boost.cpp
 
 HEADERS += \
         mainwindow.h \
     tank.h \
     npc.h \
     game.h \
-    menu.h
+    menu.h \
+    boost.h
 
 FORMS += \
         mainwindow.ui \
