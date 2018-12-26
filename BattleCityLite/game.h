@@ -3,11 +3,15 @@
 
 #include <QTimer>
 #include <QFile>
+#include <fstream>
+#include <QVector>
+#include <QString>
 #include "boost.h"
 #include "tank.h"
 #include "npc.h"
+#include "block.h"
 
-#define NUMOFLEVELS 1
+#define NUMOFLEVELS 3
 
 /*!
  * \brief Game::Game
@@ -19,29 +23,26 @@ class Game
 public:
     Game();
 
-    //TODO: consider making class for adding new  levels
-    QFile levelsPath[NUMOFLEVELS];
-    int activeLevel;
-    //MatricaNivoa matrixOfLevel[13][13]; TODO Nenad: napraviti klasu
-
     /*!
-     * \brief openLevel opens file from levelsPath of activeLevel
-     * and fill the matrixOfLevel acording to that file. Also, generate
-     * vector of npcs acording to that informations.
+     * \brief loadLevel opens file for activeLevel
+     * and fill the matrixOfLevel acording to that file.
+         TODO: Generate vector of npcs .
+     *
      * \details Function should be called at the begining of every level
      * which is when npcs vector become empty. The file should have
      * the number of every type of npc that will be in that level. Sum
      * of all numbers should be equal to 20
      */
-    void openLevel();
+    void loadLevel(int levelNum);
 
     //QVector<Npc> npcs; TODO Ivana: dodaj kada implementiras npc
 
     //Player players[2]; //TODO Ivana: napravi klasu
     int numOfLifes;
-
+    int activeLevel;
     QScopedPointer<Tank> _player;
     QVector<Boost> _powerups;
+    QVector<QVector<int>> matrixOfLevel;
     QScopedPointer<QTimer> _levelTicker;
 };
 

@@ -31,7 +31,8 @@ SOURCES += \
     npc.cpp \
     game.cpp \
     menu.cpp \
-    boost.cpp
+    boost.cpp \
+    block.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -39,7 +40,8 @@ HEADERS += \
     npc.h \
     game.h \
     menu.h \
-    boost.h
+    boost.h \
+    block.h
 
 FORMS += \
         mainwindow.ui \
