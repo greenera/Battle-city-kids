@@ -9,7 +9,7 @@ class Boost
 public:
     Boost();
 
-    //~Boost();
+    ~Boost();
 
     /*!
      * \brief BoostType enum

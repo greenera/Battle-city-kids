@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <ui_mainwindow.h>
 
 namespace Ui {
 class MainWindow;
@@ -15,8 +16,43 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    //deleted copy constructor and operator '='
+    MainWindow(const MainWindow&) = delete;
+    MainWindow& operator = (const MainWindow&) = delete;
+
+
+private slots:
+    /**
+     * @brief newGame create new game
+     */
+    void restartGame();
+
+    /**
+     * @brief pauseGame pause game
+     */
+    void pauseGame();
+
+    /**
+     * @brief exitLevel exit to main menu
+     */
+    void exitLevel();
+
+    /**
+     * @brief showHelp show in-game help
+     */
+    void showHelp();
+
+    /**
+     * @brief hideHelp hide in-game help
+     */
+    void hideHelp();
+
+
 private:
-    Ui::MainWindow *ui;
+
+    void connectSlotsAndSignals();
+
+    Ui::MainWindow *_ui;
 };
 
 #endif // MAINWINDOW_H

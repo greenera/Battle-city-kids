@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
 
 /*!
  * \brief MainWindow::MainWindow
@@ -14,9 +13,9 @@
  */
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    _ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);
+    _ui->setupUi(this);
 }
 
 /*!
@@ -24,5 +23,29 @@ MainWindow::MainWindow(QWidget *parent) :
  */
 MainWindow::~MainWindow()
 {
-    delete ui;
+    delete _ui;
+}
+
+void MainWindow::restartGame(){
+    //TODO implementirati ponovno pokretanje igre
+}
+
+void MainWindow::pauseGame(){
+    //TODO implementirati pauzu u igri
+}
+
+void MainWindow::exitLevel(){
+    //TODO implementirati izlazak iz igre
+}
+
+void MainWindow::showHelp(){
+    //TODO implementirati prikazivanje pomoci
+}
+
+void MainWindow::hideHelp(){
+    //TODO implementirati sakrivanje pomoci
+}
+
+void MainWindow::connectSlotsAndSignals(){
+    //TODO odraditi konekcije za hvatanje akcija
 }

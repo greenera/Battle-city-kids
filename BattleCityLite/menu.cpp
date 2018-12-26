@@ -1,14 +1,30 @@
 #include "menu.h"
-#include "ui_menu.h"
+#include <QPainter>
 
 Menu::Menu(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::Menu)
+    _ui(new Ui::Menu)
 {
-    ui->setupUi(this);
+    _ui->setupUi(this);
+
+
+    connectSlotsAndSignals();
 }
 
 Menu::~Menu()
 {
-    delete ui;
+    delete _ui;
+}
+
+
+void Menu::startGame(){
+    //TODO implementirati zapocinjanje nove igre
+}
+
+void Menu::exitProgram(){
+    exit(EXIT_SUCCESS);
+}
+
+void Menu::connectSlotsAndSignals(){
+    connect(_ui->exit_button, SIGNAL(clicked()), this, SLOT(exitProgram()));
 }

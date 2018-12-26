@@ -7,6 +7,10 @@ Boost::Boost()
     _powerup = BoostType(rand()%5);
 }
 
+Boost::~Boost(){
+
+}
+
 void Boost::setPowerup(const BoostType& value){
     _powerup = value;
 }
@@ -30,4 +34,5 @@ void Boost::setY(const int& value){
 int Boost::getY() const{
     return pos_y;
 }
+
 

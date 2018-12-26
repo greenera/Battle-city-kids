@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>529</width>
-    <height>398</height>
+    <width>969</width>
+    <height>442</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,12 +15,12 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="label_5">
+    <widget class="QLabel" name="game_dev_logo">
      <property name="text">
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>../../battle-city-name.jpg</pixmap>
+      <pixmap>../textures/battle-city-name.jpg</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -47,19 +47,19 @@
     </widget>
    </item>
    <item>
-    <widget class="QPushButton" name="pushButton_2">
+    <widget class="QPushButton" name="exit_button">
      <property name="text">
       <string>EXIT</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="label_4">
+    <widget class="QLabel" name="game_logo">
      <property name="text">
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>../../battle-city-logo.jpg</pixmap>
+      <pixmap>../textures/battle-city-logo.jpg</pixmap>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

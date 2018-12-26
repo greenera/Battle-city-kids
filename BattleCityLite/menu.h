@@ -2,6 +2,7 @@
 #define MENU_H
 
 #include <QWidget>
+#include <ui_menu.h>
 
 namespace Ui {
 class Menu;
@@ -15,8 +16,29 @@ public:
     explicit Menu(QWidget *parent = nullptr);
     ~Menu();
 
+    //deleted copy constructor and operator '='
+    Menu(const Menu&) = delete;
+    Menu& operator = (const Menu&) = delete;
+
+private slots:
+    /**
+     * @brief startGame begins new game
+     */
+    void startGame();
+
+    /**
+     * @brief exitProgram exits program
+     */
+    void exitProgram();
+
+
+
 private:
-    Ui::Menu *ui;
+    Ui::Menu *_ui;
+    /**
+     * @brief connectSlotsAndSignals enables program function to catch actions
+     */
+    void connectSlotsAndSignals();
 };
 
 #endif // MENU_H
