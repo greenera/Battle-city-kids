@@ -3,14 +3,14 @@
 
 #include <QGraphicsObject>
 #include <QRandomGenerator>
+#include <QStyleOptionGraphicsItem>
+#include <QRectF>
+#include <QPainter>
+#include <QGraphicsObject>
 
-class Boost
+class Boost: public QGraphicsItem
 {
 public:
-    Boost();
-
-    ~Boost();
-
     /*!
      * \brief BoostType enum
      * defines types of powerups
@@ -24,6 +24,22 @@ public:
         bomb
     };
 
+    Boost();
+    Boost(qreal x, qreal y);
+
+    Boost(const Boost& other) = delete;
+
+    //~Boost();
+
+    QRectF boundingRect() const override;
+    void paint(QPainter *painter,
+               const QStyleOptionGraphicsItem *option,
+               QWidget *widget) override;
+    QPainterPath shape() const override;
+
+
+    void generateRandomPowerup();
+
     /*!
      * \brief setters and getters...
      */
@@ -32,10 +48,10 @@ public:
     BoostType getPowerup() const;
 
     void setX(const int& value);
-    int getX() const;
+    qreal getX() const;
 
     void setY(const int& value);
-    int getY() const;
+    qreal getY() const;
 
 protected:
 
@@ -43,9 +59,12 @@ protected:
      * \brief pos_x horisontal position
      * \brief pos_y vertical position
      */
-    int pos_x, pos_y;
+    qreal _size = 30;
+    qreal pos_x, pos_y;
 
     BoostType _powerup;
+
+    QPixmap _texture;
 };
 
 #endif // BOOST_H
