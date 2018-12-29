@@ -25,27 +25,27 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
-        main.cpp \
-        mainwindow.cpp \
-    tank.cpp \
-    npc.cpp \
-    game.cpp \
-    menu.cpp \
-    boost.cpp \
-    block.cpp
+        source/main.cpp \
+        source/mainwindow.cpp \
+        source/tank.cpp \
+        source/npc.cpp \
+        source/game.cpp \
+        source/menu.cpp \
+        source/boost.cpp \
+        source/block.cpp
 
 HEADERS += \
-        mainwindow.h \
-    tank.h \
-    npc.h \
-    game.h \
-    menu.h \
-    boost.h \
-    block.h
+        include/mainwindow.h \
+        include/tank.h \
+        include/npc.h \
+        include/game.h \
+        include/menu.h \
+        include/boost.h \
+        include/block.h
 
 FORMS += \
-        mainwindow.ui \
-    menu.ui
+        ui/mainwindow.ui \
+        ui/menu.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -53,4 +53,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    resources.qrc
+    resources/textures/boosts/resources.qrc

@@ -1,4 +1,4 @@
-#include "npc.h"
+#include "include/npc.h"
 
 Npc::Npc()
 {

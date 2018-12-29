@@ -6,10 +6,10 @@
 #include <fstream>
 #include <QVector>
 #include <QString>
-#include "boost.h"
-#include "tank.h"
-#include "npc.h"
-#include "block.h"
+#include "include/boost.h"
+#include "include/tank.h"
+#include "include/npc.h"
+#include "include/block.h"
 
 #define NUMOFLEVELS 3
 

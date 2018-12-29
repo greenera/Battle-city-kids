@@ -3,8 +3,8 @@
 
 #include <QApplication>
 #include <QtWidgets>
-#include "menu.h"
-#include "mainwindow.h"
+#include "include/menu.h"
+#include "include/mainwindow.h"
 
 int main(int argc, char *argv[])
 {

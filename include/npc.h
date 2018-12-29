@@ -1,6 +1,6 @@
 #ifndef NPC_H
 #define NPC_H
-#include <tank.h>
+#include "include/tank.h"
 
 class Npc : public Tank
 {

@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <ui_mainwindow.h>
-#include "boost.h"
+#include "include/boost.h"
 
 namespace Ui {
 class MainWindow;

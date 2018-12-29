@@ -5,6 +5,8 @@
 #include <QPainter>
 #include <QGraphicsObject>
 
+// Class for obstacles
+
 class Block: public QGraphicsObject
 {
 public:
@@ -20,6 +22,7 @@ public:
     //~Block();
     Block(const Block& other) = delete;
 
+    // Overrides from QGraphicsObject
     QRectF boundingRect() const override;
     void paint(QPainter *painter,
                        const QStyleOptionGraphicsItem *option,
@@ -30,7 +33,7 @@ public:
     qreal getY();
 
 private:
-    qreal size = 1;
+    int size = 20;
     qreal pos_x;
     qreal pos_y;
     bool _collidable;

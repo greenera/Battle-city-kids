@@ -1,4 +1,4 @@
-#include "block.h"
+#include "include/block.h"
 
 Block::Block(qreal x, qreal y, bool collidable, Material m, QString texture)
     : pos_x(x), pos_y(y), _collidable(collidable), _m(m), _texture(texture)
