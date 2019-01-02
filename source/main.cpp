@@ -1,7 +1,7 @@
 // Starter of Battle city lite game which is
 // inspired by the game for "sega" with the same name.
 
-#include "mainwindow.h"
+#include "include/mainwindow.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
