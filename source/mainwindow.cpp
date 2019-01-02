@@ -23,8 +23,11 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     _ui->setupUi(this);
     //Loading level
-    Game g;
-    g.loadLevel(2);
+    Game *g = new Game();
+    g->loadLevel(2);
+    _ui->graphicsView->setRenderHint(QPainter::Antialiasing);
+
+    Menu *main = new Menu();
 
     QGraphicsScene *scene = new QGraphicsScene();
     scene->setSceneRect(0, 0, 900, 650);
@@ -34,20 +37,20 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         for(int j=0;j<26;j++)
         {
-            qDebug() << g.matrixOfLevel[i][j];
-            if (g.matrixOfLevel[i][j] == 1) {
+            qDebug() << g->matrixOfLevel[i][j];
+            if (g->matrixOfLevel[i][j] == 1) {
                 Block *b = new Block(25*j, 25*i, true, Block::Material::brick, ":/blocks/brick.png");
                 scene->addItem(b);
             }
-            else if (g.matrixOfLevel[i][j] == 2) {
+            else if (g->matrixOfLevel[i][j] == 2) {
                 Block *b = new Block(25*j, 25*i, true, Block::Material::stone, ":/blocks/stone.png");
                 scene->addItem(b);
             }
-            else if (g.matrixOfLevel[i][j] == 3) {
+            else if (g->matrixOfLevel[i][j] == 3) {
                 Block *b = new Block(25*j, 25*i, true, Block::Material::stone, ":/blocks/water.png");
                 scene->addItem(b);
             }
-            else if (g.matrixOfLevel[i][j] == 4) {
+            else if (g->matrixOfLevel[i][j] == 4) {
                 Block *b = new Block(25*j, 25*i, true, Block::Material::stone, ":/blocks/bush.png");
                 scene->addItem(b);
             }
@@ -61,11 +64,13 @@ MainWindow::MainWindow(QWidget *parent) :
     Boost *booster = new Boost(350, 150);
     scene->addItem(booster);
 
+
     _ui->graphicsView->setScene(scene);
     _ui->graphicsView->setFixedSize(900, 650);
-    _ui->graphicsView->setFrameStyle(0);
     _ui->graphicsView->setBackgroundBrush(QColor(0, 0, 0));
+    _ui->graphicsView->setFrameStyle(0);
 
+    _ui->graphicsView->setWindowTitle("Battle City Lite");
     scene->update();
 }
 

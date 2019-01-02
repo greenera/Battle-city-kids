@@ -1,4 +1,5 @@
 #include "include/game.h"
+#include <iostream>
 
 
 Game::Game()
@@ -9,6 +10,7 @@ Game::Game()
 // Loads level from file
 void Game::loadLevel(int levelNum)
 {
+
     QString path = QStringLiteral(":/levels/%1.txt").arg(levelNum);
     std::ifstream in(path.toStdString(), std::ifstream::in);
     char c;

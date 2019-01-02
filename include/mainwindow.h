@@ -3,7 +3,9 @@
 
 #include <QMainWindow>
 #include <ui_mainwindow.h>
+#include "include/menu.h"
 #include "include/boost.h"
+#include "include/game.h"
 
 namespace Ui {
 class MainWindow;

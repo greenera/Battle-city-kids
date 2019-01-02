@@ -18,7 +18,7 @@ Menu::~Menu()
 
 
 void Menu::startGame(){
-    //TODO implementirati zapocinjanje nove igre
+    this->hide();
 }
 
 void Menu::exitProgram(){
@@ -27,4 +27,5 @@ void Menu::exitProgram(){
 
 void Menu::connectSlotsAndSignals(){
     connect(_ui->exit_button, SIGNAL(clicked()), this, SLOT(exitProgram()));
+    connect(_ui->play_button, SIGNAL(clicked()), this, SLOT(startGame()));
 }

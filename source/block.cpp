@@ -1,13 +1,15 @@
 #include "include/block.h"
 
 Block::Block(int x, int y, bool collidable, Material m, QString texture)
-    : pos_x(x), pos_y(y), _collidable(collidable), _m(m), _texture(texture)
+    : pos_x(x), pos_y(y), _collidable(collidable), _m(m)
     {
+        _texture = QPixmap(texture);
     }
 
 Block::Block(int x, int y, QString texture)
-    :pos_x(x), pos_y(y), _texture(texture)
+    :pos_x(x), pos_y(y)
     {
+        _texture = QPixmap(texture);
         size = 50;
         _collidable = true;
     }
