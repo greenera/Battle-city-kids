@@ -53,4 +53,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    resources/textures/boosts/resources.qrc
+    resources/textures/boosts/boosts.qrc \
+    resources/textures/blocks/blocks.qrc \
+    resources/levels/levels.qrc

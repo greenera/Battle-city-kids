@@ -1,7 +1,10 @@
 #include "include/mainwindow.h"
 
+#include <QDebug>
 #include <QGraphicsScene>
 #include <QGraphicsView>
+#include "include/game.h"
+#include "include/block.h"
 
 /*!
  * \brief MainWindow::MainWindow
@@ -19,14 +22,49 @@ MainWindow::MainWindow(QWidget *parent) :
     _ui(new Ui::MainWindow)
 {
     _ui->setupUi(this);
+    //Loading level
+    Game g;
+    g.loadLevel(2);
 
     QGraphicsScene *scene = new QGraphicsScene();
-    scene->setSceneRect(-300, -300, 600, 600);
+    scene->setSceneRect(0, 0, 900, 650);
 
-    Boost *booster = new Boost(0, 0);
+    // Creating blocks based ond matrixOfLevel
+    for(int i=0;i<26;i++)
+    {
+        for(int j=0;j<26;j++)
+        {
+            qDebug() << g.matrixOfLevel[i][j];
+            if (g.matrixOfLevel[i][j] == 1) {
+                Block *b = new Block(25*j, 25*i, true, Block::Material::brick, ":/blocks/brick.png");
+                scene->addItem(b);
+            }
+            else if (g.matrixOfLevel[i][j] == 2) {
+                Block *b = new Block(25*j, 25*i, true, Block::Material::stone, ":/blocks/stone.png");
+                scene->addItem(b);
+            }
+            else if (g.matrixOfLevel[i][j] == 3) {
+                Block *b = new Block(25*j, 25*i, true, Block::Material::stone, ":/blocks/water.png");
+                scene->addItem(b);
+            }
+            else if (g.matrixOfLevel[i][j] == 4) {
+                Block *b = new Block(25*j, 25*i, true, Block::Material::stone, ":/blocks/bush.png");
+                scene->addItem(b);
+            }
+        }
+    }
+    // Add phoenix to the scene
+    Block *phoenix = new Block(300, 600, ":/blocks/base.png");
+    scene->addItem(phoenix);
+
+    // Add boost to the scene
+    Boost *booster = new Boost(350, 150);
     scene->addItem(booster);
 
     _ui->graphicsView->setScene(scene);
+    _ui->graphicsView->setFixedSize(900, 650);
+    _ui->graphicsView->setFrameStyle(0);
+    _ui->graphicsView->setBackgroundBrush(QColor(0, 0, 0));
 
     scene->update();
 }

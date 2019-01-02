@@ -3,11 +3,11 @@
 
 #include <QObject>
 #include <QPainter>
-#include <QGraphicsObject>
+#include <QGraphicsItem>
 
 // Class for obstacles
 
-class Block: public QGraphicsObject
+class Block: public QGraphicsItem
 {
 public:
     // Defines type of obstacle
@@ -15,10 +15,14 @@ public:
         brick,
         stone,
         water,
-        bush
+        bush,
+        base
     };
 
-    Block(qreal x, qreal y, bool collidable, Material m, QString texture);
+    Block(int x, int y, bool collidable, Material m, QString texture);
+
+    // Constructor used for creating phoenix
+    Block(int x, int y, QString texture);
     //~Block();
     Block(const Block& other) = delete;
 
@@ -29,13 +33,13 @@ public:
                        QWidget *widget) override;
     QPainterPath shape() const override;
 
-    qreal getX();
-    qreal getY();
+    int getX();
+    int getY();
 
 private:
-    int size = 20;
-    qreal pos_x;
-    qreal pos_y;
+    int size = 25;
+    int pos_x;
+    int pos_y;
     bool _collidable;
     Material _m;
     QPixmap _texture;

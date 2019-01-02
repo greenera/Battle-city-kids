@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/blocks">
+        <file>brick.png</file>
+        <file>stone.png</file>
+        <file>bush.png</file>
+        <file>water.png</file>
+        <file>base.png</file>
+    </qresource>
+</RCC>

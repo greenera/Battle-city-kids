@@ -59,7 +59,7 @@ protected:
      * \brief pos_x horisontal position
      * \brief pos_y vertical position
      */
-    qreal _size = 30;
+    qreal _size = 50;
     qreal pos_x, pos_y;
 
     BoostType _powerup;

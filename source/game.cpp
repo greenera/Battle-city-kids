@@ -6,10 +6,10 @@ Game::Game()
 {
 
 }
-
+// Loads level from file
 void Game::loadLevel(int levelNum)
 {
-    QString path = QStringLiteral("levels/%1.txt").arg(levelNum);
+    QString path = QStringLiteral(":/levels/%1.txt").arg(levelNum);
     std::ifstream in(path.toStdString(), std::ifstream::in);
     char c;
     for(int i=0;i<26;i++)
