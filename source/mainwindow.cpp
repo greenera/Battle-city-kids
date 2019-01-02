@@ -1,6 +1,5 @@
 #include "include/mainwindow.h"
 
-#include <QDebug>
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include "include/game.h"
@@ -22,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _ui(new Ui::MainWindow)
 {
     _ui->setupUi(this);
+
     //Loading level
     Game *g = new Game();
     g->loadLevel(2);
@@ -37,7 +37,6 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         for(int j=0;j<26;j++)
         {
-            qDebug() << g->matrixOfLevel[i][j];
             if (g->matrixOfLevel[i][j] == 1) {
                 Block *b = new Block(25*j, 25*i, true, Block::Material::brick, ":/blocks/brick.png");
                 scene->addItem(b);
@@ -57,7 +56,7 @@ MainWindow::MainWindow(QWidget *parent) :
         }
     }
     // Add phoenix to the scene
-    Block *phoenix = new Block(300, 600, ":/blocks/base.png");
+    Block *phoenix = new Block(300, 600, ":/blocks/phoenix.png");
     scene->addItem(phoenix);
 
     // Add boost to the scene

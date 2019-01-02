@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/blocks">
-        <file>base.png</file>
+        <file>phoenix.png</file>
         <file>brick.png</file>
         <file>bush.png</file>
         <file>stone.png</file>
