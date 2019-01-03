@@ -11,7 +11,7 @@ Game::Game()
 void Game::initializeGame()
 {
     _activeLevel = 1;
-    loadLevel(1);
+    loadLevel(2);
 
     _numOfLifes = 3; //TODO: make macro and consider other number
 
