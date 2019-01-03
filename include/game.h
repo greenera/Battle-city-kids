@@ -11,7 +11,7 @@
 #include "include/npc.h"
 #include "include/block.h"
 
-#define NUMOFLEVELS 3
+#define NUM_OF_LEVELS 3
 
 /*!
  * \brief Game::Game
@@ -22,6 +22,14 @@ class Game
 {
 public:
     Game();
+    void initializeGame();
+
+    QVector<QVector<int>> matrixOfLevel;
+
+private:
+    //TODO: consider making class for adding new  levels
+    QFile levelsPath[NUM_OF_LEVELS];
+    //MatricaNivoa matrixOfLevel[13][13]; TODO Nenad: napraviti klasu
 
     /*!
      * \brief loadLevel opens file for activeLevel
@@ -35,14 +43,14 @@ public:
      */
     void loadLevel(int levelNum);
 
-    //QVector<Npc> npcs; TODO Ivana: dodaj kada implementiras npc
+    QVector<Npc> _npcs;
 
     //Player players[2]; //TODO Ivana: napravi klasu
-    int numOfLifes;
-    int activeLevel;
+    int _numOfLifes;
+    int _activeLevel;
     QScopedPointer<Tank> _player;
     QVector<Boost> _powerups;
-    QVector<QVector<int>> matrixOfLevel;
+
     QScopedPointer<QTimer> _levelTicker;
 };
 

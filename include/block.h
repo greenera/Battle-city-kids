@@ -3,11 +3,11 @@
 
 #include <QObject>
 #include <QPainter>
-#include <QGraphicsItem>
+#include <QGraphicsObject>
 
 // Class for obstacles
 
-class Block: public QGraphicsItem
+class Block: public QGraphicsObject
 {
 public:
     // Defines type of obstacle
@@ -33,13 +33,13 @@ public:
                        QWidget *widget) override;
     QPainterPath shape() const override;
 
-    int getX();
-    int getY();
+    qreal getX() const;
+    qreal getY() const;
 
 private:
     int size = 25;
-    int pos_x;
-    int pos_y;
+    qreal pos_x;
+    qreal pos_y;
     bool _collidable;
     Material _m;
     QPixmap _texture;

@@ -1,5 +1,6 @@
 #include "include/menu.h"
 #include <QPainter>
+#include "ui_menu.h"
 
 Menu::Menu(QWidget *parent) :
     QWidget(parent),
@@ -11,21 +12,36 @@ Menu::Menu(QWidget *parent) :
     connectSlotsAndSignals();
 }
 
-Menu::~Menu()
+//Menu::~Menu()
+//{
+//    delete _ui;
+//}
+
+QPushButton *Menu::getStartButton()
 {
-    delete _ui;
+    return _ui->play_button;
 }
 
+void Menu::keyPressEvent(QKeyEvent* event)
+{
+    switch(event->key())
+    {
+        case(Qt::Key_Escape):
+            exit(EXIT_SUCCESS);
+    }
+}
 
 void Menu::startGame(){
-    this->hide();
+
 }
 
-void Menu::exitProgram(){
+void Menu::exitProgram()
+{
     exit(EXIT_SUCCESS);
 }
 
-void Menu::connectSlotsAndSignals(){
+void Menu::connectSlotsAndSignals()
+{
     connect(_ui->exit_button, SIGNAL(clicked()), this, SLOT(exitProgram()));
     connect(_ui->play_button, SIGNAL(clicked()), this, SLOT(startGame()));
 }

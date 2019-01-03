@@ -6,6 +6,7 @@
 #include "include/menu.h"
 #include "include/boost.h"
 #include "include/game.h"
+#include "include/gamewrapper.h"
 
 namespace Ui {
 class MainWindow;
@@ -50,10 +51,15 @@ private slots:
      */
     void hideHelp();
 
+public slots:
+    void startGame();
 
 private:
 
     void connectSlotsAndSignals();
+
+    Menu *_menu;
+    GameWidget *_gameWidget;
 
     Ui::MainWindow *_ui;
 };

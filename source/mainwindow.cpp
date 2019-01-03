@@ -15,62 +15,31 @@
  * This class should have information:
  *  -about first level widget
  *  -about menu widget
+ * Allways, only one of these should be visible.
  */
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     _ui(new Ui::MainWindow)
 {
     _ui->setupUi(this);
 
-    //Loading level
-    Game *g = new Game();
-    g->loadLevel(2);
-    _ui->graphicsView->setRenderHint(QPainter::Antialiasing);
 
-    Menu *main = new Menu();
+    //add both menu and game widget
+    _menu = new Menu();
+    _ui->presented->addWidget(_menu);
 
-    QGraphicsScene *scene = new QGraphicsScene();
-    scene->setSceneRect(0, 0, 900, 650);
+    auto pom = new GameWrapper(); //from this moment game and gameWidget are connected
+    _gameWidget = pom->getGameWidget();
+    _ui->presented->addWidget(_gameWidget);
 
-    // Creating blocks based ond matrixOfLevel
-    for(int i=0;i<26;i++)
-    {
-        for(int j=0;j<26;j++)
-        {
-            if (g->matrixOfLevel[i][j] == 1) {
-                Block *b = new Block(25*j, 25*i, true, Block::Material::brick, ":/blocks/brick.png");
-                scene->addItem(b);
-            }
-            else if (g->matrixOfLevel[i][j] == 2) {
-                Block *b = new Block(25*j, 25*i, true, Block::Material::stone, ":/blocks/stone.png");
-                scene->addItem(b);
-            }
-            else if (g->matrixOfLevel[i][j] == 3) {
-                Block *b = new Block(25*j, 25*i, true, Block::Material::stone, ":/blocks/water.png");
-                scene->addItem(b);
-            }
-            else if (g->matrixOfLevel[i][j] == 4) {
-                Block *b = new Block(25*j, 25*i, true, Block::Material::stone, ":/blocks/bush.png");
-                scene->addItem(b);
-            }
-        }
-    }
-    // Add phoenix to the scene
-    Block *phoenix = new Block(300, 600, ":/blocks/phoenix.png");
-    scene->addItem(phoenix);
+    //this->setStyleSheet("background-color: black;");
 
-    // Add boost to the scene
-    Boost *booster = new Boost(350, 150);
-    scene->addItem(booster);
+    //set one hidden
+    _gameWidget->setHidden(true);
 
+    connectSlotsAndSignals();
 
-    _ui->graphicsView->setScene(scene);
-    _ui->graphicsView->setFixedSize(900, 650);
-    _ui->graphicsView->setBackgroundBrush(QColor(0, 0, 0));
-    _ui->graphicsView->setFrameStyle(0);
-
-    _ui->graphicsView->setWindowTitle("Battle City Lite");
-    scene->update();
 }
 
 /*!
@@ -101,6 +70,14 @@ void MainWindow::hideHelp(){
     //TODO implementirati sakrivanje pomoci
 }
 
-void MainWindow::connectSlotsAndSignals(){
-    //TODO odraditi konekcije za hvatanje akcija
+void MainWindow::connectSlotsAndSignals()
+{
+    QObject::connect(_menu->getStartButton(), &QPushButton::clicked, this, &MainWindow::startGame);
+}
+
+void MainWindow::startGame()
+{
+    _menu->setHidden(true);
+    //TODO: treba inicijalizovati igru na pocetak pre prikazivanja
+    _gameWidget->setHidden(false);
 }

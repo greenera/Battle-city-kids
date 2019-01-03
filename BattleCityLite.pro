@@ -32,7 +32,11 @@ SOURCES += \
         source/game.cpp \
         source/menu.cpp \
         source/boost.cpp \
-        source/block.cpp
+	source/iqalgorithm.cpp \
+	source/player.cpp \
+        source/block.cpp \
+    source/gamewidget.cpp \
+    source/gamewrapper.cpp
 
 HEADERS += \
         include/mainwindow.h \
@@ -41,11 +45,16 @@ HEADERS += \
         include/game.h \
         include/menu.h \
         include/boost.h \
-        include/block.h
+	include/iqalgorithm.h \
+        include/player.h \
+        include/block.h \
+    include/gamewidget.h \
+    include/gamewrapper.h
 
 FORMS += \
         ui/mainwindow.ui \
-        ui/menu.ui
+        ui/menu.ui \
+    ui/gamewidget.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -55,4 +64,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 RESOURCES += \
     resources/textures/boosts/boosts.qrc \
     resources/textures/blocks/blocks.qrc \
-    resources/levels/levels.qrc
+    resources/levels/levels.qrc \
+    resources/main_menu/main_menu.qrc

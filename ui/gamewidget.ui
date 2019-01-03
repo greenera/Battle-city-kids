@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Menu</class>
- <widget class="QWidget" name="Menu">
+ <class>GameWidget</class>
+ <widget class="QWidget" name="GameWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>639</width>
-    <height>436</height>
+    <width>1024</width>
+    <height>768</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
   <property name="minimumSize">
    <size>
-    <width>0</width>
-    <height>0</height>
+    <width>1024</width>
+    <height>768</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -48,67 +48,67 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string/>
-       </property>
-       <property name="pixmap">
-        <pixmap resource="../resources/main_menu/main_menu.qrc">:/main_menu/battle-city-name.jpg</pixmap>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="play_button">
+      <widget class="QGraphicsView" name="activegame">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
        <property name="minimumSize">
         <size>
-         <width>300</width>
-         <height>0</height>
+         <width>652</width>
+         <height>652</height>
         </size>
        </property>
-       <property name="layoutDirection">
-        <enum>Qt::LeftToRight</enum>
+       <property name="maximumSize">
+        <size>
+         <width>652</width>
+         <height>652</height>
+        </size>
        </property>
-       <property name="text">
-        <string>PLAY</string>
+       <property name="verticalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
        </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="exit_button">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
+       <property name="horizontalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
        </property>
-       <property name="text">
-        <string>EXIT</string>
+       <property name="sizeAdjustPolicy">
+        <enum>QAbstractScrollArea::AdjustToContents</enum>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="label_2">
        <property name="text">
         <string/>
-       </property>
-       <property name="pixmap">
-        <pixmap resource="../resources/main_menu/main_menu.qrc">:/main_menu/battle-city-logo.jpg</pixmap>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QWidget" name="status" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>60</width>
+       <height>0</height>
+      </size>
+     </property>
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>666</x>
+        <y>6</y>
+        <width>341</width>
+        <height>641</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
+    </widget>
    </item>
    <item>
     <spacer name="horizontalSpacer_2">
@@ -125,8 +125,6 @@
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../resources/main_menu/main_menu.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

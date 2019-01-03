@@ -6,6 +6,20 @@ Game::Game()
 {
 
 }
+
+
+void Game::initializeGame()
+{
+    _activeLevel = 1;
+    loadLevel(1);
+
+    _numOfLifes = 3; //TODO: make macro and consider other number
+
+    //createNpcs(); TODO Ivana: implementiraj
+
+    //
+}
+
 // Loads level from file
 void Game::loadLevel(int levelNum)
 {

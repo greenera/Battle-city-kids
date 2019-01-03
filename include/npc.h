@@ -21,6 +21,11 @@ public:
 public slots:
     void onCollision();
 
+
+    // QGraphicsItem interface
+public:
+    QRectF boundingRect() const override;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 };
 
 #endif // NPC_H

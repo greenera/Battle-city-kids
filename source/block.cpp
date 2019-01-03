@@ -36,11 +36,11 @@ QPainterPath Block::shape() const
     return path;
 }
 
-int Block::getX()
+qreal Block::getX() const
 {
     return pos_x;
 }
-int Block::getY()
+qreal Block::getY() const
 {
     return  pos_y;
 }
