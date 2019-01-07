@@ -15,10 +15,14 @@ public:
         brick,
         stone,
         water,
-        bush
+        bush,
+        base
     };
 
-    Block(qreal x, qreal y, bool collidable, Material m, QString texture);
+    Block(int x, int y, bool collidable, Material m, QString texture);
+
+    // Constructor used for creating phoenix
+    Block(int x, int y, QString texture);
     //~Block();
     Block(const Block& other) = delete;
 
@@ -29,11 +33,11 @@ public:
                        QWidget *widget) override;
     QPainterPath shape() const override;
 
-    qreal getX();
-    qreal getY();
+    qreal getX() const;
+    qreal getY() const;
 
 private:
-    int size = 20;
+    int size = 25;
     qreal pos_x;
     qreal pos_y;
     bool _collidable;

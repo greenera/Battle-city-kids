@@ -1,7 +1,10 @@
-#include "include/mainwindow.h"
 #include "ui_mainwindow.h"
+#include "include/mainwindow.h"
+
 #include <QGraphicsScene>
 #include <QGraphicsView>
+#include "include/game.h"
+#include "include/block.h"
 
 /*!
  * \brief MainWindow::MainWindow
@@ -22,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     _ui->setupUi(this);
 
+
     //add both menu and game widget
     _menu = new Menu();
     _ui->presented->addWidget(_menu);
@@ -30,10 +34,13 @@ MainWindow::MainWindow(QWidget *parent) :
     _gameWidget = pom->getGameWidget();
     _ui->presented->addWidget(_gameWidget);
 
+    //this->setStyleSheet("background-color: black;");
+
     //set one hidden
     _gameWidget->setHidden(true);
 
     connectSlotsAndSignals();
+
 }
 
 /*!
@@ -44,18 +51,23 @@ MainWindow::~MainWindow()
     delete _ui;
 }
 
-void MainWindow::exitLevel()
-{
+void MainWindow::restartGame(){
+    //TODO implementirati ponovno pokretanje igre
+}
+
+void MainWindow::pauseGame(){
+    //TODO implementirati pauzu u igri
+}
+
+void MainWindow::exitLevel(){
     //TODO implementirati izlazak iz igre
 }
 
-void MainWindow::showHelp()
-{
+void MainWindow::showHelp(){
     //TODO implementirati prikazivanje pomoci
 }
 
-void MainWindow::hideHelp()
-{
+void MainWindow::hideHelp(){
     //TODO implementirati sakrivanje pomoci
 }
 

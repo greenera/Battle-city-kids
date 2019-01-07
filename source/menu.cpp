@@ -8,17 +8,31 @@ Menu::Menu(QWidget *parent) :
 {
     _ui->setupUi(this);
 
+
     connectSlotsAndSignals();
 }
 
-Menu::~Menu()
-{
-    delete _ui;
-}
+//Menu::~Menu()
+//{
+//    delete _ui;
+//}
 
 QPushButton *Menu::getStartButton()
 {
     return _ui->play_button;
+}
+
+void Menu::keyPressEvent(QKeyEvent* event)
+{
+    switch(event->key())
+    {
+        case(Qt::Key_Escape):
+            exit(EXIT_SUCCESS);
+    }
+}
+
+void Menu::startGame(){
+
 }
 
 void Menu::exitProgram()
@@ -29,4 +43,5 @@ void Menu::exitProgram()
 void Menu::connectSlotsAndSignals()
 {
     connect(_ui->exit_button, SIGNAL(clicked()), this, SLOT(exitProgram()));
+    connect(_ui->play_button, SIGNAL(clicked()), this, SLOT(startGame()));
 }

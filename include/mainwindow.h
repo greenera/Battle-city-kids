@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <ui_mainwindow.h>
 #include "include/menu.h"
+#include "include/boost.h"
+#include "include/game.h"
 #include "include/gamewrapper.h"
 
 namespace Ui {
@@ -24,6 +26,16 @@ public:
 
 
 private slots:
+    /**
+     * @brief newGame create new game
+     */
+    void restartGame();
+
+    /**
+     * @brief pauseGame pause game
+     */
+    void pauseGame();
+
     /**
      * @brief exitLevel exit to main menu
      */

@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/boosts">
+        <file>Battle_City_Powerup_Grenade.png</file>
+        <file>Battle_City_Powerup_Helmet.png</file>
+        <file>Battle_City_Powerup_Shovel.png</file>
+        <file>Battle_City_Powerup_Star.png</file>
+        <file>Battle_City_Powerup_Tank.png</file>
+        <file>Battle_City_Powerup_Timer.png</file>
+    </qresource>
+</RCC>

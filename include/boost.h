@@ -23,8 +23,16 @@ public:
         freeze,
         bomb
     };
-
+    /**
+     * @brief Boost consturctor of a random powerup at a random place
+     */
     Boost();
+
+    /**
+     * @brief Boost consturctor of a random powerup at (x, y) position
+     * @param x
+     * @param y
+     */
     Boost(qreal x, qreal y);
 
     Boost(const Boost& other) = delete;
@@ -38,6 +46,15 @@ public:
     QPainterPath shape() const override;
 
 
+    /**
+     * @brief setTexture assigns value to _texture variable
+     * @param t
+     */
+    void setTexture(const BoostType& t);
+
+    /**
+     * @brief generateRandomPowerup generates random powerup
+     */
     void generateRandomPowerup();
 
     /*!
@@ -59,10 +76,10 @@ protected:
      * \brief pos_x horisontal position
      * \brief pos_y vertical position
      */
-    qreal _size = 30;
+    qreal _size = 50;
     qreal pos_x, pos_y;
 
-    BoostType _powerup;
+    BoostType _powerup = BoostType::fenix_shield;
 
     QPixmap _texture;
 };

@@ -24,6 +24,8 @@ public:
     Game();
     void initializeGame();
 
+    QVector<QVector<int>> matrixOfLevel;
+
 private:
     //TODO: consider making class for adding new  levels
     QFile levelsPath[NUM_OF_LEVELS];
@@ -48,7 +50,7 @@ private:
     int _activeLevel;
     QScopedPointer<Tank> _player;
     QVector<Boost> _powerups;
-    QVector<QVector<int>> matrixOfLevel;
+
     QScopedPointer<QTimer> _levelTicker;
 };
 

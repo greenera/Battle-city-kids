@@ -9,7 +9,7 @@ class GameWrapper
 {
 public:
     GameWrapper();
-    GameWidget *getGameWidget();
+    GameWidget *getGameWidget() const;
 
 private:
     Game *_game;

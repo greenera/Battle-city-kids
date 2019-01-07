@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <ui_menu.h>
+#include <QKeyEvent>
 
 namespace Ui {
 class Menu;
@@ -14,7 +15,7 @@ class Menu : public QWidget
 
 public:
     explicit Menu(QWidget *parent = nullptr);
-    ~Menu();
+    //~Menu();
 
     //deleted copy constructor and operator '='
     Menu(const Menu&) = delete;
@@ -22,11 +23,20 @@ public:
 
     QPushButton *getStartButton();
 
+    void keyPressEvent(QKeyEvent* event) override;
+
 private slots:
+    /**
+     * @brief startGame begins new game
+     */
+    void startGame();
+
     /**
      * @brief exitProgram exits program
      */
     void exitProgram();
+
+
 
 private:
     Ui::Menu *_ui;
