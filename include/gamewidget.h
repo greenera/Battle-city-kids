@@ -16,15 +16,14 @@ class GameWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit GameWidget(QWidget *parent = nullptr);
+    explicit GameWidget(QWidget *parent = nullptr, QGraphicsScene *scene = nullptr);
     ~GameWidget();
 
 public slots:
     void printMap(const QVector<QVector<int>> matrixOfLevel) const;
 
 private:
-    const int _sizeOfScene = 25 * 13; //!< 25 stands for number of rects, and 13 for size of every rect
-    QGraphicsScene* _scene;
+    QGraphicsScene *_scene;
     Ui::GameWidget *_ui;
 };
 

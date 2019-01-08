@@ -1,23 +1,31 @@
 #include "include/game.h"
 #include <QFile>
+/**
+ * @brief Game::Game
+ * @param parrent
+ * \details Scena koja predstavlja igru. Tu se regulise igra u okviru nivoa.
+ * Trebalo bi preimenovati je u levelScene, takodje prebaciti sve sto ima veze sa scenom ovde.
+ */
 
-Game::Game()
-    : matrixOfLevel(26, QVector<int>(26))
+
+Game::Game(QWidget* parrent)
+    : QGraphicsScene(parrent),
+    matrixOfLevel(26, QVector<int>(26))
 {
+    this->setSceneRect(0, 0, _sizeOfScene, _sizeOfScene);
+    setBackgroundBrush(QColor(0, 0, 0));
 
+    initializeGame();
+
+//    QObject::connect(_updateTimer, &QTimer::timeout, this, &Game::update);
 }
 
 
 void Game::initializeGame()
 {
-    _activeLevel = 1;
     loadLevel(2);
 
-    _numOfLifes = 3; //TODO: make macro and consider other number
-
     //createNpcs(); TODO Ivana: implementiraj
-
-    //
 }
 
 // Loads level from file

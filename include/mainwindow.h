@@ -24,7 +24,6 @@ public:
     MainWindow(const MainWindow&) = delete;
     MainWindow& operator = (const MainWindow&) = delete;
 
-
 private slots:
     /**
      * @brief newGame create new game
@@ -51,15 +50,13 @@ private slots:
      */
     void hideHelp();
 
-public slots:
-    void startGame();
-
 private:
 
     void connectSlotsAndSignals();
 
     Menu *_menu;
     GameWidget *_gameWidget;
+    GameWrapper *_gameWrapper;
 
     Ui::MainWindow *_ui;
 };

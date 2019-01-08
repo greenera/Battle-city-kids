@@ -52,7 +52,7 @@ protected:
 
     qreal _x;
     qreal _y;
-    int _size = 25;
+    int _size = 50; //!< consider making it const
 
     QMap<QString, QPixmap> _icons;
     QString _activeIcon;
@@ -60,6 +60,11 @@ protected:
 public:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+    void onUp();
+    void onDown();
+    void onLeft();
+    void onRight();
 };
 
 #endif // TANK_H

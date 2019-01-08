@@ -25,22 +25,32 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     _ui->setupUi(this);
 
-
     //add both menu and game widget
     _menu = new Menu();
     _ui->presented->addWidget(_menu);
 
-    auto pom = new GameWrapper(); //from this moment game and gameWidget are connected
-    _gameWidget = pom->getGameWidget();
+    auto _gameWrapper = new GameWrapper(this);
+    _gameWidget = _gameWrapper->getGameWidget();
     _ui->presented->addWidget(_gameWidget);
+
+    //connect to gameWraper
+    QObject::connect(_gameWrapper, &GameWrapper::gameOver,
+                     this, [&] () {
+        _gameWidget->setHidden(true);
+        _menu->setHidden(false);
+    });
+
+    QObject::connect(_menu->getStartButton(), &QPushButton::clicked,
+                     this, [&] (){
+        _gameWrapper->initializeGame();
+        _gameWidget->setHidden(false);
+        _gameWidget->setHidden(true);
+    });
 
     //this->setStyleSheet("background-color: black;");
 
     //set one hidden
     _gameWidget->setHidden(true);
-
-    connectSlotsAndSignals();
-
 }
 
 /*!
@@ -69,16 +79,4 @@ void MainWindow::showHelp(){
 
 void MainWindow::hideHelp(){
     //TODO implementirati sakrivanje pomoci
-}
-
-void MainWindow::connectSlotsAndSignals()
-{
-    QObject::connect(_menu->getStartButton(), &QPushButton::clicked, this, &MainWindow::startGame);
-}
-
-void MainWindow::startGame()
-{
-    _menu->setHidden(true);
-    //TODO: treba inicijalizovati igru na pocetak pre prikazivanja
-    _gameWidget->setHidden(false);
 }

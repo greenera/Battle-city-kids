@@ -10,6 +10,8 @@
 #include "include/tank.h"
 #include "include/npc.h"
 #include "include/block.h"
+#include "include/player.h"
+#include <QGraphicsView>
 
 #define NUM_OF_LEVELS 3
 
@@ -18,10 +20,10 @@
  * \details This is the class with information about current game.
  * Purpose: always knows which level is active and display it to mainWindow.
  */
-class Game
+class Game : public QGraphicsScene
 {
 public:
-    Game();
+    Game(QWidget* parrent = nullptr);
     void initializeGame();
 
     QVector<QVector<int>> matrixOfLevel;
@@ -43,15 +45,14 @@ private:
      */
     void loadLevel(int levelNum);
 
-    QVector<Npc> _npcs;
-
-    //Player players[2]; //TODO Ivana: napravi klasu
-    int _numOfLifes;
-    int _activeLevel;
+    QVector<Npc> _npcs; //!< live npcs
+    int _killedEnemies;
+    Player* _players[2]; //!< live players (max 2)
     QScopedPointer<Tank> _player;
     QVector<Boost> _powerups;
-
     QScopedPointer<QTimer> _levelTicker;
+    const int _sizeOfScene = 25 * 26; //!< 26 stands for number of rects, and 25 for size of every rect
+
 };
 
 #endif // GAME_H

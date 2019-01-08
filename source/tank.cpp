@@ -65,3 +65,32 @@ void Tank::paint(QPainter *painter,
     painter->setBrush(QBrush(_icons[_activeIcon].scaledToHeight(_size)));
     painter->drawRect(_x, _y, _size, _size);
 }
+
+void Tank::onUp()
+{
+    _activeIcon = "Up";
+    //NOTE: izabrati jedno od ova dva u zavisnosti da li se negde
+    //drugde proverava da tenk ne izleti sa scene
+    // _y -= _speed;
+    _y = _y - _speed < 0 ? 0 : _y - _speed;
+}
+
+void Tank::onDown()
+{
+    _activeIcon = "Down";
+    //NOTE: isto kao za onUp
+    // _y += _speed;
+    _y = _y + _speed > 600 ? 600 : _y + _speed;
+}
+
+void Tank::onLeft()
+{
+    _activeIcon = "Left";
+    _x -= _speed;
+}
+
+void Tank::onRight()
+{
+    _activeIcon = "Right";
+    _x += _speed;
+}

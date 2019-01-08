@@ -5,13 +5,26 @@
 #include "include/gamewidget.h"
 #include "include/game.h"
 
-class GameWrapper
+class GameWrapper : public QObject
 {
+    Q_OBJECT
+
 public:
-    GameWrapper();
+    GameWrapper(QWidget *parent);
     GameWidget *getGameWidget() const;
 
+    void initializeGame();
+
+signals:
+    void gameOver();
+
 private:
+    void changeLifes(int num);
+
+private:
+    int _activeLevel;
+    int _numOfLifes;
+
     Game *_game;
     GameWidget *_gameWidget;
 };

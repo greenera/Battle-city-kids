@@ -3,32 +3,43 @@
 
 #include <include/player.h>
 
+/**
+ * @brief GameWidget::GameWidget
+ * @param parent
+ * @param scene
+ * \details ovde bi trebalo da se pravi nova igra.
+ * Treba da prikazuje sve aktivne informacije (koje dobija od gameWrapper-a).
+ * potrebne funkcije:
+ * void setLevelNumber(int num);
+ * void setNumOfEnemies(int num);
+ * void setInformacija3()....
+ *
+ * trebalo bi izbaciti sve funkcije vezane za scenu odavde.
+ * i implementirati jedino funkciju public void setScene(QGraphicsScene * scena){_ui->activegame->setScene(scene);}
+ * i nju treba zvati iz gameWrapera pri kreiranu scene i widget-a
+ */
 
-
-GameWidget::GameWidget(QWidget *parent) :
+GameWidget::GameWidget(QWidget *parent, QGraphicsScene *scene) :
     QWidget(parent),
     _ui(new Ui::GameWidget)
 {
     _ui->setupUi(this);
-    //initializing scene
-    _scene = new QGraphicsScene();
-    _scene->setSceneRect(0, 0, 2*_sizeOfScene, 2*_sizeOfScene);
-    _scene->setBackgroundBrush(QColor(0, 0, 0));
 
+    _ui->activegame->setScene(scene);
+    _scene = scene;
 
-    // Add boost to the scene
-    Boost *booster = new Boost(0, 0);
-    _scene->addItem(booster);
+//    // Add boost to the scene
+//    Boost *booster = new Boost(0, 0);
+//    _scene->addItem(booster);
 
-    //START OF TEST1
-    Player *igrac1 = new Player(1);
-    Player *igrac2 = new Player(2);
-    _scene->addItem(igrac1);
-    _scene->addItem(igrac2);
-    //END OF TEST1
+//    //START OF TEST1
+//    Player *igrac1 = new Player(1);
+//    Player *igrac2 = new Player(2);
+//    _scene->addItem(igrac1);
+//    _scene->addItem(igrac2);
+//    //END OF TEST1
 
-    _ui->activegame->setScene(_scene);
-    _scene->update();
+    scene->update();
 }
 
 GameWidget::~GameWidget()
@@ -36,6 +47,8 @@ GameWidget::~GameWidget()
     delete _ui;
 }
 
+
+//Todo: pri prebacivanju '_scene' zameniti za 'this'
 void GameWidget::printMap(const QVector<QVector<int>> matrixOfLevel) const {
     // Creating blocks based ond matrixOfLevel
     for(int i=0;i<26;i++)
@@ -63,6 +76,6 @@ void GameWidget::printMap(const QVector<QVector<int>> matrixOfLevel) const {
     // Add phoenix to the scene
     Block *phoenix = new Block(300, 600, ":/blocks/phoenix.png");
     _scene->addItem(phoenix);
-    _ui->activegame->setScene(_scene);
-    _scene->update();
+    //_ui->activegame->setScene(_scene);
+    //_scene->update();
 }
