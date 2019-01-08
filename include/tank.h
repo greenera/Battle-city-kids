@@ -2,6 +2,7 @@
 #define TANK_H
 
 #include <QGraphicsObject>
+#include <QMap>
 
 class Tank : public QGraphicsObject
 {
@@ -9,38 +10,9 @@ class Tank : public QGraphicsObject
 
 public:
     //TODO Ivana: implementirati
-    Tank();
+    Tank(int id);
     ~Tank();
     Tank(const Tank& other);
-
-    /*!
-     * \brief The Resistant enum
-     * how many times can survive bullet
-     */
-    enum Resistant {
-        Weak,           //!< 0 times
-        Protected,      //!< 1 time
-    };
-
-    /*!
-     * \brief The Speed enum
-     * speed of movement
-     */
-    enum Speed{
-        slow,
-        fast,
-        rapid
-    };
-
-    /*!
-     * \brief The WeaponType enum
-     * defiines number of bullets that can be
-     * projected at the same time
-     */
-    enum WeaponType{
-        manual,         //!< jedan metak u jednom trenutku ispaljen
-        automatic       //!< vise metkova ispaljeno u jednom trenutku NOTE:(maks 3)
-    };
 
     //NOTE za dogovor: sta da radim sa brzinom metka? Da ima boost-zvezdica posebno i za to ili
     //da su f,g i r brzi a prva tri spora?
@@ -56,12 +28,38 @@ public:
         r           //cigla (4 sloja) + beton (4 sloja) + cisti sumu
     };
 
-    Resistant resistent;
-    Speed speed;
+    /*!
+     * \brief onShot should be called every time
+     * the tank is shoted by opponent.
+     * \details change resistant and destroy tank if
+     * its resistant become 0.
+     */
+    void onShot();
+
+    void setSpeed(qreal);
+
+    Weapon getWeapon();
+    void setWeapon(const Weapon& newWeapon);
+
+
+protected:
+    int _resistent;
+    qreal _speed; //!< should be incremented/decremented when get boost
 
     //TODO Ivana: razmotri pravljenje posebne klase za oruzje
-    Weapon weapon;
-    WeaponType weapt;
+    Weapon _weapon;
+    bool _isManual;
+
+    qreal _x;
+    qreal _y;
+    int _size = 25;
+
+    QMap<QString, QPixmap> _icons;
+    QString _activeIcon;
+
+public:
+    QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 };
 
 #endif // TANK_H

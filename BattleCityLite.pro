@@ -64,5 +64,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 RESOURCES += \
     resources/textures/boosts/boosts.qrc \
     resources/textures/blocks/blocks.qrc \
+    resources/textures/tanks/player/player.qrc \
+    resources/textures/tanks/npc/npc.qrc \
     resources/levels/levels.qrc \
     resources/main_menu/main_menu.qrc

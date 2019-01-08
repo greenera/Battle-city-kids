@@ -2,26 +2,26 @@
 
 Block::Block(int x, int y, bool collidable, Material m, QString texture)
     : pos_x(x), pos_y(y), _collidable(collidable), _m(m)
-    {
-        _texture = QPixmap(texture);
-    }
+{
+    _texture = QPixmap(texture);
+}
 
 Block::Block(int x, int y, QString texture)
     :pos_x(x), pos_y(y)
-    {
-        _texture = QPixmap(texture);
-        size = 50;
-        _collidable = true;
-    }
+{
+    _texture = QPixmap(texture);
+    size = 50;
+    _collidable = true;
+}
 
 QRectF Block::boundingRect() const
-    {
-        return QRectF(pos_x, pos_y, size, size);
-    }
+{
+    return QRectF(pos_x, pos_y, size, size);
+}
 
 void Block::paint(QPainter *painter,
-                   const QStyleOptionGraphicsItem *,
-                   QWidget *)
+                  const QStyleOptionGraphicsItem *,
+                  QWidget *)
 {
     painter->setPen(Qt::NoPen);
     painter->setBrush(QBrush(_texture.scaledToHeight(size)));
@@ -30,7 +30,6 @@ void Block::paint(QPainter *painter,
 
 QPainterPath Block::shape() const
 {
-
     QPainterPath path;
     path.addRect(pos_x, pos_y, size, size);
     return path;

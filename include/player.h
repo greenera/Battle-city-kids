@@ -6,12 +6,10 @@
 class Player : public Tank
 {
 public:
-    Player();
+    Player(int id);
 
-    // QGraphicsItem interface
-public:
-    QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+
 };
 
 #endif // PLAYER_H

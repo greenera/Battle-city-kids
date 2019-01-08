@@ -1,6 +1,8 @@
 #include "include/gamewidget.h"
 #include "ui_gamewidget.h"
 
+#include <include/player.h>
+
 
 
 GameWidget::GameWidget(QWidget *parent) :
@@ -17,6 +19,13 @@ GameWidget::GameWidget(QWidget *parent) :
     // Add boost to the scene
     Boost *booster = new Boost(0, 0);
     _scene->addItem(booster);
+
+    //START OF TEST1
+    Player *igrac1 = new Player(1);
+    Player *igrac2 = new Player(2);
+    _scene->addItem(igrac1);
+    _scene->addItem(igrac2);
+    //END OF TEST1
 
     _ui->activegame->setScene(_scene);
     _scene->update();

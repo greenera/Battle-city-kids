@@ -1,17 +1,34 @@
 #include "include/player.h"
+#include <QPainter>
 
-Player::Player()
+#include <QDebug>
+
+#define START_POSITION_X 75
+#define DISTANCE 150
+#define START_POSITION_Y 600
+
+Player::Player(int id)
+    : Tank(id)
 {
+    _x = START_POSITION_X + id * DISTANCE;
+    _y = START_POSITION_Y;
 
+    _activeIcon = "Up";
+
+    //FOR TEST
+    _size = 25*2;
+    _speed = 0.2;
+    _resistent = 0;
+    _weapon = Weapon::gun;
+    _isManual = true;
+    //END OF TEST
 }
 
-//TODO Ivana: implementiraj
-QRectF Player::boundingRect() const
+void Player::paint(QPainter *painter,
+                   const QStyleOptionGraphicsItem *option,
+                   QWidget *widget)
 {
-    return QRectF();
-}
+    Tank::paint(painter, option, widget);
 
-void Player::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
-    //TODO Ivana: implementiraj
+    //TODO: dodaj oznaku da ima neki boost
 }

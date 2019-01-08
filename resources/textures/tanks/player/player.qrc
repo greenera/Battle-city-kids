@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/tanks/player">
+        <file>player1Up.png</file>
+        <file>player1Down.png</file>
+        <file>player1Right.png</file>
+        <file>player1Left.png</file>
+        <file>player2Up.png</file>
+        <file>player2Down.png</file>
+        <file>player2Right.png</file>
+        <file>player2Left.png</file>
+    </qresource>
+</RCC>
