@@ -16,7 +16,7 @@
  * This class should have information:
  *  -about first level widget
  *  -about menu widget
- * Allways, only one of these should be visible.
+ * Always, only one of these should be visible.
  */
 
 MainWindow::MainWindow(QWidget *parent) :

@@ -44,7 +44,7 @@ void Game::loadLevel(int levelNum)
                 j--;
                 continue;
             }
-            matrixOfLevel[i][j] = c - '0'; // Read data into matrix
+            matrixOfLevel[i][j] = c - '0'; // Write data into matrix
         }
     }
     file.close(); // Close the file

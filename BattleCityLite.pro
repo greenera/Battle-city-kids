@@ -36,7 +36,8 @@ SOURCES += \
 	source/player.cpp \
         source/block.cpp \
     source/gamewidget.cpp \
-    source/gamewrapper.cpp
+    source/gamewrapper.cpp \
+    source/bullet.cpp
 
 HEADERS += \
         include/mainwindow.h \
@@ -49,7 +50,8 @@ HEADERS += \
         include/player.h \
         include/block.h \
     include/gamewidget.h \
-    include/gamewrapper.h
+    include/gamewrapper.h \
+    include/bullet.h
 
 FORMS += \
         ui/mainwindow.ui \
