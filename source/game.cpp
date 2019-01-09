@@ -49,3 +49,91 @@ void Game::loadLevel(int levelNum)
     }
     file.close(); // Close the file
 }
+
+
+//TODO: srediti da ne moze da se krece ukoso
+void Game::keyPressEvent(QKeyEvent *event)
+{
+    //consider 'w' 'a' 's' and 'd'
+    if(event->key() == Qt::Key_W)
+    {
+        _players[0]->setUp(true);
+    }
+    else if (event->key() == Qt::Key_A)
+    {
+        _players[0]->setLeft(true);
+    }
+    else if (event->key() == Qt::Key_D)
+    {
+        _players[0]->setRight(true);
+    }
+    else if (event->key() == Qt::Key_S)
+    {
+        _players[0]->setDown(true);
+    }
+
+    //consider 'up' 'down' 'left' and 'right'
+    if(_players[1] != nullptr)
+    {
+        if(event->key() == Qt::Key_Up)
+        {
+            _players[1]->setUp(true);
+        }
+        else if (event->key() == Qt::Key_Left)
+        {
+            _players[1]->setLeft(true);
+        }
+        else if (event->key() == Qt::Key_Right)
+        {
+            _players[1]->setRight(true);
+        }
+        else if (event->key() == Qt::Key_Down)
+        {
+            _players[1]->setDown(true);
+        }
+    }
+
+    //TODO: add checking for pause and backToMenu
+}
+
+void Game::keyReleaseEvent(QKeyEvent *event)
+{
+    //consider 'w' 'a' 's' and 'd'
+    if(event->key() == Qt::Key_W)
+    {
+        _players[0]->setUp(false);
+    }
+    else if (event->key() == Qt::Key_A)
+    {
+        _players[0]->setLeft(false);
+    }
+    else if (event->key() == Qt::Key_D)
+    {
+        _players[0]->setRight(false);
+    }
+    else if (event->key() == Qt::Key_S)
+    {
+        _players[0]->setDown(false);
+    }
+
+    //consider 'up' 'down' 'left' and 'right'
+    if(_players[1] != nullptr)
+    {
+        if(event->key() == Qt::Key_Up)
+        {
+            _players[1]->setUp(false);
+        }
+        else if (event->key() == Qt::Key_Left)
+        {
+            _players[1]->setLeft(false);
+        }
+        else if (event->key() == Qt::Key_Right)
+        {
+            _players[1]->setRight(false);
+        }
+        else if (event->key() == Qt::Key_Down)
+        {
+            _players[1]->setDown(false);
+        }
+    }
+}

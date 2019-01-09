@@ -3,6 +3,7 @@
 
 #include <QGraphicsObject>
 #include <QMap>
+#include <QKeyEvent>
 
 class Tank : public QGraphicsObject
 {
@@ -36,35 +37,59 @@ public:
      */
     void onShot();
 
+    /*!
+     * \brief setSpeed
+     */
     void setSpeed(qreal);
 
+    /*!
+     * \brief getWeapon
+     * \return Weapon
+     */
     Weapon getWeapon();
+
+    /*!
+     * \brief setWeapon
+     * \param newWeapon
+     */
     void setWeapon(const Weapon& newWeapon);
 
+    /*!
+     * \brief getSmer
+     * \return 1, 2, 3 or 4 depending on wich way tank is
+     * faced (Up, Down, Right or Left).
+     */
+    int getSmer();
 
+    /*!
+     * \brief setUp sets indicator if tank is faced to 'up'
+     * \param t
+     */
+    void setUp(bool t);
+    void setDown(bool t);
+    void setRight(bool t);
+    void setLeft(bool t);
+
+    void move();
 protected:
-    int _resistent;
-    qreal _speed; //!< should be incremented/decremented when get boost
-
-    //TODO Ivana: razmotri pravljenje posebne klase za oruzje
+    int _moving;           //!< do tank is moving (0 -not, 1 - hoizontal, 2 - vertical)
+    int _resistent;         //!< how many times can survive bullet
+    qreal _speed;           //!< should be incremented/decremented when get boost
     Weapon _weapon;
-    bool _isManual;
-
-    qreal _x;
-    qreal _y;
-    int _size = 50; //!< consider making it const
-
-    QMap<QString, QPixmap> _icons;
-    QString _activeIcon;
+    bool _isManual;         //!< indicates if more then one bullet can be projected at the same time
+    qreal _x;               //!< x coordinate
+    qreal _y;               //!< y coordinate
+    const int _size = 50;   //!< size of tank (width and heigh)
+    QMap<QString, QPixmap> _icons; //!< icons for every 'smer'
+    QString _activeIcon;    //!< active 'smer'
 
 public:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
-    void onUp();
-    void onDown();
-    void onLeft();
-    void onRight();
+private:
+    void vertical();
+    void horizontal();
 };
 
 #endif // TANK_H
