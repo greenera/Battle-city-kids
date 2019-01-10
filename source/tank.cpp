@@ -52,6 +52,57 @@ void Tank::setWeapon(const Tank::Weapon &newWeapon)
     _weapon = newWeapon;
 }
 
+int Tank::getSmer()
+{
+    if (!_activeIcon.compare("Up"))
+        return 1;
+    if (!_activeIcon.compare("Down"))
+        return 2;
+    if(!_activeIcon.compare("Right"))
+        return 3;
+
+    return 4;
+}
+
+
+//TODO: treba setovati pokazivac na funkciju na
+//horizontal ili verical zavisi od fje do fje
+void Tank::setUp(bool t)
+{
+    _activeIcon = "Up";     //!< this is enough to happen only one
+    _moving = t;              //!< this indicates that tank should moving
+    _speed = _speed < 0 ? _speed : -_speed;
+}
+
+void Tank::setDown(bool t)
+{
+    _activeIcon = "Down";
+    _moving = t;
+    _speed = _speed < 0 ? -_speed : _speed;
+}
+
+void Tank::setRight(bool t)
+{
+    _activeIcon = "Right";
+    _moving = t;
+    _speed = _speed < 0 ? -_speed : _speed;
+}
+
+void Tank::setLeft(bool t)
+{
+    _activeIcon = "Left";
+    _moving = t;
+    _speed = _speed < 0 ? _speed : -_speed;
+}
+
+void Tank::move()
+{
+    if(!_moving)
+        return;
+
+    //fmove(); TODO: napravi pokazivac na funkciju
+}
+
 QRectF Tank::boundingRect() const
 {
     return QRectF(_x, _y, _size, _size);
@@ -62,35 +113,19 @@ void Tank::paint(QPainter *painter,
                  QWidget *widget)
 {
     painter->setPen(Qt::NoPen);
-    painter->setBrush(QBrush(_icons[_activeIcon].scaledToHeight(_size)));
-    painter->drawRect(_x, _y, _size, _size);
+    QRectF source(0.0, 0.0, _size, _size);
+    QRectF target(_x, _y, _size, _size);
+    painter->drawPixmap(target, _icons[_activeIcon], source);
+//    painter->setBrush(QBrush(_icons[_activeIcon].scaledToHeight(_size)));
+//    painter->drawRect(_x, _y, _size, _size);
 }
 
-void Tank::onUp()
+void Tank::vertical()
 {
-    _activeIcon = "Up";
-    //NOTE: izabrati jedno od ova dva u zavisnosti da li se negde
-    //drugde proverava da tenk ne izleti sa scene
-    // _y -= _speed;
-    _y = _y - _speed < 0 ? 0 : _y - _speed;
+    _y += _speed;
 }
 
-void Tank::onDown()
+void Tank::horizontal()
 {
-    _activeIcon = "Down";
-    //NOTE: isto kao za onUp
-    // _y += _speed;
-    _y = _y + _speed > 600 ? 600 : _y + _speed;
-}
-
-void Tank::onLeft()
-{
-    _activeIcon = "Left";
-    _x -= _speed;
-}
-
-void Tank::onRight()
-{
-    _activeIcon = "Right";
     _x += _speed;
 }

@@ -53,6 +53,11 @@ private:
     QScopedPointer<QTimer> _levelTicker;
     const int _sizeOfScene = 25 * 26; //!< 26 stands for number of rects, and 25 for size of every rect
 
+
+    // QGraphicsScene interface
+protected:
+    void keyPressEvent(QKeyEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
 };
 
 #endif // GAME_H

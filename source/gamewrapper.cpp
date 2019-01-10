@@ -18,7 +18,7 @@ GameWidget *GameWrapper::getGameWidget() const
 void GameWrapper::initializeGame()
 {
     //TODO: dodati brisanje stare scene
-    _game->clear();
+    //_game->clear();
 
     //pravljenje scene
     //TODO: preurediti

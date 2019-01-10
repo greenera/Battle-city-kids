@@ -42,9 +42,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QObject::connect(_menu->getStartButton(), &QPushButton::clicked,
                      this, [&] (){
-        _gameWrapper->initializeGame();
+        _menu->setHidden(true);
         _gameWidget->setHidden(false);
-        _gameWidget->setHidden(true);
     });
 
     //this->setStyleSheet("background-color: black;");

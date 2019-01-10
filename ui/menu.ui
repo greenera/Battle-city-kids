@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>639</width>
+    <width>694</width>
     <height>436</height>
    </rect>
   </property>
@@ -74,6 +74,11 @@
          <height>0</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Press Start K</family>
+        </font>
+       </property>
        <property name="layoutDirection">
         <enum>Qt::LeftToRight</enum>
        </property>
@@ -89,6 +94,11 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <family>Press Start K</family>
+        </font>
        </property>
        <property name="text">
         <string>EXIT</string>

@@ -23,7 +23,7 @@ void Boost::paint(QPainter *painter,
                    const QStyleOptionGraphicsItem *,
                    QWidget *)
 {
-    painter->setPen(Qt::white);
+    painter->setPen(Qt::NoPen);
     painter->setBrush(QBrush(_texture.scaledToHeight(_size)));
     painter->drawRect(pos_x, pos_y, _size, _size);
 
