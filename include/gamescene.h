@@ -20,13 +20,15 @@
  * \details This is the class with information about current game.
  * Purpose: always knows which level is active and display it to mainWindow.
  */
-class Game : public QGraphicsScene
+class GameScene : public QGraphicsScene
 {
 public:
-    Game(QWidget* parrent = nullptr);
+    GameScene(QWidget* parrent = nullptr);
     void initializeGame();
 
     QVector<QVector<int>> matrixOfLevel;
+
+    void printMap(const QVector<QVector<int>> matrixOfLevel);
 
 private:
     //TODO: consider making class for adding new  levels
@@ -44,6 +46,7 @@ private:
      * of all numbers should be equal to 20
      */
     void loadLevel(int levelNum);
+
 
     QVector<Npc> _npcs; //!< live npcs
     int _killedEnemies;

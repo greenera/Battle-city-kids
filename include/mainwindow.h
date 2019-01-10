@@ -5,8 +5,8 @@
 #include <ui_mainwindow.h>
 #include "include/menu.h"
 #include "include/boost.h"
-#include "include/game.h"
-#include "include/gamewrapper.h"
+#include "include/gamescene.h"
+#include "include/gameproxy.h"
 
 namespace Ui {
 class MainWindow;
@@ -56,7 +56,7 @@ private:
 
     Menu *_menu;
     GameWidget *_gameWidget;
-    GameWrapper *_gameWrapper;
+    GameProxy *_gameWrapper;
 
     Ui::MainWindow *_ui;
 };

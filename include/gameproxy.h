@@ -3,14 +3,14 @@
 
 #include <QObject>
 #include "include/gamewidget.h"
-#include "include/game.h"
+#include "include/gamescene.h"
 
-class GameWrapper : public QObject
+class GameProxy : public QObject
 {
     Q_OBJECT
 
 public:
-    GameWrapper(QWidget *parent);
+    GameProxy(QWidget *parent);
     GameWidget *getGameWidget() const;
 
     void initializeGame();
@@ -25,7 +25,7 @@ private:
     int _activeLevel;
     int _numOfLifes;
 
-    Game *_game;
+    GameScene *_gameScene;
     GameWidget *_gameWidget;
 };
 

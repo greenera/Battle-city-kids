@@ -29,29 +29,29 @@ SOURCES += \
         source/mainwindow.cpp \
         source/tank.cpp \
         source/npc.cpp \
-        source/game.cpp \
         source/menu.cpp \
         source/boost.cpp \
 	source/iqalgorithm.cpp \
 	source/player.cpp \
         source/block.cpp \
     source/gamewidget.cpp \
-    source/gamewrapper.cpp \
-    source/bullet.cpp
+    source/bullet.cpp \
+    source/gamescene.cpp \
+    source/gameproxy.cpp
 
 HEADERS += \
         include/mainwindow.h \
         include/tank.h \
         include/npc.h \
-        include/game.h \
         include/menu.h \
         include/boost.h \
 	include/iqalgorithm.h \
         include/player.h \
         include/block.h \
     include/gamewidget.h \
-    include/gamewrapper.h \
-    include/bullet.h
+    include/bullet.h \
+    include/gamescene.h \
+    include/gameproxy.h
 
 FORMS += \
         ui/mainwindow.ui \

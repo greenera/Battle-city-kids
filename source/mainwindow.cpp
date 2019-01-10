@@ -3,7 +3,7 @@
 
 #include <QGraphicsScene>
 #include <QGraphicsView>
-#include "include/game.h"
+#include "include/gamescene.h"
 #include "include/block.h"
 
 /*!
@@ -29,12 +29,12 @@ MainWindow::MainWindow(QWidget *parent) :
     _menu = new Menu();
     _ui->presented->addWidget(_menu);
 
-    auto _gameWrapper = new GameWrapper(this);
+    auto _gameWrapper = new GameProxy(this);
     _gameWidget = _gameWrapper->getGameWidget();
     _ui->presented->addWidget(_gameWidget);
 
     //connect to gameWraper
-    QObject::connect(_gameWrapper, &GameWrapper::gameOver,
+    QObject::connect(_gameWrapper, &GameProxy::gameOver,
                      this, [&] () {
         _gameWidget->setHidden(true);
         _menu->setHidden(false);

@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QKeyEvent>
 #include "include/boost.h"
-#include "include/game.h"
+#include "include/gamescene.h"
 #include "include/block.h"
 
 namespace Ui {
@@ -20,7 +20,7 @@ public:
     ~GameWidget();
 
 public slots:
-    void printMap(const QVector<QVector<int>> matrixOfLevel) const;
+
 
 private:
     QGraphicsScene *_scene;

@@ -48,34 +48,3 @@ GameWidget::~GameWidget()
 }
 
 
-//Todo: pri prebacivanju '_scene' zameniti za 'this'
-void GameWidget::printMap(const QVector<QVector<int>> matrixOfLevel) const {
-    // Creating blocks based ond matrixOfLevel
-    for(int i=0;i<26;i++)
-    {
-        for(int j=0;j<26;j++)
-        {
-            if (matrixOfLevel[i][j] == 1) {
-                Block *b = new Block(25*j, 25*i, true, Block::Material::brick, ":/blocks/brick.png");
-                _scene->addItem(b);
-            }
-            else if (matrixOfLevel[i][j] == 2) {
-                Block *b = new Block(25*j, 25*i, true, Block::Material::stone, ":/blocks/stone.png");
-                _scene->addItem(b);
-            }
-            else if (matrixOfLevel[i][j] == 3) {
-                Block *b = new Block(25*j, 25*i, true, Block::Material::stone, ":/blocks/water.png");
-                _scene->addItem(b);
-            }
-            else if (matrixOfLevel[i][j] == 4) {
-                Block *b = new Block(25*j, 25*i, true, Block::Material::stone, ":/blocks/bush.png");
-                _scene->addItem(b);
-            }
-        }
-    }
-    // Add phoenix to the scene
-    Block *phoenix = new Block(300, 600, ":/blocks/phoenix.png");
-    _scene->addItem(phoenix);
-    //_ui->activegame->setScene(_scene);
-    //_scene->update();
-}

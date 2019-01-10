@@ -1,4 +1,4 @@
-#include "include/game.h"
+#include "include/gamescene.h"
 #include <QFile>
 /**
  * @brief Game::Game
@@ -8,7 +8,7 @@
  */
 
 
-Game::Game(QWidget* parrent)
+GameScene::GameScene(QWidget* parrent)
     : QGraphicsScene(parrent),
     matrixOfLevel(26, QVector<int>(26))
 {
@@ -21,7 +21,7 @@ Game::Game(QWidget* parrent)
 }
 
 
-void Game::initializeGame()
+void GameScene::initializeGame()
 {
     loadLevel(2);
 
@@ -29,7 +29,7 @@ void Game::initializeGame()
 }
 
 // Loads level from file
-void Game::loadLevel(int levelNum)
+void GameScene::loadLevel(int levelNum)
 {
     QString path = QStringLiteral(":/levels/%1.txt").arg(levelNum);
     QFile file(path);
@@ -50,9 +50,42 @@ void Game::loadLevel(int levelNum)
     file.close(); // Close the file
 }
 
+//Todo: pri prebacivanju '_scene' zameniti za 'this'
+void GameScene::printMap(const QVector<QVector<int>> matrixOfLevel) {
+    // Creating blocks based ond matrixOfLevel
+    for(int i=0;i<26;i++)
+    {
+        for(int j=0;j<26;j++)
+        {
+            if (matrixOfLevel[i][j] == 1) {
+                Block *b = new Block(25*j, 25*i, true, Block::Material::brick, ":/blocks/brick.png");
+                this->addItem(b);
+            }
+            else if (matrixOfLevel[i][j] == 2) {
+                Block *b = new Block(25*j, 25*i, true, Block::Material::stone, ":/blocks/stone.png");
+                this->addItem(b);
+            }
+            else if (matrixOfLevel[i][j] == 3) {
+                Block *b = new Block(25*j, 25*i, true, Block::Material::stone, ":/blocks/water.png");
+                this->addItem(b);
+            }
+            else if (matrixOfLevel[i][j] == 4) {
+                Block *b = new Block(25*j, 25*i, true, Block::Material::stone, ":/blocks/bush.png");
+                this->addItem(b);
+            }
+        }
+    }
+    // Add phoenix to the scene
+    Block *phoenix = new Block(300, 600, ":/blocks/phoenix.png");
+    this->addItem(phoenix);
+    //_ui->activegame->setScene(_scene);
+    //_scene->update();
+}
+
+
 
 //TODO: srediti da ne moze da se krece ukoso
-void Game::keyPressEvent(QKeyEvent *event)
+void GameScene::keyPressEvent(QKeyEvent *event)
 {
     //consider 'w' 'a' 's' and 'd'
     if(event->key() == Qt::Key_W)
@@ -96,7 +129,7 @@ void Game::keyPressEvent(QKeyEvent *event)
     //TODO: add checking for pause and backToMenu
 }
 
-void Game::keyReleaseEvent(QKeyEvent *event)
+void GameScene::keyReleaseEvent(QKeyEvent *event)
 {
     //consider 'w' 'a' 's' and 'd'
     if(event->key() == Qt::Key_W)
