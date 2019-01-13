@@ -50,7 +50,7 @@ private:
      */
     void loadLevel(int levelNum);
 
-
+    QVector<int> npcVector;
     QVector<Npc> _npcs; //!< live npcs
     int _killedEnemies;
     Player* _players[2]; //!< live players (max 2)

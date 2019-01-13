@@ -2,6 +2,7 @@
 #define MENU_H
 
 #include <QWidget>
+#include <QFile>
 #include <ui_menu.h>
 #include <QKeyEvent>
 
@@ -45,6 +46,7 @@ private:
      * @brief connectSlotsAndSignals enables program function to catch actions
      */
     void connectSlotsAndSignals();
+    QString loadScore();
 };
 
 #endif // MENU_H

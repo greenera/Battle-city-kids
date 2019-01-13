@@ -10,7 +10,8 @@
 
 GameScene::GameScene(QWidget* parrent)
     : QGraphicsScene(parrent),
-    matrixOfLevel(26, QVector<int>(26))
+    matrixOfLevel(26, QVector<int>(26)),
+    npcVector(4)
 {
     this->setSceneRect(0, 0, _sizeOfScene, _sizeOfScene);
     setBackgroundBrush(QColor(0, 0, 0));
@@ -50,6 +51,16 @@ void GameScene::loadLevel(int levelNum)
             matrixOfLevel[i][j] = c - '0'; // Write data into matrix
         }
     }
+
+    // 20 npcs per level, 4 types of tanks
+    file.readLine();
+    QString line = file.readLine();
+    QStringList list = line.split(" ");
+    npcVector[0] = list.at(0).toInt();
+    npcVector[1] = list.at(1).toInt();
+    npcVector[2] = list.at(2).toInt();
+    npcVector[3] = list.at(3).toInt();
+
     file.close(); // Close the file
 }
 

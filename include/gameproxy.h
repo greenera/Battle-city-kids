@@ -2,8 +2,11 @@
 #define GAMEWRAPPER_H
 
 #include <QObject>
+#include <QFile>
+#include <QTextStream>
 #include "include/gamewidget.h"
 #include "include/gamescene.h"
+
 
 class GameProxy : public QObject
 {

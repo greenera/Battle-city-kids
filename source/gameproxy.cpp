@@ -47,5 +47,14 @@ void GameProxy::updateScore(double bonus)
 
 void GameProxy::saveScore()
 {
-    //TODO: implementirati
+    QFile file("resources/score.txt");
+    file.open(QIODevice::ReadOnly);
+    QString bestScore = file.readLine();
+    if (bestScore.toDouble() < _score) {
+        file.close();
+        file.open(QIODevice::ReadWrite | QIODevice::Truncate | QIODevice::Text);
+        QTextStream out(&file);
+        out << _score << endl;
+        }
+    file.close();
 }

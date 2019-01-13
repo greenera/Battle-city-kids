@@ -9,6 +9,7 @@ Menu::Menu(QWidget *parent) :
     _ui->setupUi(this);
 
     _ui->label_2->setPixmap(QPixmap(":/main_menu/battle-city-name.png"));
+    _ui->highscore_label->setText(loadScore());
 
     connectSlotsAndSignals();
 }
@@ -39,6 +40,13 @@ void Menu::startGame(){
 void Menu::exitProgram()
 {
     exit(EXIT_SUCCESS);
+}
+
+QString Menu::loadScore() {
+    QFile file("resources/score.txt");
+    file.open(QIODevice::ReadOnly);
+    QString score = file.readLine().trimmed();
+    return "HIGHSCORE: " + score;
 }
 
 void Menu::connectSlotsAndSignals()
