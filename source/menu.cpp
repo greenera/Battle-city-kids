@@ -8,6 +8,7 @@ Menu::Menu(QWidget *parent) :
 {
     _ui->setupUi(this);
 
+    _ui->label_2->setPixmap(QPixmap(":/main_menu/battle-city-name.png"));
 
     connectSlotsAndSignals();
 }

@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/main_menu">
         <file>battle-city-logo.jpg</file>
-        <file>battle-city-name.jpg</file>
+        <file>battle-city-name.png</file>
     </qresource>
 </RCC>

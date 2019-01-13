@@ -36,6 +36,7 @@ SOURCES += \
         source/block.cpp \
     source/gamewidget.cpp \
     source/bullet.cpp \
+    source/help.cpp \
     source/gamescene.cpp \
     source/gameproxy.cpp
 
@@ -50,13 +51,15 @@ HEADERS += \
         include/block.h \
     include/gamewidget.h \
     include/bullet.h \
+    include/help.h \
     include/gamescene.h \
     include/gameproxy.h
 
 FORMS += \
         ui/mainwindow.ui \
         ui/menu.ui \
-    ui/gamewidget.ui
+    ui/gamewidget.ui \
+    ui/help.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -69,4 +72,5 @@ RESOURCES += \
     resources/textures/tanks/player/player.qrc \
     resources/textures/tanks/npc/npc.qrc \
     resources/levels/levels.qrc \
-    resources/main_menu/main_menu.qrc
+    resources/main_menu/main_menu.qrc \
+    resources/help.qrc

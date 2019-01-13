@@ -1,8 +1,20 @@
 <RCC>
     <qresource prefix="/tanks/npc">
+	<file>enemy1Down.png</file>
+	<file>enemy1Left.png</file>
+	<file>enemy1Right.png</file>
         <file>enemy1Up.png</file>
-        <file>enemy2Right.png</file>
-        <file>enemy3Left.png</file>
-        <file>enemy4Down.png</file>
+        <file>enemy2Down.png</file>
+	<file>enemy2Left.png</file>
+	<file>enemy2Right.png</file>
+        <file>enemy2Up.png</file>
+	<file>enemy3Down.png</file>
+	<file>enemy3Left.png</file>
+	<file>enemy3Right.png</file>
+        <file>enemy3Up.png</file>
+	<file>enemy4Down.png</file>
+	<file>enemy4Left.png</file>
+	<file>enemy4Right.png</file>
+        <file>enemy4Up.png</file>
     </qresource>
 </RCC>

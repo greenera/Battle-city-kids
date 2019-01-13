@@ -21,9 +21,17 @@ signals:
 private:
     void changeLifes(int num);
 
+    /*!
+     * \brief updateScore
+     * \details should be caled after end of every level,
+     * and after death.
+     */
+    void updateScore(double score);
+    void saveScore();
 private:
     int _activeLevel;
     int _numOfLifes;
+    double _score;
 
     GameScene *_gameScene;
     GameWidget *_gameWidget;

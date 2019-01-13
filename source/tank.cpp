@@ -113,11 +113,8 @@ void Tank::paint(QPainter *painter,
                  QWidget *widget)
 {
     painter->setPen(Qt::NoPen);
-    QRectF source(0.0, 0.0, _size, _size);
-    QRectF target(_x, _y, _size, _size);
-    painter->drawPixmap(target, _icons[_activeIcon], source);
-//    painter->setBrush(QBrush(_icons[_activeIcon].scaledToHeight(_size)));
-//    painter->drawRect(_x, _y, _size, _size);
+    painter->setBrush(QBrush(_icons[_activeIcon].scaledToHeight(_size)));
+    painter->drawRect(_x, _y, _size, _size);
 }
 
 void Tank::vertical()

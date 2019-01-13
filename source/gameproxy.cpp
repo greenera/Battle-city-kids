@@ -1,13 +1,13 @@
 #include "include/gameproxy.h"
 
 GameProxy::GameProxy(QWidget *parrent)
-    : QObject(parrent)
+    :QObject(parrent)
 {
-    //construct Game and GameWidget
-    _gameScene = new GameScene();
-    _gameWidget = new GameWidget(parrent, _gameScene);
+    _gameWidget = new GameWidget(parrent);
+    _gameScene = _gameWidget->getGameScene();
 
-    initializeGame();
+    QObject::connect(_gameScene, &GameScene::endOfLevel,
+                     this, &GameProxy::updateScore);
 }
 
 GameWidget *GameProxy::getGameWidget() const
@@ -17,17 +17,13 @@ GameWidget *GameProxy::getGameWidget() const
 
 void GameProxy::initializeGame()
 {
-    //TODO: dodati brisanje stare scene
-    //_game->clear();
+    //javi gameWidgetu da se inicijalizuje
+    _gameWidget->initializeGame();
 
-    //pravljenje scene
-    //TODO: preurediti
-    _gameScene->initializeGame();
-    _gameScene->printMap(_gameScene->matrixOfLevel);
-
+    //inicijalizuj svoje vrednosti
     _activeLevel = 1;
     _numOfLifes = 3;
-    //_score = 0;
+    _score = 100;
 }
 
 void GameProxy::changeLifes(int num)
@@ -36,6 +32,20 @@ void GameProxy::changeLifes(int num)
     if(_numOfLifes < 0)
     {
         _gameScene->clear();
+        //updateScore(); make sure that score is signaled for update from gameScene
+        saveScore();
         emit this->gameOver();
     }
+}
+
+//TODO: namestiti da se bonus racuna kao suma proizvoda
+//jacine tenka i broja ubijenih te vrste/vremenom
+void GameProxy::updateScore(double bonus)
+{
+    _score += bonus + _activeLevel + _numOfLifes;
+}
+
+void GameProxy::saveScore()
+{
+    //TODO: implementirati
 }
