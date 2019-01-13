@@ -28,17 +28,17 @@ GameWidget::GameWidget(QWidget *parent) :
     _scene = new Game();
     _ui->activegame->setScene(_scene);
 
-//    // Add boost to the scene
-//    Boost *booster = new Boost(0, 0);
-//    _scene->addItem(booster);
+    //set hole stopwatch thing
+    _refreshingLabel.setInterval(1000);
+    resetTimeLabel();
 
-//    //START OF TEST1
-//    Player *igrac1 = new Player(1);
-//    Player *igrac2 = new Player(2);
-//    _scene->addItem(igrac1);
-//    _scene->addItem(igrac2);
-//    scene->update();
-//    //END OF TEST1
+    QObject::connect(&_refreshingLabel, &QTimer::timeout,
+                     this, &GameWidget::setTimeLabel);
+
+    //set some game rule
+    QObject::connect(_scene, &Game::endOfLevel,
+                     this, &GameWidget::onEndOfLevel);
+
 }
 
 GameWidget::~GameWidget()
@@ -46,22 +46,16 @@ GameWidget::~GameWidget()
     delete _ui;
 }
 
-void GameWidget::initializeGame()
+void GameWidget::initializeLevel(int level)
 {
     //sredi svoje stvari
-
+    setLevelName(level);
+    _refreshingLabel.stop(); //!< stop so it doesnt crash when try at the same time to change text
+    resetTimeLabel(); //!< initialize value that is shown
+    _refreshingLabel.start(); //!< start again
 
     //kaze sceni da se inicijalizuje
     _ui->activegame->scene()->clear();
-
-    //nesto staro
-//    //pravljenje scene
-//    _game->initializeGame();
-//    _gameWidget->printMap(_game->matrixOfLevel);
-
-//    _activeLevel = 1;
-//    _numOfLifes = 3;
-    //    //_score = 0;
 }
 
 
@@ -70,35 +64,42 @@ Game *GameWidget::getGameScene()
     return _scene;
 }
 
+void GameWidget::abort()
+{
+    //sredi svoje stvari
+    _refreshingLabel.stop();
 
-//Todo: pri prebacivanju '_scene' zameniti za 'this'
-void GameWidget::printMap(const QVector<QVector<int>> matrixOfLevel) const {
-    // Creating blocks based ond matrixOfLevel
-    for(int i=0;i<26;i++)
+    //sredi scenu
+    _scene->abort();
+}
+
+void GameWidget::onEndOfLevel(double forward)
+{
+    _refreshingLabel.stop();
+
+    emit endOfLevel(forward/_minutes);
+}
+
+void GameWidget::setLevelName(int level)
+{
+    _ui->horizontalStatus->setText("Level: " + QString::number(level));
+}
+
+void GameWidget::resetTimeLabel()
+{
+    _ui->timeLabel->setText("0m 0s");
+    _minutes = _sec = 0;
+}
+
+void GameWidget::setTimeLabel()
+{
+    ++_sec;
+    if(_sec >= 60)
     {
-        for(int j=0;j<26;j++)
-        {
-            if (matrixOfLevel[i][j] == 1) {
-                Block *b = new Block(25*j, 25*i, true, Block::Material::brick, ":/blocks/brick.png");
-                _scene->addItem(b);
-            }
-            else if (matrixOfLevel[i][j] == 2) {
-                Block *b = new Block(25*j, 25*i, true, Block::Material::stone, ":/blocks/stone.png");
-                _scene->addItem(b);
-            }
-            else if (matrixOfLevel[i][j] == 3) {
-                Block *b = new Block(25*j, 25*i, true, Block::Material::stone, ":/blocks/water.png");
-                _scene->addItem(b);
-            }
-            else if (matrixOfLevel[i][j] == 4) {
-                Block *b = new Block(25*j, 25*i, true, Block::Material::stone, ":/blocks/bush.png");
-                _scene->addItem(b);
-            }
-        }
+        _sec = 0;
+        ++_minutes;
     }
-    // Add phoenix to the scene
-    Block *phoenix = new Block(300, 600, ":/blocks/phoenix.png");
-    _scene->addItem(phoenix);
-    //_ui->activegame->setScene(_scene);
-    //_scene->update();
+
+    _ui->timeLabel->setText(QString::number(_minutes) + "m " +
+                            QString::number(_sec) + "s");
 }
