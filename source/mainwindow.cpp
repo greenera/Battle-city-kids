@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _help = new Help();
     _ui->presented->addWidget(_help);
 
-
+    //connect
     QObject::connect(_gameWrapper, &GameWrapper::gameOver,
                      this, [&] () {
         _gameWidget->setHidden(true);
@@ -51,10 +51,16 @@ MainWindow::MainWindow(QWidget *parent) :
         _inGame = true;
     });
 
-    //set one hidden
+    QObject::connect(_gameWidget->getGameScene(), &Game::helpRequested,
+                     this, [&](){
+        qDebug() << "in gameWindow";
+        this->setFocus();
+        showHelp();
+    });
+
+    //set current state
     _gameWidget->setHidden(true);
     _help->setHidden(true);
-
     _inGame = false;
     this->setFocus(); //!< this is important for responding to keyboard
 }
@@ -79,10 +85,16 @@ void MainWindow::hideHelp()
     _gameWidget->setHidden(!_inGame);
     _menu->setHidden(_inGame);
     _help->setHidden(true);
+    if(_inGame)
+    {
+        _gameWidget->getGameScene()->resume();
+    }
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     if(event->key() == Qt::Key_H)
         _help->isHidden() ? showHelp() : hideHelp();
+//    if(_inGame)
+//        _gameWidget->getGameScene()->keyPressEvent(event);
 }

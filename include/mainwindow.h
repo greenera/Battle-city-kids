@@ -49,6 +49,7 @@ protected:
      * \param event
      * \details only purpose for showing help page.
      * Should be invoked in child's function too.
+     * Done by signal.
      */
     void keyPressEvent(QKeyEvent *event);
 };

@@ -11,36 +11,47 @@
  */
 Game::Game(QGraphicsView* parrent)
     : QGraphicsScene(parrent),
-    matrixOfLevel(26, QVector<int>(26))
+      matrixOfLevel(26, QVector<int>(26))
 {
     _parrent = parrent;
+    _parrent->setFocusPolicy(Qt::StrongFocus);
+
     this->setSceneRect(0, 0, _sizeOfScene, _sizeOfScene);
     setBackgroundBrush(QColor(0, 0, 0));
 
     _levelTicker.setInterval(500);
     QObject::connect(&_levelTicker, &QTimer::timeout,
                      this, &Game::update);
+
+    setFocus();
 }
 
 void Game::abort()
 {
     _levelTicker.stop();
-
     this->clear();
+}
+
+void Game::resume()
+{
+    // start TEST
+    Boost *booster = new Boost(0, 0);
+    this->addItem(booster);
+    //end of TEST
+
+    _parrent->setFocus();
+    _levelTicker.start();
 }
 
 
 void Game::initializeLevel(int level)
 {
-    loadLevel(level);
+    _parrent->setFocus();
 
+    loadLevel(level);
     printMap(matrixOfLevel);
 
     //createNpcs(); TODO Ivana: implementiraj
-
-    //    // Add boost to the scene
-    //    Boost *booster = new Boost(0, 0);
-    //    _scene->addItem(booster);
 
     //    //START OF TEST1
     //    Player *igrac1 = new Player(1);
@@ -50,7 +61,7 @@ void Game::initializeLevel(int level)
     //    scene->update();
     //    //END OF TEST1
 
-//    _levelTicker.start();
+    _levelTicker.start();
     update();
 }
 
@@ -88,7 +99,7 @@ void Game::countBonusScore(int typeOfKilledEnemy)
     if(typeOfKilledEnemy > 4 || typeOfKilledEnemy < 1)
     {
         qDebug() << "potkrala se pogresna vrednost, prosledjen redni br tenka vrste koja ne postoji";
-                    return ;
+        return ;
     }
     _bonusScore += typeOfKilledEnemy;
 }
@@ -130,21 +141,24 @@ void Game::printMap(const QVector<QVector<int>> matrixOfLevel)
 void Game::keyPressEvent(QKeyEvent *event)
 {
     //consider 'w' 'a' 's' and 'd'
-    if(event->key() == Qt::Key_W)
+    if(_players[0] != nullptr)
     {
-        _players[0]->setUp(true);
-    }
-    else if (event->key() == Qt::Key_A)
-    {
-        _players[0]->setLeft(true);
-    }
-    else if (event->key() == Qt::Key_D)
-    {
-        _players[0]->setRight(true);
-    }
-    else if (event->key() == Qt::Key_S)
-    {
-        _players[0]->setDown(true);
+        if(event->key() == Qt::Key_W)
+        {
+            _players[0]->setUp(true);
+        }
+        else if (event->key() == Qt::Key_A)
+        {
+            _players[0]->setLeft(true);
+        }
+        else if (event->key() == Qt::Key_D)
+        {
+            _players[0]->setRight(true);
+        }
+        else if (event->key() == Qt::Key_S)
+        {
+            _players[0]->setDown(true);
+        }
     }
 
     //consider 'up' 'down' 'left' and 'right'
@@ -168,9 +182,12 @@ void Game::keyPressEvent(QKeyEvent *event)
         }
     }
 
-    //if(event->key() == Qt::Key_H)
-    //    _help->isHidden() ? showHelp() : hideHelp();
-
+    if(event->key() == Qt::Key_H)
+    {
+        qDebug() << "been there";
+        _levelTicker.stop();
+        emit helpRequested();
+    }
     if(event->key() == Qt::Key_P)
     {
         //TODO: add pause
@@ -179,6 +196,11 @@ void Game::keyPressEvent(QKeyEvent *event)
     if(event->key() == Qt::Key_Escape)
     {
         //TODO: add backToMenu
+    }
+
+    if(event->key() == Qt::Key_T)
+    { //this one is used for testing
+        emit killed();
     }
 }
 

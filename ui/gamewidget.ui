@@ -544,7 +544,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="lifesInfo">
         <property name="text">
          <string>here 
 should

@@ -25,12 +25,14 @@ GameWidget::GameWidget(QWidget *parent) :
 {
     _ui->setupUi(this);
 
-    _scene = new Game();
+    _scene = new Game(_ui->activegame);
     _ui->activegame->setScene(_scene);
 
     //set hole stopwatch thing
     _refreshingLabel.setInterval(1000);
     resetTimeLabel();
+
+    setFocusPolicy(Qt::StrongFocus);
 
     QObject::connect(&_refreshingLabel, &QTimer::timeout,
                      this, &GameWidget::setTimeLabel);
@@ -38,7 +40,6 @@ GameWidget::GameWidget(QWidget *parent) :
     //set some game rule
     QObject::connect(_scene, &Game::endOfLevel,
                      this, &GameWidget::onEndOfLevel);
-
 }
 
 GameWidget::~GameWidget()
@@ -56,12 +57,18 @@ void GameWidget::initializeLevel(int level)
 
     //kaze sceni da se inicijalizuje
     _ui->activegame->scene()->clear();
+    _scene->initializeLevel(2);
 }
 
 
 Game *GameWidget::getGameScene()
 {
     return _scene;
+}
+
+void GameWidget::setLifeInformation(int num)
+{
+    _ui->lifesInfo->setText("Lifes: " + QString::number(num));
 }
 
 void GameWidget::abort()
@@ -93,8 +100,11 @@ void GameWidget::resetTimeLabel()
 
 void GameWidget::setTimeLabel()
 {
+    if (this->isHidden())
+        return ;
+
     ++_sec;
-    if(_sec >= 60)
+    if (_sec >= 60)
     {
         _sec = 0;
         ++_minutes;

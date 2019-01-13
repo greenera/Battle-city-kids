@@ -21,6 +21,7 @@ public:
     ~GameWidget();
     void initializeLevel(int level);
     Game *getGameScene();
+    void setLifeInformation(int num);
 
     /*!
      * \brief abort, deletes everything when game is over

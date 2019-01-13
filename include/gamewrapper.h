@@ -19,7 +19,7 @@ signals:
     void gameOver();
 
 private:
-    void changeLifes(int num);
+    void changeLifes();
 
     /*!
      * \brief updateScore
@@ -37,7 +37,6 @@ private:
     int _numOfLifes;
     double _score;
 
-    Game *_gameScene;
     GameWidget *_gameWidget;
 };
 

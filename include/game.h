@@ -28,13 +28,15 @@ public:
     Game(QGraphicsView* parrent = nullptr);
     void initializeLevel(int level);
     void abort();
-
+    void resume();
 
 public slots:
     void printMap(const QVector<QVector<int>> matrixOfLevel);
 
 signals:
     void endOfLevel(double score);
+    void helpRequested();
+    void killed();
 
 private:
     /*!

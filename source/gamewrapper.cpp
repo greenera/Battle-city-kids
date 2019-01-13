@@ -4,10 +4,12 @@ GameWrapper::GameWrapper(QWidget *parrent)
     :QObject(parrent)
 {
     _gameWidget = new GameWidget(parrent);
-    _gameScene = _gameWidget->getGameScene();
 
     QObject::connect(_gameWidget, &GameWidget::endOfLevel,
                      this, &GameWrapper::onEndOfLevel);
+
+    QObject::connect(_gameWidget->getGameScene(), &Game::killed,
+                     this, &GameWrapper::changeLifes);
 }
 
 GameWidget *GameWrapper::getGameWidget() const
@@ -24,19 +26,19 @@ void GameWrapper::initializeGame()
     _activeLevel = 1;
     _numOfLifes = 3;
     _score = 100;
+    _gameWidget->setLifeInformation(_numOfLifes);
 }
 
-void GameWrapper::changeLifes(int num)
+void GameWrapper::changeLifes()
 {
-    _numOfLifes += num;
-    if (_numOfLifes < 0)
+    if (--_numOfLifes < 0)
     {
-        _gameScene->clear();
         updateScore(0); //!< only add for level reached
         saveScore();
         _gameWidget->abort();
         emit this->gameOver();
     }
+    _gameWidget->setLifeInformation(_numOfLifes);
 }
 
 void GameWrapper::updateScore(double bonus)
