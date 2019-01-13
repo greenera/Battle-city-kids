@@ -25,20 +25,21 @@ class GameScene : public QGraphicsScene
     Q_OBJECT
 
 public:
-    GameScene(QWidget* parrent = nullptr);
-    void initializeGame();
+    GameScene(QGraphicsView* parrent = nullptr);
+    void initializeLevel(int level);
+    void abort();
+    void resume();
 
-    QVector<QVector<int>> matrixOfLevel;
+public slots:
+    void printMap(const QVector<QVector<int>> matrixOfLevel);
 
 signals:
     void endOfLevel(double score);
+    void helpRequested();
+    void killed();
 
 private:
-    //TODO: consider making class for adding new  levels
-    QFile levelsPath[NUM_OF_LEVELS];
-    //MatricaNivoa matrixOfLevel[13][13]; TODO Nenad: napraviti klasu
-
-    /*!
+        /*!
      * \brief loadLevel opens file for activeLevel
      * and fill the matrixOfLevel acording to that file.
          TODO: Generate vector of npcs .
@@ -50,17 +51,34 @@ private:
      */
     void loadLevel(int levelNum);
 
-    QVector<int> npcVector;
+    /*!
+     * \brief update the scene and view
+     */
+    void update();
+
+    /*!
+     * \brief countBonusScore
+     * \param typeOfKilledEnemy in range [1,4]
+     * \details calculate bonusScore, based on what type of enemy
+     * is killed. Be sure to divide this number with minutes
+     * of level leasting before signal it to basic score.
+     */
+    void countBonusScore(int typeOfKilledEnemy);
+    long _bonusScore;
+
     QVector<Npc> _npcs; //!< live npcs
-    int _killedEnemies;
+    int numOfEnemyByType[4];
+    QVector<int> _npcVector;
+
     Player* _players[2]; //!< live players (max 2)
-    QScopedPointer<Tank> _player;
     QVector<Boost> _powerups;
-    QScopedPointer<QTimer> _levelTicker;
+
+    QVector<QVector<int>> matrixOfLevel;
+
+    QTimer _levelTicker;
     const int _sizeOfScene = 25 * 26; //!< 26 stands for number of rects, and 25 for size of every rect
 
-
-    // QGraphicsScene interface
+    QGraphicsView *_parrent;
 protected:
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);

@@ -4,10 +4,12 @@ GameProxy::GameProxy(QWidget *parrent)
     :QObject(parrent)
 {
     _gameWidget = new GameWidget(parrent);
-    _gameScene = _gameWidget->getGameScene();
 
-    QObject::connect(_gameScene, &GameScene::endOfLevel,
-                     this, &GameProxy::updateScore);
+    QObject::connect(_gameWidget, &GameWidget::endOfLevel,
+                     this, &GameProxy::onEndOfLevel);
+
+    QObject::connect(_gameWidget->getGameScene(), &GameScene::killed,
+                     this, &GameProxy::changeLifes);
 }
 
 GameWidget *GameProxy::getGameWidget() const
@@ -18,28 +20,27 @@ GameWidget *GameProxy::getGameWidget() const
 void GameProxy::initializeGame()
 {
     //javi gameWidgetu da se inicijalizuje
-    _gameWidget->initializeGame();
+    _gameWidget->initializeLevel(1);
 
     //inicijalizuj svoje vrednosti
     _activeLevel = 1;
     _numOfLifes = 3;
     _score = 100;
+    _gameWidget->setLifeInformation(_numOfLifes);
 }
 
-void GameProxy::changeLifes(int num)
+void GameProxy::changeLifes()
 {
-    _numOfLifes += num;
-    if(_numOfLifes < 0)
+    if (--_numOfLifes < 0)
     {
-        _gameScene->clear();
-        //updateScore(); make sure that score is signaled for update from gameScene
+        updateScore(0); //!< only add for level reached
         saveScore();
+        _gameWidget->abort();
         emit this->gameOver();
     }
+    _gameWidget->setLifeInformation(_numOfLifes);
 }
 
-//TODO: namestiti da se bonus racuna kao suma proizvoda
-//jacine tenka i broja ubijenih te vrste/vremenom
 void GameProxy::updateScore(double bonus)
 {
     _score += bonus + _activeLevel + _numOfLifes;
@@ -57,4 +58,14 @@ void GameProxy::saveScore()
         out << _score << endl;
         }
     file.close();
+}
+
+void GameProxy::onEndOfLevel(double bonus)
+{
+    updateScore(bonus);
+
+    //show short sum
+
+    if (++_activeLevel <= NUM_OF_LEVELS)
+        _gameWidget->initializeLevel(_activeLevel);
 }

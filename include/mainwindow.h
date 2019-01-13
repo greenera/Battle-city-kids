@@ -4,8 +4,6 @@
 #include <QMainWindow>
 #include <ui_mainwindow.h>
 #include "include/menu.h"
-#include "include/boost.h"
-#include "include/gamescene.h"
 #include "include/gameproxy.h"
 #include "include/help.h"
 
@@ -52,6 +50,7 @@ protected:
      * \param event
      * \details only purpose for showing help page.
      * Should be invoked in child's function too.
+     * Done by signal.
      */
     void keyPressEvent(QKeyEvent *event);
 };

@@ -1,10 +1,6 @@
 #include "ui_mainwindow.h"
 #include "include/mainwindow.h"
 
-#include <QGraphicsScene>
-#include <QGraphicsView>
-#include "include/gamescene.h"
-#include "include/block.h"
 #include <QDebug>
 
 /*!
@@ -39,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _help = new Help();
     _ui->presented->addWidget(_help);
 
-
+    //connect
     QObject::connect(_gameWrapper, &GameProxy::gameOver,
                      this, [&] () {
         _gameWidget->setHidden(true);
@@ -55,9 +51,14 @@ MainWindow::MainWindow(QWidget *parent) :
         _inGame = true;
     });
 
-    //this->setStyleSheet("background-color: black;");
+    QObject::connect(_gameWidget->getGameScene(), &GameScene::helpRequested,
+                     this, [&](){
+        qDebug() << "in gameWindow";
+        this->setFocus();
+        showHelp();
+    });
 
-    //set one hidden
+    //set current state
     _gameWidget->setHidden(true);
     _help->setHidden(true);
 
@@ -85,6 +86,10 @@ void MainWindow::hideHelp()
     _gameWidget->setHidden(!_inGame);
     _menu->setHidden(_inGame);
     _help->setHidden(true);
+    if(_inGame)
+    {
+        _gameWidget->getGameScene()->resume();
+    }
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event)

@@ -22,7 +22,7 @@ signals:
     void gameOver();
 
 private:
-    void changeLifes(int num);
+    void changeLifes();
 
     /*!
      * \brief updateScore
@@ -31,12 +31,15 @@ private:
      */
     void updateScore(double score);
     void saveScore();
+
+public slots:
+    void onEndOfLevel(double bonus);
+
 private:
     int _activeLevel;
     int _numOfLifes;
     double _score;
 
-    GameScene *_gameScene;
     GameWidget *_gameWidget;
 };
 
