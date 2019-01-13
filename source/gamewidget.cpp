@@ -19,14 +19,14 @@
  * i nju treba zvati iz gameWrapera pri kreiranu scene i widget-a
  */
 
-GameWidget::GameWidget(QWidget *parent, QGraphicsScene *scene) :
+GameWidget::GameWidget(QWidget *parent) :
     QWidget(parent),
     _ui(new Ui::GameWidget)
 {
     _ui->setupUi(this);
 
-    _ui->activegame->setScene(scene);
-    _scene = scene;
+    _scene = new Game();
+    _ui->activegame->setScene(_scene);
 
 //    // Add boost to the scene
 //    Boost *booster = new Boost(0, 0);
@@ -37,14 +37,37 @@ GameWidget::GameWidget(QWidget *parent, QGraphicsScene *scene) :
 //    Player *igrac2 = new Player(2);
 //    _scene->addItem(igrac1);
 //    _scene->addItem(igrac2);
+//    scene->update();
 //    //END OF TEST1
-
-    scene->update();
 }
 
 GameWidget::~GameWidget()
 {
     delete _ui;
+}
+
+void GameWidget::initializeGame()
+{
+    //sredi svoje stvari
+
+
+    //kaze sceni da se inicijalizuje
+    _ui->activegame->scene()->clear();
+
+    //nesto staro
+//    //pravljenje scene
+//    _game->initializeGame();
+//    _gameWidget->printMap(_game->matrixOfLevel);
+
+//    _activeLevel = 1;
+//    _numOfLifes = 3;
+    //    //_score = 0;
+}
+
+
+Game *GameWidget::getGameScene()
+{
+    return _scene;
 }
 
 

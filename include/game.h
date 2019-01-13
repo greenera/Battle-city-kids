@@ -22,11 +22,16 @@
  */
 class Game : public QGraphicsScene
 {
+    Q_OBJECT
+
 public:
     Game(QWidget* parrent = nullptr);
     void initializeGame();
 
     QVector<QVector<int>> matrixOfLevel;
+
+signals:
+    void endOfLevel(double score);
 
 private:
     //TODO: consider making class for adding new  levels

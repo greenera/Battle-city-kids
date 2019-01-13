@@ -36,7 +36,8 @@ SOURCES += \
 	source/player.cpp \
         source/block.cpp \
     source/gamewidget.cpp \
-    source/gamewrapper.cpp
+    source/gamewrapper.cpp \
+    source/help.cpp
 
 HEADERS += \
         include/mainwindow.h \
@@ -49,12 +50,14 @@ HEADERS += \
         include/player.h \
         include/block.h \
     include/gamewidget.h \
-    include/gamewrapper.h
+    include/gamewrapper.h \
+    include/help.h
 
 FORMS += \
         ui/mainwindow.ui \
         ui/menu.ui \
-    ui/gamewidget.ui
+    ui/gamewidget.ui \
+    ui/help.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

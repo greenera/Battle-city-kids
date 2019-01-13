@@ -10,7 +10,7 @@ class GameWrapper : public QObject
     Q_OBJECT
 
 public:
-    GameWrapper(QWidget *parent);
+    GameWrapper(QWidget *parrent);
     GameWidget *getGameWidget() const;
 
     void initializeGame();
@@ -21,11 +21,19 @@ signals:
 private:
     void changeLifes(int num);
 
+    /*!
+     * \brief updateScore
+     * \details should be caled after end of every level,
+     * and after death.
+     */
+    void updateScore(double score);
+    void saveScore();
 private:
     int _activeLevel;
     int _numOfLifes;
+    double _score;
 
-    Game *_game;
+    Game *_gameScene;
     GameWidget *_gameWidget;
 };
 

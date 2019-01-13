@@ -16,14 +16,16 @@ class GameWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit GameWidget(QWidget *parent = nullptr, QGraphicsScene *scene = nullptr);
+    explicit GameWidget(QWidget *parent = nullptr);
     ~GameWidget();
+    void initializeGame();
+    Game *getGameScene();
 
 public slots:
     void printMap(const QVector<QVector<int>> matrixOfLevel) const;
 
 private:
-    QGraphicsScene *_scene;
+    Game *_scene;
     Ui::GameWidget *_ui;
 };
 

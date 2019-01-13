@@ -17,7 +17,10 @@ Game::Game(QWidget* parrent)
 
     initializeGame();
 
-//    QObject::connect(_updateTimer, &QTimer::timeout, this, &Game::update);
+    QTimer _updateTimer;
+    _updateTimer.setInterval(500);
+    _updateTimer.start();
+    //QObject::connect(_updateTimer, &QTimer::timeout, this, &Game::update);
 }
 
 

@@ -1,13 +1,13 @@
 #include "include/gamewrapper.h"
 
 GameWrapper::GameWrapper(QWidget *parrent)
-    : QObject(parrent)
+    :QObject(parrent)
 {
-    //construct Game and GameWidget
-    _game = new Game();
-    _gameWidget = new GameWidget(parrent, _game);
+    _gameWidget = new GameWidget(parrent);
+    _gameScene = _gameWidget->getGameScene();
 
-    initializeGame();
+    QObject::connect(_gameScene, &Game::endOfLevel,
+                     this, &GameWrapper::updateScore);
 }
 
 GameWidget *GameWrapper::getGameWidget() const
@@ -17,17 +17,13 @@ GameWidget *GameWrapper::getGameWidget() const
 
 void GameWrapper::initializeGame()
 {
-    //TODO: dodati brisanje stare scene
-    //_game->clear();
+    //javi gameWidgetu da se inicijalizuje
+    _gameWidget->initializeGame();
 
-    //pravljenje scene
-    //TODO: preurediti
-    _game->initializeGame();
-    _gameWidget->printMap(_game->matrixOfLevel);
-
+    //inicijalizuj svoje vrednosti
     _activeLevel = 1;
     _numOfLifes = 3;
-    //_score = 0;
+    _score = 100;
 }
 
 void GameWrapper::changeLifes(int num)
@@ -35,7 +31,21 @@ void GameWrapper::changeLifes(int num)
     _numOfLifes += num;
     if(_numOfLifes < 0)
     {
-        _game->clear();
+        _gameScene->clear();
+        //updateScore(); make sure that score is signaled for update from gameScene
+        saveScore();
         emit this->gameOver();
     }
+}
+
+//TODO: namestiti da se bonus racuna kao suma proizvoda
+//jacine tenka i broja ubijenih te vrste/vremenom
+void GameWrapper::updateScore(double bonus)
+{
+    _score += bonus + _activeLevel + _numOfLifes;
+}
+
+void GameWrapper::saveScore()
+{
+    //TODO: implementirati
 }

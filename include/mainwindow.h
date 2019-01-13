@@ -4,9 +4,8 @@
 #include <QMainWindow>
 #include <ui_mainwindow.h>
 #include "include/menu.h"
-#include "include/boost.h"
-#include "include/game.h"
 #include "include/gamewrapper.h"
+#include "include/help.h"
 
 namespace Ui {
 class MainWindow;
@@ -20,26 +19,10 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    //deleted copy constructor and operator '='
     MainWindow(const MainWindow&) = delete;
     MainWindow& operator = (const MainWindow&) = delete;
 
 private slots:
-    /**
-     * @brief newGame create new game
-     */
-    void restartGame();
-
-    /**
-     * @brief pauseGame pause game
-     */
-    void pauseGame();
-
-    /**
-     * @brief exitLevel exit to main menu
-     */
-    void exitLevel();
-
     /**
      * @brief showHelp show in-game help
      */
@@ -51,14 +34,23 @@ private slots:
     void hideHelp();
 
 private:
+    bool _inGame;
 
-    void connectSlotsAndSignals();
-
+    Help *_help;
     Menu *_menu;
     GameWidget *_gameWidget;
     GameWrapper *_gameWrapper;
 
     Ui::MainWindow *_ui;
+
+protected:
+    /*!
+     * \brief keyPressEvent
+     * \param event
+     * \details only purpose for showing help page.
+     * Should be invoked in child's function too.
+     */
+    void keyPressEvent(QKeyEvent *event);
 };
 
 #endif // MAINWINDOW_H

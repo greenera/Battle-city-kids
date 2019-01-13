@@ -1,10 +1,7 @@
 #include "ui_mainwindow.h"
 #include "include/mainwindow.h"
 
-#include <QGraphicsScene>
-#include <QGraphicsView>
-#include "include/game.h"
-#include "include/block.h"
+#include <QDebug>
 
 /*!
  * \brief MainWindow::MainWindow
@@ -13,9 +10,11 @@
  * In Presented will be loaded:
  *  - menu (for choosing options)
  *  - reached level (in wich game will play)
+ *  - help page (with instructions how to play)
  * This class should have information:
- *  -about first level widget
- *  -about menu widget
+ *  - about first level widget
+ *  - about menu widget
+ *  - about help page
  * Allways, only one of these should be visible.
  */
 
@@ -25,32 +24,39 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     _ui->setupUi(this);
 
-    //add both menu and game widget
+    //add all three widgets
     _menu = new Menu();
     _ui->presented->addWidget(_menu);
 
-    auto _gameWrapper = new GameWrapper(this);
+    _gameWrapper = new GameWrapper(this);
     _gameWidget = _gameWrapper->getGameWidget();
     _ui->presented->addWidget(_gameWidget);
 
-    //connect to gameWraper
+    _help = new Help();
+    _ui->presented->addWidget(_help);
+
+
     QObject::connect(_gameWrapper, &GameWrapper::gameOver,
                      this, [&] () {
         _gameWidget->setHidden(true);
         _menu->setHidden(false);
+        _inGame = false;
     });
 
     QObject::connect(_menu->getStartButton(), &QPushButton::clicked,
                      this, [&] (){
         _gameWrapper->initializeGame();
         _gameWidget->setHidden(false);
-        _gameWidget->setHidden(true);
+        _menu->setHidden(true);
+        _inGame = true;
     });
-
-    //this->setStyleSheet("background-color: black;");
 
     //set one hidden
     _gameWidget->setHidden(true);
+    _help->setHidden(true);
+
+    _inGame = false;
+    this->setFocus(); //!< this is important for responding to keyboard
 }
 
 /*!
@@ -61,22 +67,22 @@ MainWindow::~MainWindow()
     delete _ui;
 }
 
-void MainWindow::restartGame(){
-    //TODO implementirati ponovno pokretanje igre
+void MainWindow::showHelp()
+{
+    _gameWidget->setHidden(true);
+    _menu->setHidden(true);
+    _help->setHidden(false);
 }
 
-void MainWindow::pauseGame(){
-    //TODO implementirati pauzu u igri
+void MainWindow::hideHelp()
+{
+    _gameWidget->setHidden(!_inGame);
+    _menu->setHidden(_inGame);
+    _help->setHidden(true);
 }
 
-void MainWindow::exitLevel(){
-    //TODO implementirati izlazak iz igre
-}
-
-void MainWindow::showHelp(){
-    //TODO implementirati prikazivanje pomoci
-}
-
-void MainWindow::hideHelp(){
-    //TODO implementirati sakrivanje pomoci
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    if(event->key() == Qt::Key_H)
+        _help->isHidden() ? showHelp() : hideHelp();
 }
