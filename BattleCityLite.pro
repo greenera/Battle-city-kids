@@ -31,7 +31,6 @@ SOURCES += \
         source/npc.cpp \
         source/menu.cpp \
         source/boost.cpp \
-	source/iqalgorithm.cpp \
 	source/player.cpp \
         source/block.cpp \
     source/gamewidget.cpp \
@@ -39,7 +38,7 @@ SOURCES += \
     source/help.cpp \
     source/gamescene.cpp \
     source/gameproxy.cpp \
-    ui/pause.cpp
+    source/pause.cpp
 
 HEADERS += \
         include/mainwindow.h \
@@ -47,7 +46,6 @@ HEADERS += \
         include/npc.h \
         include/menu.h \
         include/boost.h \
-	include/iqalgorithm.h \
         include/player.h \
         include/block.h \
     include/gamewidget.h \
@@ -55,7 +53,7 @@ HEADERS += \
     include/help.h \
     include/gamescene.h \
     include/gameproxy.h \
-    ui/pause.h
+    include/pause.h
 
 FORMS += \
         ui/mainwindow.ui \

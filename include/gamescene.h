@@ -6,14 +6,13 @@
 #include <fstream>
 #include <QVector>
 #include <QString>
-#include <QGraphicsView>
-#include <QFile>
-#include <QDebug>
 #include "include/boost.h"
 #include "include/tank.h"
 #include "include/npc.h"
 #include "include/block.h"
 #include "include/player.h"
+#include <QGraphicsView>
+#include <QRandomGenerator>
 
 #define NUM_OF_LEVELS 3
 
@@ -28,12 +27,14 @@ class GameScene : public QGraphicsScene
 
 public:
     GameScene(QGraphicsView* parrent = nullptr);
+    ~GameScene();
     void initializeLevel(int level, int numOfPlayers);
     void abort();
     void resume();
 
 public slots:
     void printMap(const QVector<QVector<int>> matrixOfLevel);
+    void npcFactory();
 
 signals:
     void endOfLevel(double score);
@@ -41,13 +42,28 @@ signals:
     void pauseRequested();
     void exitRequested();
     void killed();
+    void npcCreated(int num);
 
 private:
+    //moving
     void movePlayers();
-    void moveNpcs();
     void moveBullets();
-
+    void moveNpcs();
+	
     void showBoost();
+
+    //boost earning
+    void onStar(int idPlayer);
+    void onBomb();
+
+    /*!
+     *\brief choose random number
+     * \return random value
+     */
+    int roulet();
+
+
+    void deleteAllVectors();
 
     /*!
      * \brief loadLevel opens file for activeLevel
@@ -76,10 +92,9 @@ private:
     void countBonusScore(int typeOfKilledEnemy);
     long _bonusScore;
 
-    QVector<Npc> _npcs; //!< live npcs
-    int numOfEnemyByType[4];
+    QVector<Npc*> _npcs; //!< live npcs
     QVector<int> _npcVector;
-    QVector<Bullet*> bullets;
+    QTimer _npcCreating;
 
     QTimer _boostShowerInterval;
     Boost* _boost;
@@ -87,13 +102,18 @@ private:
     Player* _players[2]; //!< live players (max 2)
     QVector<Boost> _powerups;
 
+    QVector<Bullet*> bullets; // Empty at the end of every level
+    QTimer _shooting1;
+    QTimer _shooting2;
+
     QVector<QVector<int>> matrixOfLevel;
-    QVector<bool> _playerStatus;
-    QTimer _shooting;
     QTimer _levelTicker;
+    int _numOfLevel;
+    Block* _phoenix;
     const int _sizeOfScene = 25 * 26; //!< 26 stands for number of rects, and 25 for size of every rect
 
     QGraphicsView *_parrent;
+    QRandomGenerator _generator;
 protected:
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);

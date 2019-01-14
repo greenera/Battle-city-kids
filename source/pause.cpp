@@ -1,4 +1,4 @@
-#include "pause.h"
+#include "include/pause.h"
 #include "ui_pause.h"
 
 Pause::Pause(QWidget *parent) :

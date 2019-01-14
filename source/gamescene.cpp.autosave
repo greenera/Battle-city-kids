@@ -193,6 +193,7 @@ void GameScene::update()
                 this->removeItem(i);
                 if (i == _phoenix)
                     emit exitRequested();
+                
             }
         }
     }

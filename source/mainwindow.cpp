@@ -1,6 +1,8 @@
 #include "ui_mainwindow.h"
 #include "include/mainwindow.h"
 
+#include <QDebug>
+
 /*!
  * \brief MainWindow::MainWindow
  * \param parent

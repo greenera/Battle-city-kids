@@ -4,8 +4,6 @@
 #include <QGraphicsObject>
 #include <QMap>
 #include <QKeyEvent>
-#include <QPainter>
-#include <QDebug>
 #include "include/bullet.h"
 
 class Tank : public QGraphicsObject
@@ -13,17 +11,10 @@ class Tank : public QGraphicsObject
     Q_OBJECT
 
 public:
-    //TODO Ivana: implementirati
     Tank(int id);
-    ~Tank();
-    Tank(const Tank& other);
+    ~Tank() = default;
 
-    //NOTE za dogovor: sta da radim sa brzinom metka? Da ima boost-zvezdica posebno i za to ili
-    //da su f,g i r brzi a prva tri spora?
-
-    //NOTE for Nenad: ovo treba isproveravati pri skidanju sloja
-    //sa prepreke na sudar sa pucnjem
-    enum Weapon{
+    enum Weapon {
         gun,        //cigla (1 sloj)
         d,          //cigla (2 sloja)
         e,          //cigla (4 sloja) + beton (1 sloj)
@@ -64,7 +55,7 @@ public:
      */
     int getDirection();
 
-    void colisionDetection();
+    virtual void colisionDetection();
 
     /*!
      * \brief setUp sets indicator if tank is faced to 'up'
@@ -74,7 +65,6 @@ public:
     void setDown(bool t);
     void setRight(bool t);
     void setLeft(bool t);
-
     void move();
     void reMoving();
     Bullet* shoot();

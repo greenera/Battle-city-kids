@@ -3,7 +3,6 @@
 
 #include <QWidget>
 #include <QFile>
-#include <QPainter>
 #include <ui_menu.h>
 #include <QKeyEvent>
 

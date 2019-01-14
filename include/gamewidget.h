@@ -1,11 +1,11 @@
 #ifndef GAMEWIDGET_H
 #define GAMEWIDGET_H
 
+#include "include/gamescene.h"
+
 #include <QWidget>
 #include <QKeyEvent>
 #include <QTimer>
-#include "include/gamescene.h"
-#include "include/player.h"
 
 namespace Ui {
 class GameWidget;
@@ -37,6 +37,8 @@ private:
     void setLevelName(int level);
     void resetTimeLabel();
     void setTimeLabel();
+    void setVisibleSmallTank();
+    void hideTank(int num);
 
     void initSmallTankText();
 

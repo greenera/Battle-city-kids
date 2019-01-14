@@ -1,4 +1,7 @@
 #include "include/player.h"
+#include <QPainter>
+
+#include <QDebug>
 
 #define START_POSITION_X 75
 #define DISTANCE 150
@@ -12,12 +15,11 @@ Player::Player(int id)
 
     _activeIcon = "Up";
 
-    //FOR TEST
+
     _speed = 2;
     _resistent = 0;
     _weapon = Weapon::gun;
     _isManual = true;
-    //END OF TEST
 }
 
 void Player::paint(QPainter *painter,

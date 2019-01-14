@@ -1,6 +1,9 @@
 #include "include/tank.h"
-
 #define SPEED_LIMIT 4
+
+#include <QPainter>
+
+#include <QDebug>
 
 Tank::Tank(int id)
     :grid(27)
@@ -18,17 +21,6 @@ Tank::Tank(int id)
     _icons.insert("Down", QPixmap(iconName + "Down.png"));
     _icons.insert("Right", QPixmap(iconName + "Right.png"));
     _icons.insert("Left", QPixmap(iconName + "Left.png"));
-}
-
-Tank::~Tank()
-{
-
-}
-
-Tank::Tank(const Tank &other)
-{
-
-
 }
 
 void Tank::onShot()
@@ -110,16 +102,11 @@ int Tank::getDirection()
 }
 
 void Tank::colisionDetection()
-{
+{   
     QList<QGraphicsItem*> list = collidingItems();
-    foreach(QGraphicsItem* i , list)
-    {
-        int p = 0;
-
-        qDebug() << QString::number(p);
+    if(list.length() > 0){
         reMoving();
     }
-    //qDebug() << QString::number(p);
 }
 
 
@@ -129,8 +116,8 @@ QRectF Tank::boundingRect() const
 }
 
 void Tank::paint(QPainter *painter,
-                 const QStyleOptionGraphicsItem *option,
-                 QWidget *widget)
+                 const QStyleOptionGraphicsItem*,
+                 QWidget*)
 {
     painter->setPen(Qt::NoPen);
     QRectF source(0.0, 0.0, _size, _size);

@@ -10,8 +10,8 @@ public:
 
     // Constructor
     Bullet(int x, int y, int parent, qreal speed, int direction);
-    //~Bullet();
-    Bullet(const Bullet& other) = delete;
+    ~Bullet() override;
+   // Bullet(const Bullet& other);
 
     // Overrides from QGraphicsItem
     QRectF boundingRect() const override;
@@ -21,10 +21,10 @@ public:
     QPainterPath shape() const override;
 
     // Getters
-    qreal getX() const;
-    qreal getY() const;
-    void setX(const qreal& x);
-    void setY(const qreal& y);
+    int getX() const;
+    int getY() const;
+    void setX(const int& x);
+    void setY(const int& y);
 
     void moveBullet();
     void coliding();

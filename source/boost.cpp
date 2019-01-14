@@ -1,4 +1,6 @@
 #include "include/boost.h"
+#include <QDebug>
+#include <iostream>
 
 Boost::Boost()
 {
@@ -35,7 +37,7 @@ QPainterPath Boost::shape() const
 }
 
 void Boost::generateRandomPowerup(){
-    srand(time(NULL));
+    srand(time(nullptr));
     _powerup = BoostType(rand()%5);
 }
 

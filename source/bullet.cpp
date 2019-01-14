@@ -2,9 +2,10 @@
 
 
 Bullet::Bullet(int x, int y, int parent, qreal speed, int direction)
-    :pos_x(x), pos_y(y), _parent(parent), _speed(speed), _direction(direction)
+    :_parent(parent), _speed(speed), _direction(direction), pos_x(x), pos_y(y)
     {
     }
+Bullet::~Bullet() = default;
 
 QRectF Bullet::boundingRect() const
 {
@@ -29,19 +30,19 @@ QPainterPath Bullet::shape() const
 }
 
 // Getters
-qreal Bullet::getX() const
+int Bullet::getX() const
 {
     return pos_x;
 }
-qreal Bullet::getY() const
+int Bullet::getY() const
 {
     return pos_y;
 }
 
-void Bullet::setX(const qreal& x) {
+void Bullet::setX(const int& x) {
     pos_x = x;
 }
-void Bullet::setY(const qreal& y) {
+void Bullet::setY(const int& y) {
     pos_y = y;
 }
 
