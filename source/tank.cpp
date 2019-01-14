@@ -116,12 +116,13 @@ void Tank::colisionDetection()
 {
     QList<QGraphicsItem*> list = collidingItems();
     foreach(QGraphicsItem* i , list)
-    int p = 0;
     {
+        int p = 0;
+
         qDebug() << QString::number(p);
         reMoving();
     }
-    qDebug() << QString::number(p);
+    //qDebug() << QString::number(p);
 }
 
 
@@ -140,24 +141,6 @@ void Tank::paint(QPainter *painter,
     painter->drawPixmap(target, _icons[_activeIcon], source);
 }
 
-void Tank::move() {
-    int direction = getDirection();
-    switch (direction) {
-        case 1:
-            _y -= _speed;
-            break;
-        case 2:
-            _x += _speed;
-            break;
-        case 3:
-            _y += _speed;
-            break;
-        case 4:
-            _x -= _speed;
-            break;
-    }
-
-}
 
 void Tank::move()
 {

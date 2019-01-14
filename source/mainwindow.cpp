@@ -40,6 +40,10 @@ MainWindow::MainWindow(QWidget *parent) :
     _pause = new Pause();
     _ui->presented->addWidget(_pause);
 
+    //set sound effect
+    _testEfekat.setSource(QUrl::fromLocalFile("resources/music.wav"));
+    _testEfekat.setLoopCount(1);
+
     //connect
     QObject::connect(_gameWrapper, &GameProxy::gameOver,
                      this, [&] () {
@@ -50,6 +54,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QObject::connect(_menu->getStartButton(), &QPushButton::clicked,
                      this, [&] (){
+        _testEfekat.play();
         _gameWrapper->initializeGame(1);
         _gameWidget->setHidden(false);
         _menu->setHidden(true);
@@ -58,6 +63,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QObject::connect(_menu->getStartButton2(), &QPushButton::clicked,
                      this, [&] (){
+        _testEfekat.play();
         _gameWrapper->initializeGame(2);
         _gameWidget->setHidden(false);
         _menu->setHidden(true);
@@ -84,12 +90,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     _inGame = false;
     this->setFocus(); //!< this is important for responding to keyboard
-
-    //start TEST
-    _testEfekat.setSource(QUrl::fromLocalFile("resources/music.wav"));
-    _testEfekat.setLoopCount(1);
-    _testEfekat.play();
-    //end TEST
 }
 
 /*!

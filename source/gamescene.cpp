@@ -35,11 +35,6 @@ void GameScene::abort()
 
 void GameScene::resume()
 {
-    // start TEST
-    Boost *booster = new Boost(0, 0);
-    this->addItem(booster);
-    //end of TEST
-
     _parrent->setFocus();
     _levelTicker.start();
 }
@@ -61,9 +56,8 @@ void GameScene::initializeLevel(int level, int numOfPlayers)
     igrac1->setUp(false);
     igrac1->setLeft(false);
     igrac1->setRight(false);
-    igrac1->setMoving(true);
 
-    if(--numOfPlayers > 0)
+    if (--numOfPlayers > 0)
     {
         Player *igrac2 = new Player(2);
         this->addItem(igrac2);
@@ -73,14 +67,12 @@ void GameScene::initializeLevel(int level, int numOfPlayers)
         igrac2->setUp(false);
         igrac2->setLeft(false);
         igrac2->setRight(false);
-        igrac2->setMoving(true);
     }
 
     _levelTicker.start();
 }
 
 
-// Loads level from file
 void GameScene::loadLevel(int levelNum)
 {
     QString path = QStringLiteral(":/levels/%1.txt").arg(levelNum);
@@ -120,9 +112,9 @@ void GameScene::update()
     moveBullets();
 
     //do the changes
-    if(_playerStatus[0])
+    if(_players[0] != nullptr)
         _players[0]->colisionDetection();
-    if(_playerStatus[1])
+    if(_players[1] != nullptr)
         _players[1]->colisionDetection();
 
     _parrent->update();
