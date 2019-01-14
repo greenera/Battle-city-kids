@@ -12,6 +12,8 @@ Since it is developed in QtCreator you will need it to run application. Follow t
 * 2.Open project and build it.
 * 3.Run 
 
+For better expirience it is recomended to install "Press Start K" font from resources folder
+
 ## :video_game: Controls
 |Button|Description|
 |:-:|:-:|
