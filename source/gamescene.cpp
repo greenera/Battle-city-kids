@@ -1,7 +1,4 @@
 #include "include/gamescene.h"
-#include <QFile>
-
-#include <QDebug>
 
 /**
  * @brief Game::Game
@@ -23,6 +20,11 @@ GameScene::GameScene(QGraphicsView* parrent)
     _levelTicker.setInterval(50);
     QObject::connect(&_levelTicker, &QTimer::timeout,
                      this, &GameScene::update);
+
+    _boostShowerInterval.setInterval(5000);
+    QObject::connect(&_boostShowerInterval, &QTimer::timeout,
+                     this, &GameScene::showBoost);
+    _boost = new Boost();
 
     setFocus();
 }
@@ -61,7 +63,8 @@ void GameScene::initializeLevel(int level, int numOfPlayers)
     _players[0]->shootingEnabled = true;
     _shooting.setInterval(1500);
     _shooting.setSingleShot(true);
-    QObject::connect(&_shooting, &QTimer::timeout, this, [&](){_players[0]->shootingEnabled = true;});
+    QObject::connect(&_shooting, &QTimer::timeout,
+                     this, [&](){_players[0]->shootingEnabled = true;});
 
 
     if (--numOfPlayers > 0)
@@ -81,6 +84,7 @@ void GameScene::initializeLevel(int level, int numOfPlayers)
         QObject::connect(&_shooting, &QTimer::timeout, this, [&](){_players[1]->shootingEnabled = true;});
     }
 
+    _boostShowerInterval.start();
     _levelTicker.start();
 }
 
@@ -207,7 +211,16 @@ void GameScene::moveBullets()
             b->moveBullet();
 }
 
+void GameScene::showBoost()
+{
+    srand(time(NULL));
 
+    _boost->setX(rand()%(25*26));
+    _boost->setY(rand()%(25*26));
+    _boost->generateRandomPowerup();
+    _boost->setTexture(_boost->getPowerup());
+    this->addItem(_boost);
+}
 
 //TODO: srediti da ne moze da se krece ukoso
 void GameScene::keyPressEvent(QKeyEvent *event)

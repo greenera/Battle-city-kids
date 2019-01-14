@@ -1,7 +1,6 @@
 #include "include/gamewidget.h"
 #include "ui_gamewidget.h"
 
-#include <include/player.h>
 
 /**
  * @brief GameWidget::GameWidget

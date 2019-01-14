@@ -1,5 +1,4 @@
 #include "include/menu.h"
-#include <QPainter>
 #include "ui_menu.h"
 
 Menu::Menu(QWidget *parent) :

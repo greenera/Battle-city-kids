@@ -1,7 +1,4 @@
 #include "include/player.h"
-#include <QPainter>
-
-#include <QDebug>
 
 #define START_POSITION_X 75
 #define DISTANCE 150

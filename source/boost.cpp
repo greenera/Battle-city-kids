@@ -1,11 +1,9 @@
 #include "include/boost.h"
-#include <QDebug>
-#include <iostream>
 
 Boost::Boost()
 {
-    pos_x = QRandomGenerator::global()->bounded(26);
-    pos_x = QRandomGenerator::global()->bounded(26);
+    pos_x = QRandomGenerator::global()->bounded(25*26);
+    pos_x = QRandomGenerator::global()->bounded(25*26);
     Boost::generateRandomPowerup();
     Boost::setTexture(_powerup);
 }
@@ -24,8 +22,9 @@ void Boost::paint(QPainter *painter,
                    QWidget *)
 {
     painter->setPen(Qt::NoPen);
-    painter->setBrush(QBrush(_texture.scaledToHeight(_size)));
-    painter->drawRect(pos_x, pos_y, _size, _size);
+    QRectF source(0.0, 0.0, _size, _size);
+    QRectF target(pos_x, pos_y, _size, _size);
+    painter->drawPixmap(target, _texture, source);
 
 }
 QPainterPath Boost::shape() const

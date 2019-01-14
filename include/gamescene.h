@@ -6,12 +6,14 @@
 #include <fstream>
 #include <QVector>
 #include <QString>
+#include <QGraphicsView>
+#include <QFile>
+#include <QDebug>
 #include "include/boost.h"
 #include "include/tank.h"
 #include "include/npc.h"
 #include "include/block.h"
 #include "include/player.h"
-#include <QGraphicsView>
 
 #define NUM_OF_LEVELS 3
 
@@ -45,6 +47,8 @@ private:
     void moveNpcs();
     void moveBullets();
 
+    void showBoost();
+
     /*!
      * \brief loadLevel opens file for activeLevel
      * and fill the matrixOfLevel acording to that file.
@@ -76,6 +80,9 @@ private:
     int numOfEnemyByType[4];
     QVector<int> _npcVector;
     QVector<Bullet*> bullets;
+
+    QTimer _boostShowerInterval;
+    Boost* _boost;
 
     Player* _players[2]; //!< live players (max 2)
     QVector<Boost> _powerups;

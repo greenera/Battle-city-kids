@@ -1,9 +1,6 @@
 #include "include/tank.h"
+
 #define SPEED_LIMIT 4
-
-#include <QPainter>
-
-#include <QDebug>
 
 Tank::Tank(int id)
     :grid(27)

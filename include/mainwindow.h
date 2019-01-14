@@ -3,10 +3,11 @@
 
 #include <QMainWindow>
 #include <ui_mainwindow.h>
+#include <QSoundEffect>
+#include <QDebug>
 #include "include/menu.h"
 #include "include/gameproxy.h"
 #include "include/help.h"
-#include <QSoundEffect>
 #include "ui/pause.h"
 
 namespace Ui {

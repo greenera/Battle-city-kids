@@ -4,6 +4,8 @@
 #include <QGraphicsObject>
 #include <QMap>
 #include <QKeyEvent>
+#include <QPainter>
+#include <QDebug>
 #include "include/bullet.h"
 
 class Tank : public QGraphicsObject
