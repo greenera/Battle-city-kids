@@ -1,5 +1,6 @@
 #ifndef NPC_H
 #define NPC_H
+#include <QTimer>
 #include "include/tank.h"
 #include <QTimer>
 

@@ -39,20 +39,33 @@ qreal Bullet::getY() const
     return pos_y;
 }
 
+void Bullet::setX(const qreal& x) {
+    pos_x = x;
+}
+void Bullet::setY(const qreal& y) {
+    pos_y = y;
+}
+
 void Bullet::moveBullet()
 {
-    switch (_direction) {
-        case 1:
-            pos_y -= _speed;
-            break;
-        case 2:
-            pos_x += _speed;
-            break;
-        case 3:
-            pos_y += _speed;
-            break;
-        case 4:
-            pos_x -= _speed;
-            break;
+    if (_moving) {
+        switch (_direction) {
+            case 1:
+                pos_y -= _speed;
+                break;
+            case 2:
+                pos_x += _speed;
+                break;
+            case 3:
+                pos_y += _speed;
+                break;
+            case 4:
+                pos_x -= _speed;
+                break;
+        }
     }
+}
+
+void Bullet::coliding() {
+    QList<QGraphicsItem*> list = collidingItems();
 }

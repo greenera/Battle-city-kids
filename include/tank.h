@@ -85,7 +85,7 @@ protected:
 
     bool _movingUp, _movingDown, _movingLeft, _movingRight;
     int _resistent;         //!< how many times can survive bullet
-    qreal _speed;           //!< should be incremented/decremented when get boost
+    qreal _speed = 5;           //!< should be incremented/decremented when get boost
     Weapon _weapon;
     bool _isManual;         //!< indicates if more then one bullet can be projected at the same time
     qreal _x;               //!< x coordinate

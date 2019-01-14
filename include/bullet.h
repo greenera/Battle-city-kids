@@ -23,8 +23,12 @@ public:
     // Getters
     qreal getX() const;
     qreal getY() const;
+    void setX(const qreal& x);
+    void setY(const qreal& y);
 
     void moveBullet();
+    void coliding();
+    bool _moving = true;
 
 private:
     int size = 10;

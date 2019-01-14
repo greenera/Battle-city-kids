@@ -81,6 +81,7 @@ void GameScene::initializeLevel(int level, int numOfPlayers)
         Player *igrac2 = new Player(2);
         this->addItem(igrac2);
         _players[1] = igrac2;
+        _playerStatus[1] = true;
 
         igrac2->setDown(false);
         igrac2->setUp(false);
@@ -137,10 +138,7 @@ void GameScene::update()
     //change position of dinamic objects
     movePlayers();
     moveNpcs();
-
-    //move bulltets
-    foreach(Bullet* b, bullets)
-        b->moveBullet();
+    moveBullets();
 
     //do the changes
     if(_players[0] != nullptr)
@@ -148,7 +146,19 @@ void GameScene::update()
     if(_players[1] != nullptr)
         _players[1]->colisionDetection();
 
-    _parrent->update(); //!< should be at end of function
+    foreach(Bullet* b, bullets) {
+        QList<QGraphicsItem*> list = b->collidingItems();
+        if (list.size() > 0) {
+            b->_moving = false;
+            b->setX(-100);
+            b->setY(-100);
+            foreach(QGraphicsItem* i , list) {
+                this->removeItem(i);
+            }
+        }
+    }
+
+    _parrent->update();
 }
 
 void GameScene::countBonusScore(int typeOfKilledEnemy)
@@ -198,9 +208,22 @@ int GameScene::roulet()
         sum += _npcVector[i];
     }
 
+void GameScene::moveNpcs()
+{
     //izaberi random broj 0-sum
     int choosen = _generator.bounded(sum);
 
+}
+
+void GameScene::moveBullets()
+{
+    foreach(Bullet* b, bullets)
+            b->moveBullet();
+}
+
+
+
+//TODO: srediti da ne moze da se krece ukoso
     //prolazi kroz petlju ponovo
     //i vidi koji je na tom mestu
     int sum2 = 0;
@@ -255,11 +278,6 @@ void GameScene::movePlayers()
     {
         _players[1]->move();
     }
-}
-
-void GameScene::moveNpcs()
-{
-
 }
 
 
@@ -376,26 +394,27 @@ void GameScene::keyPressEvent(QKeyEvent *event)
 
 void GameScene::keyReleaseEvent(QKeyEvent *event)
 {
-    //consider 'w' 'a' 's' and 'd'
-    if(event->key() == Qt::Key_W)
-    {
-        _players[0]->setUp(false);
-    }
-    else if (event->key() == Qt::Key_A)
-    {
-        _players[0]->setLeft(false);
-    }
-    else if (event->key() == Qt::Key_D)
-    {
-        _players[0]->setRight(false);
-    }
-    else if (event->key() == Qt::Key_S)
-    {
-        _players[0]->setDown(false);
-    }
-
+    if(_playerStatus[0] == true) {
+        //consider 'w' 'a' 's' and 'd'
+        if(event->key() == Qt::Key_W)
+        {
+            _players[0]->setUp(false);
+        }
+        else if (event->key() == Qt::Key_A)
+        {
+            _players[0]->setLeft(false);
+        }
+        else if (event->key() == Qt::Key_D)
+        {
+            _players[0]->setRight(false);
+        }
+        else if (event->key() == Qt::Key_S)
+        {
+            _players[0]->setDown(false);
+        }
+}
     //consider 'up' 'down' 'left' and 'right'
-    if(_players[1] != nullptr)
+    if(_playerStatus[1] == true)
     {
         if(event->key() == Qt::Key_Up)
         {
