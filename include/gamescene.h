@@ -41,6 +41,7 @@ signals:
     void pauseRequested();
     void exitRequested();
     void killed();
+    void npcCreated(int num);
 
 private:
     //moving
@@ -50,6 +51,12 @@ private:
     //boost earning
     void onStar(int idPlayer);
     void onBomb();
+
+    /*!
+     *\brief choose random number
+     * \return random value
+     */
+    int roulet();
 
     /*!
      * \brief loadLevel opens file for activeLevel

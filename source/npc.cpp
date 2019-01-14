@@ -1,7 +1,7 @@
 #include "include/npc.h"
 
-Npc::Npc(bool isBlinking, int iq, int id)
-    : _blinking(isBlinking), Tank(id)
+Npc::Npc(qreal x, qreal y, int id)
+   : Tank(id)
 {
     _activeIcon = "Down";
 
@@ -9,6 +9,9 @@ Npc::Npc(bool isBlinking, int iq, int id)
     QObject::connect(&_shootTimer, &QTimer::timeout,
                      this, &Tank::shoot);
     _shootTimer.start();
+
+    _x = x;
+    _y = y;
 }
 
 Npc::~Npc()
@@ -22,11 +25,4 @@ Npc::~Npc()
 void Npc::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     Tank::paint(painter, option, widget);
-
-    if(_blinking)
-    {
-        //TODO: namesti miganje
-    }
-
-    //TODO: dodaj stit ako ga je sakupio
 }

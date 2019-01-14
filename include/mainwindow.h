@@ -7,7 +7,7 @@
 #include "include/gameproxy.h"
 #include "include/help.h"
 #include <QSoundEffect>
-#include "ui/pause.h"
+#include "include/pause.h"
 
 namespace Ui {
 class MainWindow;

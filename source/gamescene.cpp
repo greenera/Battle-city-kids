@@ -25,7 +25,7 @@ GameScene::GameScene(QGraphicsView* parrent)
                      this, &GameScene::update);
 
     connect(&_npcCreating, &QTimer::timeout,
-            this, &GameScene::npcFactory)
+            this, &GameScene::npcFactory);
 
     setFocus();
 }
@@ -182,14 +182,15 @@ void GameScene::printMap(const QVector<QVector<int>> matrixOfLevel)
     this->addItem(phoenix);
 }
 
-int roulet()
+int GameScene::roulet()
 {
     int sum = 0;
-    for (int a : _npcVector)
-        sum += a;
+    for (int i = 0; i < 4; i++) {
+        sum += _npcVector[i];
+    }
 
     //izaberi random broj 0-sum
-    int choosen = _generator.bounded(a);
+    int choosen = _generator.bounded(sum);
 
     //prolazi kroz petlju ponovo
     //i vidi koji je na tom mestu
@@ -215,15 +216,18 @@ void GameScene::npcFactory()
     //izberi bazu
     int baza = _generator.bounded(2);
 
+    int sum = 0;
+    for (int a : _npcVector)
+        sum += a;
+
     //napravi npc na toj poziciji
+    _npcs.append(new Npc(baza * 300, 0, 2));
+    this->addItem(_npcs.back());
 
     //emituj hajdovanje labele
     emit npcCreated(sum);
 
     //zaustavi tajmer ako nema vise tenkova za crtanje
-    int sum = 0;
-    for (int a : _npcVector)
-        sum += a;
     if (sum == 0)
         _npcCreating.stop();
 }
@@ -241,11 +245,6 @@ void GameScene::movePlayers()
 }
 
 void GameScene::moveNpcs()
-{
-
-}
-
-void GameScene::moveBullets()
 {
 
 }
