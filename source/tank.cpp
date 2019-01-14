@@ -3,6 +3,8 @@
 
 #include <QPainter>
 
+#include <QDebug>
+
 Tank::Tank(int id)
     :grid(27)
     {
@@ -55,60 +57,87 @@ void Tank::setWeapon(const Tank::Weapon &newWeapon)
     _weapon = newWeapon;
 }
 
+void Tank::setUp(bool t)
+{
+    _movingUp = t;
+    if (t)
+    {
+        _activeIcon = "Up";  //!< this is enough to happen only one
+        _movingDown = _movingLeft = _movingRight = false;
+    }
+    adjustPosition();
+}
+
+void Tank::setDown(bool t)
+{
+    _movingDown = t;
+    if (t)
+    {
+        _activeIcon = "Down";
+        _movingUp = _movingLeft = _movingRight = false;
+    }
+    adjustPosition();
+}
+
+void Tank::setRight(bool t)
+{
+    _movingRight = t;
+    if (t)
+    {
+        _activeIcon = "Right";
+        _movingUp = _movingLeft = _movingDown = false;
+    }
+    adjustPosition();
+}
+
+void Tank::setLeft(bool t)
+{
+    _movingLeft = t;
+    if (t)
+    {
+        _activeIcon = "Left";
+        _movingUp = _movingDown = _movingRight = false;
+    }
+    adjustPosition();
+}
+
+
 int Tank::getDirection()
 {
     if (!_activeIcon.compare("Up"))
         return 1;
     if (!_activeIcon.compare("Down"))
         return 3;
-    if(!_activeIcon.compare("Right"))
+    if (!_activeIcon.compare("Right"))
         return 2;
 
     return 4;
 }
 
-
-//TODO: treba setovati pokazivac na funkciju na
-//horizontal ili verical zavisi od fje do fje
-void Tank::setUp(bool t)
+void Tank::reMoving()
 {
-    _activeIcon = "Up";     //!< this is enough to happen only one
-    _moving = t;              //!< this indicates that tank should moving
-    adjustPosition();
-    move();
+    if (_movingUp)
+        _y += _speed;
+    else if (_movingRight)
+        _x -= _speed;
+    else if (_movingDown)
+        _y -= _speed;
+    else if (_movingLeft)
+        _x += _speed;
 }
 
-void Tank::setDown(bool t)
+void Tank::colisionDetection()
 {
-    _activeIcon = "Down";
-    _moving = t;
-    adjustPosition();
-    move();
+    QList<QGraphicsItem*> list = collidingItems();
+    int p = 0;
+    foreach(QGraphicsItem* i , list)
+    {
+        qDebug() << QString::number(p);
+        reMoving();
+    }
+    qDebug() << QString::number(p);
+
 }
-
-void Tank::setRight(bool t)
-{
-    _activeIcon = "Right";
-    _moving = t;
-    adjustPosition();
-    move();
-}
-
-void Tank::setLeft(bool t)
-{
-    _activeIcon = "Left";
-    _moving = t;
-    adjustPosition();
-    move();
-}
-
-//void Tank::move()
-//{
-//    if(!_moving)
-//        return;
-
-//    //fmove(); TODO: napravi pokazivac na funkciju
-//}
 
 QRectF Tank::boundingRect() const
 {
@@ -123,39 +152,38 @@ void Tank::paint(QPainter *painter,
     QRectF source(0.0, 0.0, _size, _size);
     QRectF target(_x, _y, _size, _size);
     painter->drawPixmap(target, _icons[_activeIcon], source);
-//    painter->setBrush(QBrush(_icons[_activeIcon].scaledToHeight(_size)));
-//    painter->drawRect(_x, _y, _size, _size);
 }
 
 void Tank::move() {
-    int direction = getDirection();
-    switch (direction) {
-        case 1:
-            _y -= _speed;
-            break;
-        case 2:
-            _x += _speed;
-            break;
-        case 3:
-            _y += _speed;
-            break;
-        case 4:
-            _x -= _speed;
-            break;
-    }
+    if(!_moving)
+        return;
 
+    if (_movingUp)
+        _y -= _speed;
+    else if (_movingRight)
+        _x += _speed;
+    else if (_movingDown)
+        _y += _speed;
+    else if (_movingLeft)
+        _x -= _speed;
+}
+
+void Tank::setMoving(bool x)
+{
+    _moving = x;
 }
 
 void Tank::adjustPosition()
 {
     if (_x < 0)
-            _x = 0;
-        else if (_y < 0)
-            _y = 0;
-        else if (_x > 600)
-            _x = 600;
-        else if (_y > 600)
-            _y = 600;
+        _x = 0;
+    else if (_y < 0)
+        _y = 0;
+    else if (_x > 600)
+        _x = 600;
+    else if (_y > 600)
+        _y = 600;
+
     int i = 0;
     if (getDirection() == 1 || getDirection() == 3) {
         for (i = 0; i < 27; i++) {

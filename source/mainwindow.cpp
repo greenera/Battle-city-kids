@@ -40,6 +40,10 @@ MainWindow::MainWindow(QWidget *parent) :
     _pause = new Pause();
     _ui->presented->addWidget(_pause);
 
+    //set sound effect
+    _testEfekat.setSource(QUrl::fromLocalFile("resources/music.wav"));
+    _testEfekat.setLoopCount(1);
+
     //connect
     QObject::connect(_gameWrapper, &GameProxy::gameOver,
                      this, [&] () {
@@ -50,7 +54,17 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QObject::connect(_menu->getStartButton(), &QPushButton::clicked,
                      this, [&] (){
-        _gameWrapper->initializeGame();
+        _testEfekat.play();
+        _gameWrapper->initializeGame(1);
+        _gameWidget->setHidden(false);
+        _menu->setHidden(true);
+        _inGame = true;
+    });
+
+    QObject::connect(_menu->getStartButton2(), &QPushButton::clicked,
+                     this, [&] (){
+        _testEfekat.play();
+        _gameWrapper->initializeGame(2);
         _gameWidget->setHidden(false);
         _menu->setHidden(true);
         _inGame = true;

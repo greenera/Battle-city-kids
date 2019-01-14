@@ -23,6 +23,7 @@ public:
     Menu& operator = (const Menu&) = delete;
 
     QPushButton *getStartButton();
+    QPushButton *getStartButton2();
 
     void keyPressEvent(QKeyEvent* event) override;
 

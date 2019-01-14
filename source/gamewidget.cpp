@@ -47,7 +47,7 @@ GameWidget::~GameWidget()
     delete _ui;
 }
 
-void GameWidget::initializeLevel(int level)
+void GameWidget::initializeLevel(int level, int numOfPlayers)
 {
     //sredi svoje stvari
     setLevelName(level);
@@ -57,7 +57,8 @@ void GameWidget::initializeLevel(int level)
 
     //kaze sceni da se inicijalizuje
     _ui->activegame->scene()->clear();
-    _scene->initializeLevel(2);
+
+    _scene->initializeLevel(level,numOfPlayers);
 
     _small_tenk = QPixmap(":/small_tank/small_npc.jpg");
     initSmallTankText();
