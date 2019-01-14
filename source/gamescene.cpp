@@ -62,6 +62,10 @@ void GameScene::initializeLevel(int level, int numOfPlayers)
         Player *igrac2 = new Player(2);
         this->addItem(igrac2);
         _players[1] = igrac2;
+        _players[0]->shootingEnabled = true;
+        _shooting.setInterval(2000);
+        _shooting.setSingleShot(true);
+        QObject::connect(&_shooting, &QTimer::timeout, this, [&](){_players[0]->shootingEnabled = true;});
 
         igrac2->setDown(false);
         igrac2->setUp(false);
@@ -118,6 +122,9 @@ void GameScene::update()
         _players[1]->colisionDetection();
 
     _parrent->update();
+    foreach(Bullet* b, bullets)
+        b->moveBullet();
+
 }
 
 void GameScene::countBonusScore(int typeOfKilledEnemy)
@@ -233,6 +240,19 @@ void GameScene::keyPressEvent(QKeyEvent *event)
         }
     }
 
+    if(event->key() == Qt::Key_F) {
+        if (_players[0]->shootingEnabled == true) {
+            _shooting.start();
+            bullets.append(_players[0]->shoot());
+            this->addItem(bullets.back());
+        }
+    }
+
+    if(event->key() == Qt::Key_L) {
+        bullets.append(_players[1]->shoot());
+        this->addItem(bullets.back());
+    }
+
     if(event->key() == Qt::Key_H)
     {
         qDebug() << "been there";
@@ -299,3 +319,5 @@ void GameScene::keyReleaseEvent(QKeyEvent *event)
         }
     }
 }
+
+
