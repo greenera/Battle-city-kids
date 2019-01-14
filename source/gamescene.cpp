@@ -59,7 +59,7 @@ void GameScene::initializeLevel(int level, int numOfPlayers)
     igrac1->setLeft(false);
     igrac1->setRight(false);
     _players[0]->shootingEnabled = true;
-    _shooting.setInterval(2000);
+    _shooting.setInterval(1500);
     _shooting.setSingleShot(true);
     QObject::connect(&_shooting, &QTimer::timeout, this, [&](){_players[0]->shootingEnabled = true;});
 
@@ -76,7 +76,7 @@ void GameScene::initializeLevel(int level, int numOfPlayers)
         igrac2->setLeft(false);
         igrac2->setRight(false);
         _players[1]->shootingEnabled = true;
-        _shooting.setInterval(2000);
+        _shooting.setInterval(1500);
         _shooting.setSingleShot(true);
         QObject::connect(&_shooting, &QTimer::timeout, this, [&](){_players[1]->shootingEnabled = true;});
     }
@@ -128,6 +128,18 @@ void GameScene::update()
         _players[0]->colisionDetection();
     if(_playerStatus[1] == true)
         _players[1]->colisionDetection();
+
+    foreach(Bullet* b, bullets) {
+        QList<QGraphicsItem*> list = b->collidingItems();
+        if (list.size() > 0) {
+            b->_moving = false;
+            b->setX(-100);
+            b->setY(-100);
+            foreach(QGraphicsItem* i , list) {
+                this->removeItem(i);
+            }
+        }
+    }
 
     _parrent->update();
 }

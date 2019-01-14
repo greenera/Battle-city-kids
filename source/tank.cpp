@@ -1,5 +1,5 @@
 #include "include/tank.h"
-#define SPEED_LIMIT 2
+#define SPEED_LIMIT 4
 
 #include <QPainter>
 
@@ -195,18 +195,22 @@ void Tank::adjustPosition()
 
 Bullet *Tank::shoot() {
     qreal x = _x, y = _y;
-    if (getDirection() == 1)
+    if (getDirection() == 1) {
         x = _x + 20;
+        y = _y - 10;
+    }
     else if (getDirection() == 2) {
-        x = _x + 50;
+        x = _x + 60;
         y = _y + 20;
     }
     else if (getDirection() == 3){
         x = _x + 20;
-        y = _y + 50;
+        y = _y + 60;
     }
-    else
+    else {
+        x = _x - 10;
         y = _y + 20;
+    }
     Bullet* b = new Bullet(x, y, 0, 8, getDirection());
     shootingEnabled = false;
     return b;
