@@ -11,7 +11,7 @@ public:
     // Constructor
     Bullet(int x, int y, int parent, qreal speed, int direction);
     ~Bullet() override;
-   // Bullet(const Bullet& other);
+    Bullet(const Bullet& other) = delete;
 
     // Overrides from QGraphicsItem
     QRectF boundingRect() const override;

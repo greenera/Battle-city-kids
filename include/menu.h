@@ -16,9 +16,8 @@ class Menu : public QWidget
 
 public:
     explicit Menu(QWidget *parent = nullptr);
-    //~Menu();
+    ~Menu() override = default;
 
-    //deleted copy constructor and operator '='
     Menu(const Menu&) = delete;
     Menu& operator = (const Menu&) = delete;
 

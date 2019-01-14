@@ -7,7 +7,6 @@
 class Npc : public Tank
 {
 public:
-    //TODO Ivana: implementiraj sveto trojstvo
     Npc(qreal x, qreal y, int id);
     ~Npc();
     Npc(const Npc& other);

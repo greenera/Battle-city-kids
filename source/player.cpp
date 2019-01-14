@@ -12,11 +12,9 @@ Player::Player(int id)
 {
     _x = START_POSITION_X + id * DISTANCE;
     _y = START_POSITION_Y;
-
+    _speed = 6;
     _activeIcon = "Up";
 
-
-    _speed = 2;
     _resistent = 0;
     _weapon = Weapon::gun;
     _isManual = true;

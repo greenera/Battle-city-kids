@@ -195,7 +195,7 @@ Bullet *Tank::shoot() {
         x = _x - 10;
         y = _y + 20;
     }
-    Bullet* b = new Bullet(x, y, 0, 8, getDirection());
+    Bullet* b = new Bullet(x, y, 0, 9, getDirection());
     shootingEnabled = false;
     return b;
 }

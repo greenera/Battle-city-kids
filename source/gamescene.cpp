@@ -193,9 +193,14 @@ void GameScene::update()
                 this->removeItem(i);
                 if (i == _phoenix)
                     emit exitRequested();
+                
             }
         }
     }
+    //svi: npc, scena, player, tank
+    //m: boost, , gscene, help, pause,
+    //n: block, bullet, gscene,
+    //i: gproxy, gscene, gwidget, mainw,
 
     foreach(Npc* n, _npcs)
     {

@@ -68,7 +68,6 @@ private:
     /*!
      * \brief loadLevel opens file for activeLevel
      * and fill the matrixOfLevel acording to that file.
-         TODO: Generate vector of npcs .
      *
      * \details Function should be called at the begining of every level
      * which is when npcs vector become empty. The file should have

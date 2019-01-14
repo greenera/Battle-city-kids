@@ -21,7 +21,6 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    //deleted copy constructor and operator '='
     MainWindow(const MainWindow&) = delete;
     MainWindow& operator = (const MainWindow&) = delete;
 

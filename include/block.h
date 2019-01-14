@@ -23,7 +23,7 @@ public:
 
     // Constructor used for creating phoenix
     Block(int x, int y, QString texture);
-    //~Block();
+    ~Block() override = default;
     Block(const Block& other) = delete;
 
     // Overrides from QGraphicsObject

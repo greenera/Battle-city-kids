@@ -37,7 +37,7 @@ public:
 
     Boost(const Boost& other) = delete;
 
-    //~Boost();
+    ~Boost() override = default;
 
     QRectF boundingRect() const override;
     void paint(QPainter *painter,
