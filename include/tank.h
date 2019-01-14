@@ -61,6 +61,8 @@ public:
      */
     int getDirection();
 
+    void colisionDetection();
+
     /*!
      * \brief setUp sets indicator if tank is faced to 'up'
      * \param t
@@ -71,9 +73,13 @@ public:
     void setLeft(bool t);
 
     void move();
+    void setMoving(bool x);
+    void reMoving();
 
 protected:
-    int _moving;           //!< do tank is moving (0 -not, 1 - hoizontal, 2 - vertical)
+    bool _moving; //should be set and reset at the collision
+
+    bool _movingUp, _movingDown, _movingLeft, _movingRight;
     int _resistent;         //!< how many times can survive bullet
     qreal _speed;           //!< should be incremented/decremented when get boost
     Weapon _weapon;

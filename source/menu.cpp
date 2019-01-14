@@ -24,6 +24,11 @@ QPushButton *Menu::getStartButton()
     return _ui->play_button;
 }
 
+QPushButton *Menu::getStartButton2()
+{
+    return _ui->play_button2;
+}
+
 void Menu::keyPressEvent(QKeyEvent* event)
 {
     switch(event->key())

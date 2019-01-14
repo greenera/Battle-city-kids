@@ -45,7 +45,7 @@ void GameScene::resume()
 }
 
 
-void GameScene::initializeLevel(int level)
+void GameScene::initializeLevel(int level, int numOfPlayers)
 {
     _parrent->setFocus();
 
@@ -54,18 +54,32 @@ void GameScene::initializeLevel(int level)
 
     //createNpcs(); TODO Ivana: implementiraj
 
-    //    //START OF TEST1
-        Player *igrac1 = new Player(1);
+    _playerStatus[0] = true;
+    _playerStatus[1] = false;
+    Player *igrac1 = new Player(1);
+    _players[0] = igrac1;
+    this->addItem(igrac1);
+    igrac1->setDown(false);
+    igrac1->setUp(false);
+    igrac1->setLeft(false);
+    igrac1->setRight(false);
+    igrac1->setMoving(true);
+
+    if(--numOfPlayers > 0)
+    {
+        _playerStatus[1] = true;
         Player *igrac2 = new Player(2);
-        this->addItem(igrac1);
         this->addItem(igrac2);
-        _players[0] = igrac1;
         _players[1] = igrac2;
 
-    //    //END OF TEST1
+        igrac2->setDown(false);
+        igrac2->setUp(false);
+        igrac2->setLeft(false);
+        igrac2->setRight(false);
+        igrac2->setMoving(true);
+    }
 
     _levelTicker.start();
-    update();
 }
 
 
@@ -100,9 +114,19 @@ void GameScene::loadLevel(int levelNum)
 
     file.close(); // Close the file
 }
+
 void GameScene::update()
 {
+    //change position of dinamic objects
+    movePlayers();
+    moveNpcs();
+    moveBullets();
+
     //do the changes
+    if(_playerStatus[0])
+        _players[0]->colisionDetection();
+    if(_playerStatus[1])
+        _players[1]->colisionDetection();
 
     _parrent->update();
 }
@@ -147,6 +171,28 @@ void GameScene::printMap(const QVector<QVector<int>> matrixOfLevel)
     this->addItem(phoenix);
 }
 
+void GameScene::movePlayers()
+{
+    if (_players[0] != nullptr)
+    {
+        _players[0]->move();
+    }
+    if (_players[1] != nullptr)
+    {
+        _players[1]->move();
+    }
+}
+
+void GameScene::moveNpcs()
+{
+
+}
+
+void GameScene::moveBullets()
+{
+
+}
+
 
 
 //TODO: srediti da ne moze da se krece ukoso
@@ -155,8 +201,10 @@ void GameScene::keyPressEvent(QKeyEvent *event)
     //consider 'w' 'a' 's' and 'd'
     if(_players[0] != nullptr)
     {
+        qDebug() << "in players one area";
         if(event->key() == Qt::Key_W)
         {
+            qDebug() << "in player1 up";
             _players[0]->setUp(true);
         }
         else if (event->key() == Qt::Key_A)
@@ -176,8 +224,10 @@ void GameScene::keyPressEvent(QKeyEvent *event)
     //consider 'up' 'down' 'left' and 'right'
     if(_players[1] != nullptr)
     {
+        qDebug() << "in player2s area";
         if(event->key() == Qt::Key_Up)
         {
+            qDebug() << "in player2 up";
             _players[1]->setUp(true);
         }
         else if (event->key() == Qt::Key_Left)
@@ -202,7 +252,6 @@ void GameScene::keyPressEvent(QKeyEvent *event)
     }
     if(event->key() == Qt::Key_P)
     {
-        //TODO: add pause
         _levelTicker.stop();
         emit pauseRequested();
     }
@@ -210,6 +259,8 @@ void GameScene::keyPressEvent(QKeyEvent *event)
     if(event->key() == Qt::Key_Escape)
     {
         //TODO: add backToMenu
+        _levelTicker.stop();
+        emit exitRequested();
     }
 
     if(event->key() == Qt::Key_T)
