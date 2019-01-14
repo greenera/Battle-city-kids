@@ -46,6 +46,7 @@ signals:
 private:
     //moving
     void movePlayers();
+    void moveBullets();
     void moveNpcs();
 
     //boost earning

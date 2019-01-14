@@ -81,7 +81,6 @@ void GameScene::initializeLevel(int level, int numOfPlayers)
         Player *igrac2 = new Player(2);
         this->addItem(igrac2);
         _players[1] = igrac2;
-        _playerStatus[1] = true;
 
         igrac2->setDown(false);
         igrac2->setUp(false);
@@ -207,12 +206,18 @@ int GameScene::roulet()
     for (int i = 0; i < 4; i++) {
         sum += _npcVector[i];
     }
-
-void GameScene::moveNpcs()
-{
     //izaberi random broj 0-sum
     int choosen = _generator.bounded(sum);
-
+    //prolazi kroz petlju ponovo
+    //i vidi koji je na tom mestu
+    int sum2 = 0;
+    for (int i = 0; i < 4; i++)
+    {
+        sum2 += _npcVector[i];
+        if(choosen < sum2)
+            return i;
+    }
+    return sum; //actualy never happen
 }
 
 void GameScene::moveBullets()
@@ -221,24 +226,6 @@ void GameScene::moveBullets()
             b->moveBullet();
 }
 
-
-
-//TODO: srediti da ne moze da se krece ukoso
-    //prolazi kroz petlju ponovo
-    //i vidi koji je na tom mestu
-    int sum2 = 0;
-    for (int i = 0; i < 4; i++)
-    {
-        sum2 += _npcVector[i];
-
-        if(choosen < sum2)
-            return i;
-    }
-
-    return sum; //actualy never happen
-}
-
-//TODO: treba da se umanji sum
 
 void GameScene::npcFactory()
 {
@@ -250,12 +237,12 @@ void GameScene::npcFactory()
 
     //izberi bazu
     int baza = _generator.bounded(2);
-
     int sum = 0;
     for (int a : _npcVector)
         sum += a;
 
     //napravi npc na toj poziciji
+    _npcs.append(new Npc(baza * 300, 0, 2));
     _npcs.append(new Npc(baza * 300, 0, 2 + npcType));
     this->addItem(_npcs.back());
 
@@ -280,6 +267,10 @@ void GameScene::movePlayers()
     }
 }
 
+
+void GameScene::moveNpcs()
+{
+}
 
 //TODO: add macros for 501
 void GameScene::onStar(int playerNum)
@@ -394,9 +385,9 @@ void GameScene::keyPressEvent(QKeyEvent *event)
 
 void GameScene::keyReleaseEvent(QKeyEvent *event)
 {
-    if(_playerStatus[0] == true) {
+    if(_players[0] != nullptr) {
         //consider 'w' 'a' 's' and 'd'
-        if(event->key() == Qt::Key_W)
+        if (event->key() == Qt::Key_W)
         {
             _players[0]->setUp(false);
         }
@@ -414,7 +405,7 @@ void GameScene::keyReleaseEvent(QKeyEvent *event)
         }
 }
     //consider 'up' 'down' 'left' and 'right'
-    if(_playerStatus[1] == true)
+    if(_players[1] != nullptr)
     {
         if(event->key() == Qt::Key_Up)
         {
