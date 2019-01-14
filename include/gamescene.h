@@ -98,6 +98,7 @@ private:
 
     QVector<QVector<int>> matrixOfLevel;
     QTimer _levelTicker;
+    int _numOfLevel;
     const int _sizeOfScene = 25 * 26; //!< 26 stands for number of rects, and 25 for size of every rect
 
     QGraphicsView *_parrent;

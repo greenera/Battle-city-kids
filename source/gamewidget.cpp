@@ -59,12 +59,11 @@ void GameWidget::initializeLevel(int level, int numOfPlayers)
     _refreshingLabel.stop(); //!< stop so it doesnt crash when try at the same time to change text
     resetTimeLabel(); //!< initialize value that is shown
     _refreshingLabel.start(); //!< start again
+    setVisibleSmallTank();
 
     //kaze sceni da se inicijalizuje
     _ui->activegame->scene()->clear();
     _scene->initializeLevel(level,numOfPlayers);
-
-    setVisibleSmallTank();
 }
 
 

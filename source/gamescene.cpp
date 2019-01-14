@@ -45,14 +45,22 @@ void GameScene::resume()
 
 void GameScene::initializeLevel(int level, int numOfPlayers)
 {
+    _numOfLevel = level;
     _parrent->setFocus();
 
     loadLevel(level);
     printMap(matrixOfLevel);
 
     _npcCreating.setInterval(4000 - 120 * level);
-    _npcCreating.start();
 
+    for (int i = 0; i < 3; i++)
+    {
+        _npcVector[i]--;
+        _npcs.append(new Npc(i * 300, 0, i+1));
+        this->addItem(_npcs.back());
+
+        emit npcCreated(20 - i);
+    }
     Player *igrac1 = new Player(1);
     _players[0] = igrac1;
     this->addItem(igrac1);
@@ -88,6 +96,7 @@ void GameScene::initializeLevel(int level, int numOfPlayers)
     else
         _players[1] = nullptr;
 
+    _npcCreating.start();
     _levelTicker.start();
 }
 
@@ -210,6 +219,9 @@ int GameScene::roulet()
 
 void GameScene::npcFactory()
 {
+    if (_npcVector.length() >= _numOfLevel + 5)
+        return ;
+
     //izaberi jednog (rulet metodom)
     int npcType = roulet();
 
@@ -221,11 +233,12 @@ void GameScene::npcFactory()
         sum += a;
 
     //napravi npc na toj poziciji
-    _npcs.append(new Npc(baza * 300, 0, 2));
+    _npcs.append(new Npc(baza * 300, 0, 2 + npcType));
     this->addItem(_npcs.back());
 
     //emituj hajdovanje labele
     emit npcCreated(sum);
+    _npcVector[npcType]--;
 
     //zaustavi tajmer ako nema vise tenkova za crtanje
     if (sum == 0)
@@ -357,7 +370,6 @@ void GameScene::keyPressEvent(QKeyEvent *event)
     if(event->key() == Qt::Key_T)
     { //this one is used for testing
         emit killed();
-        onStar(1);
         onBomb();
     }
 }

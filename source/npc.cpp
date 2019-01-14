@@ -1,7 +1,7 @@
 #include "include/npc.h"
 
 Npc::Npc(qreal x, qreal y, int id)
-   : Tank(id)
+   : Tank(id+2)
 {
     _activeIcon = "Down";
 
@@ -12,12 +12,13 @@ Npc::Npc(qreal x, qreal y, int id)
 
     _x = x;
     _y = y;
+    if (id > 4)
+        _speed = 4;
+    if (id == 6)
+        _resistent = 4;
 }
 
-Npc::~Npc()
-{
-
-}
+Npc::~Npc() = default;
 
 //Npc::Npc(const Npc &other) = default;
 
