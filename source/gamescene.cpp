@@ -203,6 +203,8 @@ void GameScene::keyPressEvent(QKeyEvent *event)
     if(event->key() == Qt::Key_P)
     {
         //TODO: add pause
+        _levelTicker.stop();
+        emit pauseRequested();
     }
 
     if(event->key() == Qt::Key_Escape)

@@ -69,6 +69,7 @@ public:
     void setDown(bool t);
     void setRight(bool t);
     void setLeft(bool t);
+
     void move();
 
 protected:

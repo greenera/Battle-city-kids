@@ -38,7 +38,8 @@ SOURCES += \
     source/bullet.cpp \
     source/help.cpp \
     source/gamescene.cpp \
-    source/gameproxy.cpp
+    source/gameproxy.cpp \
+    ui/pause.cpp
 
 HEADERS += \
         include/mainwindow.h \
@@ -53,13 +54,15 @@ HEADERS += \
     include/bullet.h \
     include/help.h \
     include/gamescene.h \
-    include/gameproxy.h
+    include/gameproxy.h \
+    ui/pause.h
 
 FORMS += \
         ui/mainwindow.ui \
         ui/menu.ui \
     ui/gamewidget.ui \
-    ui/help.ui
+    ui/help.ui \
+    ui/pause.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -74,4 +77,5 @@ RESOURCES += \
     resources/levels/levels.qrc \
     resources/main_menu/main_menu.qrc \
     resources/help.qrc \
-    resources/pom.wav
+    resources/music.wav \
+    resources/levels/small_tank.qrc

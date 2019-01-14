@@ -148,6 +148,14 @@ void Tank::move() {
 
 void Tank::adjustPosition()
 {
+    if (_x < 0)
+            _x = 0;
+        else if (_y < 0)
+            _y = 0;
+        else if (_x > 600)
+            _x = 600;
+        else if (_y > 600)
+            _y = 600;
     int i = 0;
     if (getDirection() == 1 || getDirection() == 3) {
         for (i = 0; i < 27; i++) {
