@@ -15,14 +15,26 @@ class GameProxy : public QObject
 public:
     GameProxy(QWidget *parent);
     GameWidget *getGameWidget() const;
-
+    /**
+     * @brief initializeGame function for game initialization
+     */
     void initializeGame(int numOfPlayers);
 
 signals:
+    /**
+     * @brief gameOver signal end of current game
+     */
     void gameOver();
 
 private:
+    /**
+     * @brief changeLifes
+     */
     void changeLifes();
+    /**
+     * @brief exitToMainMenu return to main menu
+     */
+    void exitToMainMenu();
 
     /*!
      * \brief updateScore

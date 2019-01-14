@@ -58,7 +58,10 @@ void GameWidget::initializeLevel(int level, int numOfPlayers)
     //kaze sceni da se inicijalizuje
     _ui->activegame->scene()->clear();
     //TODO: ovu dvojku zameniti sa 'level'
-    _scene->initializeLevel(2,numOfPlayers);
+    _scene->initializeLevel(level,numOfPlayers);
+
+    _small_tenk = QPixmap(":/small_tank/small_npc.jpg");
+    initSmallTankText();
 }
 
 
@@ -113,4 +116,29 @@ void GameWidget::setTimeLabel()
 
     _ui->timeLabel->setText(QString::number(_minutes) + "m " +
                             QString::number(_sec) + "s");
+}
+
+void GameWidget::initSmallTankText()
+{
+    _ui->small_tank_1->setPixmap(_small_tenk);
+    _ui->small_tank_2->setPixmap(_small_tenk);
+    _ui->small_tank_3->setPixmap(_small_tenk);
+    _ui->small_tank_4->setPixmap(_small_tenk);
+    _ui->small_tank_5->setPixmap(_small_tenk);
+    _ui->small_tank_6->setPixmap(_small_tenk);
+    _ui->small_tank_7->setPixmap(_small_tenk);
+    _ui->small_tank_8->setPixmap(_small_tenk);
+    _ui->small_tank_9->setPixmap(_small_tenk);
+    _ui->small_tank_10->setPixmap(_small_tenk);
+    _ui->small_tank_11->setPixmap(_small_tenk);
+    _ui->small_tank_12->setPixmap(_small_tenk);
+    _ui->small_tank_13->setPixmap(_small_tenk);
+    _ui->small_tank_14->setPixmap(_small_tenk);
+    _ui->small_tank_15->setPixmap(_small_tenk);
+    _ui->small_tank_16->setPixmap(_small_tenk);
+    _ui->small_tank_17->setPixmap(_small_tenk);
+    _ui->small_tank_18->setPixmap(_small_tenk);
+    _ui->small_tank_19->setPixmap(_small_tenk);
+    _ui->small_tank_20->setPixmap(_small_tenk);
+
 }

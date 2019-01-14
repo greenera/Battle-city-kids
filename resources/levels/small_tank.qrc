@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/small_tank">
+        <file>small_npc.jpg</file>
+    </qresource>
+</RCC>

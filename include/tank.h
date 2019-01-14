@@ -61,6 +61,8 @@ public:
      */
     int getDirection();
 
+    void colisionDetection();
+
     /*!
      * \brief setUp sets indicator if tank is faced to 'up'
      * \param t
@@ -69,6 +71,7 @@ public:
     void setDown(bool t);
     void setRight(bool t);
     void setLeft(bool t);
+
     void move();
     void reMoving(bool x);
 

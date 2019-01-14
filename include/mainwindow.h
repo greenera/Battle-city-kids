@@ -7,6 +7,7 @@
 #include "include/gameproxy.h"
 #include "include/help.h"
 #include <QSoundEffect>
+#include "ui/pause.h"
 
 namespace Ui {
 class MainWindow;
@@ -35,10 +36,21 @@ private slots:
      */
     void hideHelp();
 
+    /**
+     * @brief showPause show pause screen
+     */
+    void showPause();
+
+    /**
+     * @brief hidePause hide pause screen
+     */
+    void hidePause();
+
 private:
     bool _inGame;
 
     Help *_help;
+    Pause* _pause;
     Menu *_menu;
     GameWidget *_gameWidget;
     GameProxy *_gameWrapper;

@@ -3,6 +3,8 @@
 
 #include <QPainter>
 
+#include <QDebug>
+
 Tank::Tank(int id)
     :grid(27)
 {
@@ -15,7 +17,6 @@ Tank::Tank(int id)
     else
         iconName = iconName.append("player/player").append(QString::number(id));
 
-    //TODO dogovor: da li da ostane ovako ili da se radi rotacija?
     _icons.insert("Up", QPixmap(iconName + "Up.png"));
     _icons.insert("Down", QPixmap(iconName + "Down.png"));
     _icons.insert("Right", QPixmap(iconName + "Right.png"));
@@ -99,6 +100,31 @@ void Tank::setLeft(bool t)
     adjustPosition();
 }
 
+int Tank::getDirection()
+{
+    if (!_activeIcon.compare("Up"))
+        return 1;
+    if (!_activeIcon.compare("Down"))
+        return 3;
+    if (!_activeIcon.compare("Right"))
+        return 2;
+
+    return 4;
+}
+
+void Tank::colisionDetection()
+{
+    QList<QGraphicsItem*> list = collidingItems();
+    foreach(QGraphicsItem* i , list)
+    int p = 0;
+    {
+        qDebug() << QString::number(p);
+        reMoving();
+    }
+    qDebug() << QString::number(p);
+}
+
+
 QRectF Tank::boundingRect() const
 {
     return QRectF(_x, _y, _size, _size);
@@ -112,20 +138,25 @@ void Tank::paint(QPainter *painter,
     QRectF source(0.0, 0.0, _size, _size);
     QRectF target(_x, _y, _size, _size);
     painter->drawPixmap(target, _icons[_activeIcon], source);
-    //    painter->setBrush(QBrush(_icons[_activeIcon].scaledToHeight(_size)));
-    //    painter->drawRect(_x, _y, _size, _size);
 }
 
-int Tank::getDirection()
-{
-    if (!_activeIcon.compare("Up"))
-        return 1;
-    if (!_activeIcon.compare("Down"))
-        return 3;
-    if (!_activeIcon.compare("Right"))
-        return 2;
+void Tank::move() {
+    int direction = getDirection();
+    switch (direction) {
+        case 1:
+            _y -= _speed;
+            break;
+        case 2:
+            _x += _speed;
+            break;
+        case 3:
+            _y += _speed;
+            break;
+        case 4:
+            _x -= _speed;
+            break;
+    }
 
-    return 4;
 }
 
 void Tank::move()
@@ -151,12 +182,6 @@ void Tank::reMoving()
     else if (_movingLeft)
         _x += _speed;
 }
-
-void Tank::setMoving(bool x)
-{
-    _moving = x;
-}
-
 void Tank::adjustPosition()
 {
     if (_x < 0)

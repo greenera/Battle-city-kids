@@ -38,10 +38,14 @@ private:
     void resetTimeLabel();
     void setTimeLabel();
 
+    void initSmallTankText();
+
     GameScene *_scene;
     Ui::GameWidget *_ui;
     QTimer _refreshingLabel;
     int _minutes, _sec;
+
+    QPixmap _small_tenk;
 };
 
 #endif // GAMEWIDGET_H

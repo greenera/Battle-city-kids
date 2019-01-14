@@ -36,6 +36,8 @@ public slots:
 signals:
     void endOfLevel(double score);
     void helpRequested();
+    void pauseRequested();
+    void exitRequested();
     void killed();
 
 private:
@@ -76,6 +78,9 @@ private:
 
     Player* _players[2]; //!< live players (max 2)
     QVector<Boost> _powerups;
+
+    bool _playerStatus[2]; //!< life status of the players
+
     QVector<QVector<int>> matrixOfLevel;
 
     QTimer _levelTicker;

@@ -10,6 +10,9 @@ GameProxy::GameProxy(QWidget *parrent)
 
     QObject::connect(_gameWidget->getGameScene(), &GameScene::killed,
                      this, &GameProxy::changeLifes);
+
+    QObject::connect(_gameWidget->getGameScene(), &GameScene::exitRequested,
+                     this, &GameProxy::exitToMainMenu);
 }
 
 GameWidget *GameProxy::getGameWidget() const
@@ -40,6 +43,15 @@ void GameProxy::changeLifes()
         emit this->gameOver();
     }
     _gameWidget->setLifeInformation(_numOfLives);
+}
+
+void GameProxy::exitToMainMenu()
+{
+    updateScore(0);
+    saveScore();
+    _gameWidget->abort();
+    emit this->gameOver();
+
 }
 
 void GameProxy::updateScore(double bonus)

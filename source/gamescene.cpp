@@ -120,6 +120,10 @@ void GameScene::update()
     moveBullets();
 
     //do the changes
+    if(_playerStatus[0])
+        _players[0]->colisionDetection();
+    if(_playerStatus[1])
+        _players[1]->colisionDetection();
 
     _parrent->update();
 }
@@ -245,12 +249,15 @@ void GameScene::keyPressEvent(QKeyEvent *event)
     }
     if(event->key() == Qt::Key_P)
     {
-        //TODO: add pause
+        _levelTicker.stop();
+        emit pauseRequested();
     }
 
     if(event->key() == Qt::Key_Escape)
     {
         //TODO: add backToMenu
+        _levelTicker.stop();
+        emit exitRequested();
     }
 
     if(event->key() == Qt::Key_T)

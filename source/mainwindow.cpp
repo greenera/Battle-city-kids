@@ -37,6 +37,9 @@ MainWindow::MainWindow(QWidget *parent) :
     _help = new Help();
     _ui->presented->addWidget(_help);
 
+    _pause = new Pause();
+    _ui->presented->addWidget(_pause);
+
     //connect
     QObject::connect(_gameWrapper, &GameProxy::gameOver,
                      this, [&] () {
@@ -68,15 +71,22 @@ MainWindow::MainWindow(QWidget *parent) :
         showHelp();
     });
 
+    QObject::connect(_gameWidget->getGameScene(), &GameScene::pauseRequested,
+                     this, [&](){
+        this->setFocus();
+        showPause();
+    });
+
     //set current state
     _gameWidget->setHidden(true);
     _help->setHidden(true);
+    _pause->setHidden(true);
 
     _inGame = false;
     this->setFocus(); //!< this is important for responding to keyboard
 
     //start TEST
-    _testEfekat.setSource(QUrl::fromLocalFile("resources/pom.wav"));
+    _testEfekat.setSource(QUrl::fromLocalFile("resources/music.wav"));
     _testEfekat.setLoopCount(1);
     _testEfekat.play();
     //end TEST
@@ -95,6 +105,7 @@ void MainWindow::showHelp()
     _gameWidget->setHidden(true);
     _menu->setHidden(true);
     _help->setHidden(false);
+    _pause->setHidden(true);
 }
 
 void MainWindow::hideHelp()
@@ -102,6 +113,27 @@ void MainWindow::hideHelp()
     _gameWidget->setHidden(!_inGame);
     _menu->setHidden(_inGame);
     _help->setHidden(true);
+    _pause->setHidden(true);
+    if(_inGame)
+    {
+        _gameWidget->getGameScene()->resume();
+    }
+}
+
+void MainWindow::showPause()
+{
+    _gameWidget->setHidden(true);
+    _menu->setHidden(true);
+    _help->setHidden(true);
+    _pause->setHidden(false);
+}
+
+void MainWindow::hidePause()
+{
+    _gameWidget->setHidden(!_inGame);
+    _menu->setHidden(_inGame);
+    _help->setHidden(true);
+    _pause->setHidden(true);
     if(_inGame)
     {
         _gameWidget->getGameScene()->resume();
@@ -112,4 +144,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     if(event->key() == Qt::Key_H)
         _help->isHidden() ? showHelp() : hideHelp();
+    else if(event->key() == Qt::Key_P)
+        _pause->isHidden() ? showPause() : hidePause();
 }
