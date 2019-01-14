@@ -6,7 +6,7 @@
 
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets multimedia
 
 TARGET = BattleCityLite
 TEMPLATE = app
@@ -73,4 +73,5 @@ RESOURCES += \
     resources/textures/tanks/npc/npc.qrc \
     resources/levels/levels.qrc \
     resources/main_menu/main_menu.qrc \
-    resources/help.qrc
+    resources/help.qrc \
+    resources/pom.wav

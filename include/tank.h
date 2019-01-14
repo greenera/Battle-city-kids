@@ -59,7 +59,7 @@ public:
      * \return 1, 2, 3 or 4 depending on wich way tank is
      * faced (Up, Down, Right or Left).
      */
-    int getSmer();
+    int getDirection();
 
     /*!
      * \brief setUp sets indicator if tank is faced to 'up'
@@ -69,8 +69,8 @@ public:
     void setDown(bool t);
     void setRight(bool t);
     void setLeft(bool t);
-
     void move();
+
 protected:
     int _moving;           //!< do tank is moving (0 -not, 1 - hoizontal, 2 - vertical)
     int _resistent;         //!< how many times can survive bullet
@@ -88,8 +88,8 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 private:
-    void vertical();
-    void horizontal();
+    QVector<int> grid;
+    void adjustPosition();
 };
 
 #endif // TANK_H

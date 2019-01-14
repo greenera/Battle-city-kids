@@ -27,6 +27,8 @@ MainWindow::MainWindow(QWidget *parent) :
     //add all three widgets
     _menu = new Menu();
     _ui->presented->addWidget(_menu);
+    this->setStyleSheet("background-color:black; color:orange;");
+
 
     _gameWrapper = new GameProxy(this);
     _gameWidget = _gameWrapper->getGameWidget();
@@ -64,6 +66,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     _inGame = false;
     this->setFocus(); //!< this is important for responding to keyboard
+
+    //start TEST
+    _testEfekat.setSource(QUrl::fromLocalFile("resources/pom.wav"));
+    _testEfekat.setLoopCount(1);
+    _testEfekat.play();
+    //end TEST
 }
 
 /*!

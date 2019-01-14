@@ -4,7 +4,10 @@
 #include <QPainter>
 
 Tank::Tank(int id)
-{
+    :grid(27)
+    {
+        for (int i = 0; i < 27; i++)
+            grid[i] = i*25;
     //uploading icons
     QString iconName(":/tanks/");
     if(id > 2)
@@ -52,14 +55,14 @@ void Tank::setWeapon(const Tank::Weapon &newWeapon)
     _weapon = newWeapon;
 }
 
-int Tank::getSmer()
+int Tank::getDirection()
 {
     if (!_activeIcon.compare("Up"))
         return 1;
     if (!_activeIcon.compare("Down"))
-        return 2;
-    if(!_activeIcon.compare("Right"))
         return 3;
+    if(!_activeIcon.compare("Right"))
+        return 2;
 
     return 4;
 }
@@ -71,37 +74,41 @@ void Tank::setUp(bool t)
 {
     _activeIcon = "Up";     //!< this is enough to happen only one
     _moving = t;              //!< this indicates that tank should moving
-    _speed = _speed < 0 ? _speed : -_speed;
+    adjustPosition();
+    move();
 }
 
 void Tank::setDown(bool t)
 {
     _activeIcon = "Down";
     _moving = t;
-    _speed = _speed < 0 ? -_speed : _speed;
+    adjustPosition();
+    move();
 }
 
 void Tank::setRight(bool t)
 {
     _activeIcon = "Right";
     _moving = t;
-    _speed = _speed < 0 ? -_speed : _speed;
+    adjustPosition();
+    move();
 }
 
 void Tank::setLeft(bool t)
 {
     _activeIcon = "Left";
     _moving = t;
-    _speed = _speed < 0 ? _speed : -_speed;
+    adjustPosition();
+    move();
 }
 
-void Tank::move()
-{
-    if(!_moving)
-        return;
+//void Tank::move()
+//{
+//    if(!_moving)
+//        return;
 
-    //fmove(); TODO: napravi pokazivac na funkciju
-}
+//    //fmove(); TODO: napravi pokazivac na funkciju
+//}
 
 QRectF Tank::boundingRect() const
 {
@@ -113,16 +120,47 @@ void Tank::paint(QPainter *painter,
                  QWidget *widget)
 {
     painter->setPen(Qt::NoPen);
-    painter->setBrush(QBrush(_icons[_activeIcon].scaledToHeight(_size)));
-    painter->drawRect(_x, _y, _size, _size);
+    QRectF source(0.0, 0.0, _size, _size);
+    QRectF target(_x, _y, _size, _size);
+    painter->drawPixmap(target, _icons[_activeIcon], source);
+//    painter->setBrush(QBrush(_icons[_activeIcon].scaledToHeight(_size)));
+//    painter->drawRect(_x, _y, _size, _size);
 }
 
-void Tank::vertical()
-{
-    _y += _speed;
+void Tank::move() {
+    int direction = getDirection();
+    switch (direction) {
+        case 1:
+            _y -= _speed;
+            break;
+        case 2:
+            _x += _speed;
+            break;
+        case 3:
+            _y += _speed;
+            break;
+        case 4:
+            _x -= _speed;
+            break;
+    }
+
 }
 
-void Tank::horizontal()
+void Tank::adjustPosition()
 {
-    _x += _speed;
+    int i = 0;
+    if (getDirection() == 1 || getDirection() == 3) {
+        for (i = 0; i < 27; i++) {
+            if (_x < grid[i])
+                break;
+        }
+        _x = (_x - grid[i-1]) < (grid[i] - _x) ? grid[i-1] : grid[i];
+    }
+    else {
+        for (i = 0; i < 27; i++) {
+            if (_y < grid[i])
+                break;
+        }
+        _y = (_y - grid[i-1]) < (grid[i] - _y) ? grid[i-1] : grid[i];
+    }
 }

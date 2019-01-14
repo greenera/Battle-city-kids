@@ -6,6 +6,7 @@
 #include "include/menu.h"
 #include "include/gameproxy.h"
 #include "include/help.h"
+#include <QSoundEffect>
 
 namespace Ui {
 class MainWindow;
@@ -43,6 +44,7 @@ private:
     GameProxy *_gameWrapper;
 
     Ui::MainWindow *_ui;
+    QSoundEffect _testEfekat;
 
 protected:
     /*!

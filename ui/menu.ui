@@ -89,6 +89,9 @@
        <property name="layoutDirection">
         <enum>Qt::LeftToRight</enum>
        </property>
+       <property name="styleSheet">
+        <string notr="true">border: none;</string>
+       </property>
        <property name="text">
         <string>PLAY</string>
        </property>
@@ -107,6 +110,9 @@
          <family>Press Start K</family>
          <pointsize>12</pointsize>
         </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border: none;</string>
        </property>
        <property name="text">
         <string>EXIT</string>

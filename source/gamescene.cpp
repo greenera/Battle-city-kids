@@ -20,7 +20,7 @@ GameScene::GameScene(QGraphicsView* parrent)
     this->setSceneRect(0, 0, _sizeOfScene, _sizeOfScene);
     setBackgroundBrush(QColor(0, 0, 0));
 
-    _levelTicker.setInterval(500);
+    _levelTicker.setInterval(50);
     QObject::connect(&_levelTicker, &QTimer::timeout,
                      this, &GameScene::update);
 
@@ -55,11 +55,13 @@ void GameScene::initializeLevel(int level)
     //createNpcs(); TODO Ivana: implementiraj
 
     //    //START OF TEST1
-    //    Player *igrac1 = new Player(1);
-    //    Player *igrac2 = new Player(2);
-    //    _scene->addItem(igrac1);
-    //    _scene->addItem(igrac2);
-    //    scene->update();
+        Player *igrac1 = new Player(1);
+        Player *igrac2 = new Player(2);
+        this->addItem(igrac1);
+        this->addItem(igrac2);
+        _players[0] = igrac1;
+        _players[1] = igrac2;
+
     //    //END OF TEST1
 
     _levelTicker.start();

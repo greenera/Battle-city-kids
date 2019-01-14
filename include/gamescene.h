@@ -72,7 +72,6 @@ private:
 
     Player* _players[2]; //!< live players (max 2)
     QVector<Boost> _powerups;
-
     QVector<QVector<int>> matrixOfLevel;
 
     QTimer _levelTicker;

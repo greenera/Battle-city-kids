@@ -16,7 +16,7 @@ Player::Player(int id)
     _activeIcon = "Up";
 
     //FOR TEST
-    _speed = 0.2;
+    _speed = 2;
     _resistent = 0;
     _weapon = Weapon::gun;
     _isManual = true;
