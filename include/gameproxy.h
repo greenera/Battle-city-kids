@@ -16,7 +16,7 @@ public:
     GameProxy(QWidget *parent);
     GameWidget *getGameWidget() const;
 
-    void initializeGame();
+    void initializeGame(int numOfPlayers);
 
 signals:
     void gameOver();
@@ -37,7 +37,8 @@ public slots:
 
 private:
     int _activeLevel;
-    int _numOfLifes;
+    int _numOfLives;
+    int _playersNum;
     double _score;
 
     GameWidget *_gameWidget;

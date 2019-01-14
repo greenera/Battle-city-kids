@@ -26,7 +26,7 @@ class GameScene : public QGraphicsScene
 
 public:
     GameScene(QGraphicsView* parrent = nullptr);
-    void initializeLevel(int level);
+    void initializeLevel(int level, int numOfPlayers);
     void abort();
     void resume();
 
@@ -39,7 +39,11 @@ signals:
     void killed();
 
 private:
-        /*!
+    void movePlayers();
+    void moveNpcs();
+    void moveBullets();
+
+    /*!
      * \brief loadLevel opens file for activeLevel
      * and fill the matrixOfLevel acording to that file.
          TODO: Generate vector of npcs .

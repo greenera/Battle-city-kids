@@ -17,33 +17,34 @@ GameWidget *GameProxy::getGameWidget() const
     return _gameWidget;
 }
 
-void GameProxy::initializeGame()
+void GameProxy::initializeGame(int numOfPlayers)
 {
     //javi gameWidgetu da se inicijalizuje
-    _gameWidget->initializeLevel(1);
+    _gameWidget->initializeLevel(1, numOfPlayers);
 
     //inicijalizuj svoje vrednosti
     _activeLevel = 1;
-    _numOfLifes = 3;
+    _numOfLives = 3;
+    _playersNum = numOfPlayers;
     _score = 100;
-    _gameWidget->setLifeInformation(_numOfLifes);
+    _gameWidget->setLifeInformation(_numOfLives);
 }
 
 void GameProxy::changeLifes()
 {
-    if (--_numOfLifes < 0)
+    if (--_numOfLives < 0)
     {
         updateScore(0); //!< only add for level reached
         saveScore();
         _gameWidget->abort();
         emit this->gameOver();
     }
-    _gameWidget->setLifeInformation(_numOfLifes);
+    _gameWidget->setLifeInformation(_numOfLives);
 }
 
 void GameProxy::updateScore(double bonus)
 {
-    _score += bonus + _activeLevel + _numOfLifes;
+    _score += bonus + _activeLevel + _numOfLives;
 }
 
 void GameProxy::saveScore()
@@ -67,5 +68,5 @@ void GameProxy::onEndOfLevel(double bonus)
     //show short sum
 
     if (++_activeLevel <= NUM_OF_LEVELS)
-        _gameWidget->initializeLevel(_activeLevel);
+        _gameWidget->initializeLevel(_activeLevel, _playersNum);
 }

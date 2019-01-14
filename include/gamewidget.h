@@ -18,7 +18,7 @@ class GameWidget : public QWidget
 public:
     explicit GameWidget(QWidget *parent = nullptr);
     ~GameWidget();
-    void initializeLevel(int level);
+    void initializeLevel(int level, int numOfLifes);
     GameScene *getGameScene();
     void setLifeInformation(int num);
 
