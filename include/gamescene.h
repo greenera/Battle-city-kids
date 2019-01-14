@@ -75,14 +75,14 @@ private:
     QVector<Npc> _npcs; //!< live npcs
     int numOfEnemyByType[4];
     QVector<int> _npcVector;
+    QVector<Bullet*> bullets;
 
     Player* _players[2]; //!< live players (max 2)
     QVector<Boost> _powerups;
 
-    bool _playerStatus[2]; //!< life status of the players
-
     QVector<QVector<int>> matrixOfLevel;
-
+    QVector<bool> _playerStatus;
+    QTimer _shooting;
     QTimer _levelTicker;
     const int _sizeOfScene = 25 * 26; //!< 26 stands for number of rects, and 25 for size of every rect
 

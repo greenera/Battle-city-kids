@@ -4,6 +4,7 @@
 #include <QGraphicsObject>
 #include <QMap>
 #include <QKeyEvent>
+#include "include/bullet.h"
 
 class Tank : public QGraphicsObject
 {
@@ -73,15 +74,16 @@ public:
     void setLeft(bool t);
 
     void move();
-    void setMoving(bool x);
     void reMoving();
+    Bullet* shoot();
+    bool shootingEnabled;
 
 protected:
     bool _moving; //should be set and reset at the collision
 
     bool _movingUp, _movingDown, _movingLeft, _movingRight;
     int _resistent;         //!< how many times can survive bullet
-    qreal _speed;           //!< should be incremented/decremented when get boost
+    qreal _speed = 5;           //!< should be incremented/decremented when get boost
     Weapon _weapon;
     bool _isManual;         //!< indicates if more then one bullet can be projected at the same time
     qreal _x;               //!< x coordinate

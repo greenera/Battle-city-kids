@@ -1,5 +1,6 @@
 #ifndef NPC_H
 #define NPC_H
+#include <QTimer>
 #include "include/tank.h"
 
 class Npc : public Tank
@@ -19,6 +20,7 @@ public:
 private:
     int _iq;
     bool _blinking;
+    QTimer _shootTimer;
 };
 
 #endif // NPC_H

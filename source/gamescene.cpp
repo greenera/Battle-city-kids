@@ -12,7 +12,7 @@
 GameScene::GameScene(QGraphicsView* parrent)
     : QGraphicsScene(parrent),
     matrixOfLevel(26, QVector<int>(26)),
-    _npcVector(4)
+    _npcVector(4), _playerStatus(2)
 {
     _parrent = parrent;
     _parrent->setFocusPolicy(Qt::StrongFocus);
@@ -35,11 +35,6 @@ void GameScene::abort()
 
 void GameScene::resume()
 {
-    // start TEST
-    Boost *booster = new Boost(0, 0);
-    this->addItem(booster);
-    //end of TEST
-
     _parrent->setFocus();
     _levelTicker.start();
 }
@@ -54,36 +49,42 @@ void GameScene::initializeLevel(int level, int numOfPlayers)
 
     //createNpcs(); TODO Ivana: implementiraj
 
-    _playerStatus[0] = true;
-    _playerStatus[1] = false;
     Player *igrac1 = new Player(1);
     _players[0] = igrac1;
+    _playerStatus[0] = true;
+    _playerStatus[1] = false;
     this->addItem(igrac1);
     igrac1->setDown(false);
     igrac1->setUp(false);
     igrac1->setLeft(false);
     igrac1->setRight(false);
-    igrac1->setMoving(true);
+    _players[0]->shootingEnabled = true;
+    _shooting.setInterval(2000);
+    _shooting.setSingleShot(true);
+    QObject::connect(&_shooting, &QTimer::timeout, this, [&](){_players[0]->shootingEnabled = true;});
 
-    if(--numOfPlayers > 0)
+
+    if (--numOfPlayers > 0)
     {
-        _playerStatus[1] = true;
         Player *igrac2 = new Player(2);
         this->addItem(igrac2);
         _players[1] = igrac2;
+        _playerStatus[1] = true;
 
         igrac2->setDown(false);
         igrac2->setUp(false);
         igrac2->setLeft(false);
         igrac2->setRight(false);
-        igrac2->setMoving(true);
+        _players[1]->shootingEnabled = true;
+        _shooting.setInterval(2000);
+        _shooting.setSingleShot(true);
+        QObject::connect(&_shooting, &QTimer::timeout, this, [&](){_players[1]->shootingEnabled = true;});
     }
 
     _levelTicker.start();
 }
 
 
-// Loads level from file
 void GameScene::loadLevel(int levelNum)
 {
     QString path = QStringLiteral(":/levels/%1.txt").arg(levelNum);
@@ -123,9 +124,9 @@ void GameScene::update()
     moveBullets();
 
     //do the changes
-    if(_playerStatus[0])
+    if(_playerStatus[0] == true)
         _players[0]->colisionDetection();
-    if(_playerStatus[1])
+    if(_playerStatus[1] == true)
         _players[1]->colisionDetection();
 
     _parrent->update();
@@ -173,11 +174,11 @@ void GameScene::printMap(const QVector<QVector<int>> matrixOfLevel)
 
 void GameScene::movePlayers()
 {
-    if (_players[0] != nullptr)
+    if (_playerStatus[0] == true)
     {
         _players[0]->move();
     }
-    if (_players[1] != nullptr)
+    if (_playerStatus[1] == true)
     {
         _players[1]->move();
     }
@@ -190,7 +191,8 @@ void GameScene::moveNpcs()
 
 void GameScene::moveBullets()
 {
-
+    foreach(Bullet* b, bullets)
+            b->moveBullet();
 }
 
 
@@ -199,10 +201,12 @@ void GameScene::moveBullets()
 void GameScene::keyPressEvent(QKeyEvent *event)
 {
     //consider 'w' 'a' 's' and 'd'
-    if(_players[0] != nullptr)
+    if(_playerStatus[0] == true)
     {
+        qDebug() << "in players one area";
         if(event->key() == Qt::Key_W)
         {
+            qDebug() << "in player1 up";
             _players[0]->setUp(true);
         }
         else if (event->key() == Qt::Key_A)
@@ -217,13 +221,23 @@ void GameScene::keyPressEvent(QKeyEvent *event)
         {
             _players[0]->setDown(true);
         }
+
+        if(event->key() == Qt::Key_F) {
+                if (_players[0]->shootingEnabled == true) {
+                    _shooting.start();
+                    bullets.append(_players[0]->shoot());
+                    this->addItem(bullets.back());
+                }
+        }
     }
 
     //consider 'up' 'down' 'left' and 'right'
-    if(_players[1] != nullptr)
+    if(_playerStatus[1] == true)
     {
+        qDebug() << "in player2s area";
         if(event->key() == Qt::Key_Up)
         {
+            qDebug() << "in player2 up";
             _players[1]->setUp(true);
         }
         else if (event->key() == Qt::Key_Left)
@@ -237,6 +251,13 @@ void GameScene::keyPressEvent(QKeyEvent *event)
         else if (event->key() == Qt::Key_Down)
         {
             _players[1]->setDown(true);
+        }
+        if(event->key() == Qt::Key_L) {
+                if (_players[1]->shootingEnabled == true) {
+                    _shooting.start();
+                    bullets.append(_players[1]->shoot());
+                    this->addItem(bullets.back());
+                }
         }
     }
 
@@ -254,6 +275,7 @@ void GameScene::keyPressEvent(QKeyEvent *event)
 
     if(event->key() == Qt::Key_Escape)
     {
+        //TODO: add backToMenu
         _levelTicker.stop();
         emit exitRequested();
     }
@@ -266,26 +288,27 @@ void GameScene::keyPressEvent(QKeyEvent *event)
 
 void GameScene::keyReleaseEvent(QKeyEvent *event)
 {
-    //consider 'w' 'a' 's' and 'd'
-    if(event->key() == Qt::Key_W)
-    {
-        _players[0]->setUp(false);
-    }
-    else if (event->key() == Qt::Key_A)
-    {
-        _players[0]->setLeft(false);
-    }
-    else if (event->key() == Qt::Key_D)
-    {
-        _players[0]->setRight(false);
-    }
-    else if (event->key() == Qt::Key_S)
-    {
-        _players[0]->setDown(false);
-    }
-
+    if(_playerStatus[0] == true) {
+        //consider 'w' 'a' 's' and 'd'
+        if(event->key() == Qt::Key_W)
+        {
+            _players[0]->setUp(false);
+        }
+        else if (event->key() == Qt::Key_A)
+        {
+            _players[0]->setLeft(false);
+        }
+        else if (event->key() == Qt::Key_D)
+        {
+            _players[0]->setRight(false);
+        }
+        else if (event->key() == Qt::Key_S)
+        {
+            _players[0]->setDown(false);
+        }
+}
     //consider 'up' 'down' 'left' and 'right'
-    if(_players[1] != nullptr)
+    if(_playerStatus[1] == true)
     {
         if(event->key() == Qt::Key_Up)
         {

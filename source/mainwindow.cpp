@@ -90,12 +90,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     _inGame = false;
     this->setFocus(); //!< this is important for responding to keyboard
-
-    //start TEST
-    _testEfekat.setSource(QUrl::fromLocalFile("resources/music.wav"));
-    _testEfekat.setLoopCount(1);
-    _testEfekat.play();
-    //end TEST
 }
 
 /*!

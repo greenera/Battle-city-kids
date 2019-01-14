@@ -42,13 +42,13 @@ void Bullet::moveBullet()
 {
     switch (_direction) {
         case 1:
-            pos_y += _speed;
+            pos_y -= _speed;
             break;
         case 2:
             pos_x += _speed;
             break;
         case 3:
-            pos_y -= _speed;
+            pos_y += _speed;
             break;
         case 4:
             pos_x -= _speed;

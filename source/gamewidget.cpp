@@ -57,7 +57,7 @@ void GameWidget::initializeLevel(int level, int numOfPlayers)
 
     //kaze sceni da se inicijalizuje
     _ui->activegame->scene()->clear();
-
+    //TODO: ovu dvojku zameniti sa 'level'
     _scene->initializeLevel(level,numOfPlayers);
 
     _small_tenk = QPixmap(":/small_tank/small_npc.jpg");

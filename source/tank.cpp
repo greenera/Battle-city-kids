@@ -7,9 +7,9 @@
 
 Tank::Tank(int id)
     :grid(27)
-    {
-        for (int i = 0; i < 27; i++)
-            grid[i] = i*25;
+{
+    for (int i = 0; i < 27; i++)
+        grid[i] = i*25;
     //uploading icons
     QString iconName(":/tanks/");
     if(id > 2)
@@ -17,7 +17,6 @@ Tank::Tank(int id)
     else
         iconName = iconName.append("player/player").append(QString::number(id));
 
-    //TODO dogovor: da li da ostane ovako ili da se radi rotacija?
     _icons.insert("Up", QPixmap(iconName + "Up.png"));
     _icons.insert("Down", QPixmap(iconName + "Down.png"));
     _icons.insert("Right", QPixmap(iconName + "Right.png"));
@@ -101,7 +100,6 @@ void Tank::setLeft(bool t)
     adjustPosition();
 }
 
-
 int Tank::getDirection()
 {
     if (!_activeIcon.compare("Up"))
@@ -114,30 +112,19 @@ int Tank::getDirection()
     return 4;
 }
 
-void Tank::reMoving()
-{
-    if (_movingUp)
-        _y += _speed;
-    else if (_movingRight)
-        _x -= _speed;
-    else if (_movingDown)
-        _y -= _speed;
-    else if (_movingLeft)
-        _x += _speed;
-}
-
 void Tank::colisionDetection()
 {
     QList<QGraphicsItem*> list = collidingItems();
-    int p = 0;
     foreach(QGraphicsItem* i , list)
     {
+        int p = 0;
+
         qDebug() << QString::number(p);
         reMoving();
     }
-    qDebug() << QString::number(p);
-
+    //qDebug() << QString::number(p);
 }
+
 
 QRectF Tank::boundingRect() const
 {
@@ -154,10 +141,9 @@ void Tank::paint(QPainter *painter,
     painter->drawPixmap(target, _icons[_activeIcon], source);
 }
 
-void Tank::move() {
-    if(!_moving)
-        return;
 
+void Tank::move()
+{
     if (_movingUp)
         _y -= _speed;
     else if (_movingRight)
@@ -168,11 +154,17 @@ void Tank::move() {
         _x -= _speed;
 }
 
-void Tank::setMoving(bool x)
+void Tank::reMoving()
 {
-    _moving = x;
+    if (_movingUp)
+        _y += _speed;
+    else if (_movingRight)
+        _x -= _speed;
+    else if (_movingDown)
+        _y -= _speed;
+    else if (_movingLeft)
+        _x += _speed;
 }
-
 void Tank::adjustPosition()
 {
     if (_x < 0)
@@ -199,4 +191,23 @@ void Tank::adjustPosition()
         }
         _y = (_y - grid[i-1]) < (grid[i] - _y) ? grid[i-1] : grid[i];
     }
+}
+
+Bullet *Tank::shoot() {
+    qreal x = _x, y = _y;
+    if (getDirection() == 1)
+        x = _x + 20;
+    else if (getDirection() == 2) {
+        x = _x + 50;
+        y = _y + 20;
+    }
+    else if (getDirection() == 3){
+        x = _x + 20;
+        y = _y + 50;
+    }
+    else
+        y = _y + 20;
+    Bullet* b = new Bullet(x, y, 0, 8, getDirection());
+    shootingEnabled = false;
+    return b;
 }
