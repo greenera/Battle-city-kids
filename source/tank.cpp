@@ -130,9 +130,6 @@ int Tank::getDirection()
 
 void Tank::move()
 {
-    if (!_moving)
-        return;
-
     if (_movingUp)
         _y -= _speed;
     else if (_movingRight)
@@ -141,6 +138,18 @@ void Tank::move()
         _y += _speed;
     else if (_movingLeft)
         _x -= _speed;
+}
+
+void Tank::reMoving()
+{
+    if (_movingUp)
+        _y += _speed;
+    else if (_movingRight)
+        _x -= _speed;
+    else if (_movingDown)
+        _y -= _speed;
+    else if (_movingLeft)
+        _x += _speed;
 }
 
 void Tank::setMoving(bool x)

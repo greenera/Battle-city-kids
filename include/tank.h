@@ -70,7 +70,7 @@ public:
     void setRight(bool t);
     void setLeft(bool t);
     void move();
-    void setMoving(bool x);
+    void reMoving(bool x);
 
 protected:
     bool _moving; //should be set and reset at the collision
