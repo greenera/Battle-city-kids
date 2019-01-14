@@ -37,6 +37,8 @@ private:
     void setLevelName(int level);
     void resetTimeLabel();
     void setTimeLabel();
+    void setVisibleSmallTank();
+    void hideTank(int num);
 
     void initSmallTankText();
 

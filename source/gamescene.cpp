@@ -11,8 +11,8 @@
  */
 GameScene::GameScene(QGraphicsView* parrent)
     : QGraphicsScene(parrent),
-    matrixOfLevel(26, QVector<int>(26)),
-    _npcVector(4)
+      matrixOfLevel(26, QVector<int>(26)),
+      _npcVector(4)
 {
     _parrent = parrent;
     _parrent->setFocusPolicy(Qt::StrongFocus);
@@ -23,6 +23,9 @@ GameScene::GameScene(QGraphicsView* parrent)
     _levelTicker.setInterval(50);
     QObject::connect(&_levelTicker, &QTimer::timeout,
                      this, &GameScene::update);
+
+    connect(&_npcCreating, &QTimer::timeout,
+            this, &GameScene::npcFactory)
 
     setFocus();
 }
@@ -47,31 +50,43 @@ void GameScene::initializeLevel(int level, int numOfPlayers)
     loadLevel(level);
     printMap(matrixOfLevel);
 
-    //createNpcs(); TODO Ivana: implementiraj
+    _npcCreating.setInterval(4000 - 120 * level);
+    _npcCreating.start();
 
     Player *igrac1 = new Player(1);
     _players[0] = igrac1;
     this->addItem(igrac1);
+
     igrac1->setDown(false);
     igrac1->setUp(false);
     igrac1->setLeft(false);
     igrac1->setRight(false);
+
+    _players[0]->shootingEnabled = true;
+    _shooting1.setInterval(2000);
+    _shooting1.setSingleShot(true);
+    QObject::connect(&_shooting1, &QTimer::timeout,
+                     this, [&](){_players[0]->shootingEnabled = true;});
 
     if (--numOfPlayers > 0)
     {
         Player *igrac2 = new Player(2);
         this->addItem(igrac2);
         _players[1] = igrac2;
-        _players[0]->shootingEnabled = true;
-        _shooting.setInterval(2000);
-        _shooting.setSingleShot(true);
-        QObject::connect(&_shooting, &QTimer::timeout, this, [&](){_players[0]->shootingEnabled = true;});
 
         igrac2->setDown(false);
         igrac2->setUp(false);
         igrac2->setLeft(false);
         igrac2->setRight(false);
+
+        _players[1]->shootingEnabled = true;
+        _shooting2.setInterval(2000);
+        _shooting2.setSingleShot(true);
+        QObject::connect(&_shooting2, &QTimer::timeout,
+                         this, [&](){_players[1]->shootingEnabled = true;});
     }
+    else
+        _players[1] = nullptr;
 
     _levelTicker.start();
 }
@@ -113,7 +128,10 @@ void GameScene::update()
     //change position of dinamic objects
     movePlayers();
     moveNpcs();
-    moveBullets();
+
+    //move bulltets
+    foreach(Bullet* b, bullets)
+        b->moveBullet();
 
     //do the changes
     if(_players[0] != nullptr)
@@ -121,10 +139,7 @@ void GameScene::update()
     if(_players[1] != nullptr)
         _players[1]->colisionDetection();
 
-    _parrent->update();
-    foreach(Bullet* b, bullets)
-        b->moveBullet();
-
+    _parrent->update(); //!< should be at end of function
 }
 
 void GameScene::countBonusScore(int typeOfKilledEnemy)
@@ -167,6 +182,52 @@ void GameScene::printMap(const QVector<QVector<int>> matrixOfLevel)
     this->addItem(phoenix);
 }
 
+int roulet()
+{
+    int sum = 0;
+    for (int a : _npcVector)
+        sum += a;
+
+    //izaberi random broj 0-sum
+    int choosen = _generator.bounded(a);
+
+    //prolazi kroz petlju ponovo
+    //i vidi koji je na tom mestu
+    int sum2 = 0;
+    for (int i = 0; i < 4; i++)
+    {
+        sum2 += _npcVector[i];
+
+        if(choosen < sum2)
+            return i;
+    }
+
+    return sum; //actualy never happen
+}
+
+//TODO: treba da se umanji sum
+
+void GameScene::npcFactory()
+{
+    //izaberi jednog (rulet metodom)
+    int npcType = roulet();
+
+    //izberi bazu
+    int baza = _generator.bounded(2);
+
+    //napravi npc na toj poziciji
+
+    //emituj hajdovanje labele
+    emit npcCreated(sum);
+
+    //zaustavi tajmer ako nema vise tenkova za crtanje
+    int sum = 0;
+    for (int a : _npcVector)
+        sum += a;
+    if (sum == 0)
+        _npcCreating.stop();
+}
+
 void GameScene::movePlayers()
 {
     if (_players[0] != nullptr)
@@ -190,11 +251,33 @@ void GameScene::moveBullets()
 }
 
 
+//TODO: add macros for 501
+void GameScene::onStar(int playerNum)
+{
+    if (playerNum == 1)
+    {
+        int newValue = _shooting1.interval() - 501;
+        _shooting1.setInterval(newValue < 0 ? 500 : newValue);
+    }
+    else
+    {
+        int newValue = _shooting2.interval() - 501;
+        _shooting2.setInterval(newValue < 0 ? 500 : newValue);
+    }
+}
 
-//TODO: srediti da ne moze da se krece ukoso
+void GameScene::onBomb()
+{
+    foreach(Npc* n, _npcs)
+       delete n;
+
+    _npcs.clear();
+}
+
+
 void GameScene::keyPressEvent(QKeyEvent *event)
 {
-    //consider 'w' 'a' 's' and 'd'
+    //consider player1
     if(_players[0] != nullptr)
     {
         qDebug() << "in players one area";
@@ -215,9 +298,16 @@ void GameScene::keyPressEvent(QKeyEvent *event)
         {
             _players[0]->setDown(true);
         }
+        if(event->key() == Qt::Key_F) {
+            if (_players[0]->shootingEnabled == true) {
+                _shooting1.start();
+                bullets.append(_players[0]->shoot());
+                this->addItem(bullets.back());
+            }
+        }
     }
 
-    //consider 'up' 'down' 'left' and 'right'
+    //consider player2
     if(_players[1] != nullptr)
     {
         qDebug() << "in player2s area";
@@ -238,24 +328,17 @@ void GameScene::keyPressEvent(QKeyEvent *event)
         {
             _players[1]->setDown(true);
         }
-    }
-
-    if(event->key() == Qt::Key_F) {
-        if (_players[0]->shootingEnabled == true) {
-            _shooting.start();
-            bullets.append(_players[0]->shoot());
-            this->addItem(bullets.back());
+        if(event->key() == Qt::Key_L) {
+            if (_players[1]->shootingEnabled == true) {
+                _shooting2.start();
+                bullets.append(_players[1]->shoot());
+                this->addItem(bullets.back());
+            }
         }
-    }
-
-    if(event->key() == Qt::Key_L) {
-        bullets.append(_players[1]->shoot());
-        this->addItem(bullets.back());
     }
 
     if(event->key() == Qt::Key_H)
     {
-        qDebug() << "been there";
         _levelTicker.stop();
         emit helpRequested();
     }
@@ -275,6 +358,8 @@ void GameScene::keyPressEvent(QKeyEvent *event)
     if(event->key() == Qt::Key_T)
     { //this one is used for testing
         emit killed();
+        onStar(1);
+        onBomb();
     }
 }
 

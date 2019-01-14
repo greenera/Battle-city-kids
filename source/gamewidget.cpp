@@ -37,9 +37,14 @@ GameWidget::GameWidget(QWidget *parent) :
     QObject::connect(&_refreshingLabel, &QTimer::timeout,
                      this, &GameWidget::setTimeLabel);
 
-    //set some game rule
     QObject::connect(_scene, &GameScene::endOfLevel,
                      this, &GameWidget::onEndOfLevel);
+
+    QObject::connect(_scene, &GameScene::npcCreated,
+                     this, &GameWidget::hideTank);
+
+    _small_tenk = QPixmap(":/small_tank/small_npc.jpg");
+    initSmallTankText();
 }
 
 GameWidget::~GameWidget()
@@ -57,11 +62,9 @@ void GameWidget::initializeLevel(int level, int numOfPlayers)
 
     //kaze sceni da se inicijalizuje
     _ui->activegame->scene()->clear();
-    //TODO: ovu dvojku zameniti sa 'level'
     _scene->initializeLevel(level,numOfPlayers);
 
-    _small_tenk = QPixmap(":/small_tank/small_npc.jpg");
-    initSmallTankText();
+    setVisibleSmallTank();
 }
 
 
@@ -118,6 +121,30 @@ void GameWidget::setTimeLabel()
                             QString::number(_sec) + "s");
 }
 
+void GameWidget::setVisibleSmallTank()
+{
+    _ui->small_tank_1->setHidden(false);
+    _ui->small_tank_2->setHidden(false);
+    _ui->small_tank_3->setHidden(false);
+    _ui->small_tank_4->setHidden(false);
+    _ui->small_tank_5->setHidden(false);
+    _ui->small_tank_6->setHidden(false);
+    _ui->small_tank_7->setHidden(false);
+    _ui->small_tank_8->setHidden(false);
+    _ui->small_tank_9->setHidden(false);
+    _ui->small_tank_10->setHidden(false);
+    _ui->small_tank_11->setHidden(false);
+    _ui->small_tank_12->setHidden(false);
+    _ui->small_tank_13->setHidden(false);
+    _ui->small_tank_14->setHidden(false);
+    _ui->small_tank_15->setHidden(false);
+    _ui->small_tank_16->setHidden(false);
+    _ui->small_tank_17->setHidden(false);
+    _ui->small_tank_18->setHidden(false);
+    _ui->small_tank_19->setHidden(false);
+    _ui->small_tank_20->setHidden(false);
+}
+
 void GameWidget::initSmallTankText()
 {
     _ui->small_tank_1->setPixmap(_small_tenk);
@@ -140,5 +167,48 @@ void GameWidget::initSmallTankText()
     _ui->small_tank_18->setPixmap(_small_tenk);
     _ui->small_tank_19->setPixmap(_small_tenk);
     _ui->small_tank_20->setPixmap(_small_tenk);
+}
 
+void GameWidget::hideTank(int num)
+{
+    if (num == 1)
+        _ui->small_tank_1->setHidden(true);
+    if (num == 2)
+        _ui->small_tank_2->setHidden(true);
+    if (num == 3)
+        _ui->small_tank_3->setHidden(true);
+    if (num == 4)
+        _ui->small_tank_4->setHidden(true);
+    if (num == 5)
+        _ui->small_tank_5->setHidden(true);
+    if (num == 6)
+        _ui->small_tank_6->setHidden(true);
+    if (num == 7)
+        _ui->small_tank_7->setHidden(true);
+    if (num == 8)
+        _ui->small_tank_8->setHidden(true);
+    if (num == 9)
+        _ui->small_tank_9->setHidden(true);
+    if (num == 10)
+        _ui->small_tank_10->setHidden(true);
+    if (num == 11)
+        _ui->small_tank_11->setHidden(true);
+    if (num == 12)
+        _ui->small_tank_12->setHidden(true);
+    if (num == 13)
+        _ui->small_tank_13->setHidden(true);
+    if (num == 14)
+        _ui->small_tank_14->setHidden(true);
+    if (num == 15)
+        _ui->small_tank_15->setHidden(true);
+    if (num == 16)
+        _ui->small_tank_16->setHidden(true);
+    if (num == 17)
+        _ui->small_tank_17->setHidden(true);
+    if (num == 18)
+        _ui->small_tank_18->setHidden(true);
+    if (num == 19)
+        _ui->small_tank_19->setHidden(true);
+    if (num == 20)
+        _ui->small_tank_20->setHidden(true);
 }

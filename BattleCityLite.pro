@@ -39,7 +39,7 @@ SOURCES += \
     source/help.cpp \
     source/gamescene.cpp \
     source/gameproxy.cpp \
-    ui/pause.cpp
+    source/pause.cpp
 
 HEADERS += \
         include/mainwindow.h \
@@ -55,7 +55,7 @@ HEADERS += \
     include/help.h \
     include/gamescene.h \
     include/gameproxy.h \
-    ui/pause.h
+    include/pause.h
 
 FORMS += \
         ui/mainwindow.ui \

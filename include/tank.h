@@ -21,7 +21,7 @@ public:
 
     //NOTE for Nenad: ovo treba isproveravati pri skidanju sloja
     //sa prepreke na sudar sa pucnjem
-    enum Weapon{
+    enum Weapon {
         gun,        //cigla (1 sloj)
         d,          //cigla (2 sloja)
         e,          //cigla (4 sloja) + beton (1 sloj)

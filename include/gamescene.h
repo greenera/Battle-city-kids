@@ -12,6 +12,7 @@
 #include "include/block.h"
 #include "include/player.h"
 #include <QGraphicsView>
+#include <QRandomGenerator>
 
 #define NUM_OF_LEVELS 3
 
@@ -32,6 +33,7 @@ public:
 
 public slots:
     void printMap(const QVector<QVector<int>> matrixOfLevel);
+    void npcFactory();
 
 signals:
     void endOfLevel(double score);
@@ -41,9 +43,13 @@ signals:
     void killed();
 
 private:
+    //moving
     void movePlayers();
     void moveNpcs();
-    void moveBullets();
+
+    //boost earning
+    void onStar(int idPlayer);
+    void onBomb();
 
     /*!
      * \brief loadLevel opens file for activeLevel
@@ -72,20 +78,23 @@ private:
     void countBonusScore(int typeOfKilledEnemy);
     long _bonusScore;
 
-    QVector<Npc> _npcs; //!< live npcs
-    int numOfEnemyByType[4];
+    QVector<Npc*> _npcs; //!< live npcs
     QVector<int> _npcVector;
+    QTimer _npcCreating;
 
     Player* _players[2]; //!< live players (max 2)
     QVector<Boost> _powerups;
 
-    QVector<QVector<int>> matrixOfLevel;
     QVector<Bullet*> bullets; // Empty at the end of every level
-    QTimer _shooting;
+    QTimer _shooting1;
+    QTimer _shooting2;
+
+    QVector<QVector<int>> matrixOfLevel;
     QTimer _levelTicker;
     const int _sizeOfScene = 25 * 26; //!< 26 stands for number of rects, and 25 for size of every rect
 
     QGraphicsView *_parrent;
+    QRandomGenerator _generator;
 protected:
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
