@@ -89,6 +89,7 @@ private:
     QVector<Npc*> _npcs; //!< live npcs
     QVector<int> _npcVector;
     QTimer _npcCreating;
+    int _npcDirection;
 
     Player* _players[2]; //!< live players (max 2)
     QVector<Boost> _powerups;

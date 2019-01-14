@@ -52,6 +52,7 @@ void GameScene::initializeLevel(int level, int numOfPlayers)
     printMap(matrixOfLevel);
 
     _npcCreating.setInterval(4000 - 120 * level);
+    _npcDirection = 0;
 
     for (int i = 0; i < 3; i++)
     {
@@ -157,6 +158,12 @@ void GameScene::update()
         }
     }
 
+    foreach(Npc* n, _npcs)
+    {
+        n->colisionDetection();
+    }
+
+
     _parrent->update();
 }
 
@@ -223,7 +230,7 @@ int GameScene::roulet()
 void GameScene::moveBullets()
 {
     foreach(Bullet* b, bullets)
-            b->moveBullet();
+        b->moveBullet();
 }
 
 
@@ -270,6 +277,26 @@ void GameScene::movePlayers()
 
 void GameScene::moveNpcs()
 {
+    foreach(Npc* n, _npcs)
+    {
+        if(n != nullptr)
+        {
+            if (_npcDirection % 50 == 0)
+                n->setLeft(true);
+            else if(_npcDirection % 15 == 0)
+                n->setRight(true);
+            else if(_npcDirection % 16 == 0)
+                n->setUp(true);
+            else
+                n->setDown(true);
+
+            _npcDirection++;
+            if(_npcDirection > 15000)
+                _npcDirection = 0;
+
+            n->move();
+        }
+    }
 }
 
 //TODO: add macros for 501
@@ -290,7 +317,7 @@ void GameScene::onStar(int playerNum)
 void GameScene::onBomb()
 {
     foreach(Npc* n, _npcs)
-       delete n;
+        delete n;
 
     _npcs.clear();
 }
@@ -403,7 +430,7 @@ void GameScene::keyReleaseEvent(QKeyEvent *event)
         {
             _players[0]->setDown(false);
         }
-}
+    }
     //consider 'up' 'down' 'left' and 'right'
     if(_players[1] != nullptr)
     {
