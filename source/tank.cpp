@@ -6,8 +6,8 @@
 Tank::Tank(int id)
     :grid(27)
     {
-        for (int i = 0; i < 27; i++)
-            grid[i] = i*25;
+    for (int i = 0; i < 27; i++)
+        grid[i] = i*25;
     //uploading icons
     QString iconName(":/tanks/");
     if(id > 2)
@@ -171,4 +171,24 @@ void Tank::adjustPosition()
         }
         _y = (_y - grid[i-1]) < (grid[i] - _y) ? grid[i-1] : grid[i];
     }
+}
+
+
+Bullet *Tank::shoot() {
+    qreal x = _x, y = _y;
+    if (getDirection() == 1)
+        x = _x + 20;
+    else if (getDirection() == 2) {
+        x = _x + 50;
+        y = _y + 20;
+    }
+    else if (getDirection() == 3){
+        x = _x + 20;
+        y = _y + 50;
+    }
+    else
+        y = _y + 20;
+    Bullet* b = new Bullet(x, y, 0, 8, getDirection());
+    shootingEnabled = false;
+    return b;
 }

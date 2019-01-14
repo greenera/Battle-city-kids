@@ -75,7 +75,8 @@ private:
     QVector<Boost> _powerups;
 
     QVector<QVector<int>> matrixOfLevel;
-
+    QVector<Bullet*> bullets; // Empty at the end of every level
+    QTimer _shooting;
     QTimer _levelTicker;
     const int _sizeOfScene = 25 * 26; //!< 26 stands for number of rects, and 25 for size of every rect
 

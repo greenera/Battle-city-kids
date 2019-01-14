@@ -57,7 +57,7 @@ void GameWidget::initializeLevel(int level)
 
     //kaze sceni da se inicijalizuje
     _ui->activegame->scene()->clear();
-    _scene->initializeLevel(2);
+    _scene->initializeLevel(4);
 
     _small_tenk = QPixmap(":/small_tank/small_npc.jpg");
     initSmallTankText();

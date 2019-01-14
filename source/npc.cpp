@@ -4,6 +4,11 @@ Npc::Npc(bool isBlinking, int iq, int id)
     : _blinking(isBlinking), Tank(id)
 {
     _activeIcon = "Down";
+
+    _shootTimer.setInterval(2000);
+    QObject::connect(&_shootTimer, &QTimer::timeout,
+                     this, &Tank::shoot);
+    _shootTimer.start();
 }
 
 Npc::~Npc()
@@ -11,7 +16,7 @@ Npc::~Npc()
 
 }
 
-Npc::Npc(const Npc &other) = default;
+//Npc::Npc(const Npc &other) = default;
 
 
 void Npc::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

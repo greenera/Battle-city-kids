@@ -4,6 +4,7 @@
 #include <QGraphicsObject>
 #include <QMap>
 #include <QKeyEvent>
+#include "include/bullet.h"
 
 class Tank : public QGraphicsObject
 {
@@ -69,8 +70,12 @@ public:
     void setDown(bool t);
     void setRight(bool t);
     void setLeft(bool t);
-
     void move();
+    Bullet* shoot();
+    bool shootingEnabled;
+
+
+    //ovde je dosta toga promenjeno, trebalo bi da se uradi merge
 
 protected:
     int _moving;           //!< do tank is moving (0 -not, 1 - hoizontal, 2 - vertical)

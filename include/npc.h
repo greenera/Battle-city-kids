@@ -1,6 +1,7 @@
 #ifndef NPC_H
 #define NPC_H
 #include "include/tank.h"
+#include <QTimer>
 
 class Npc : public Tank
 {
@@ -9,6 +10,9 @@ public:
     Npc(bool isBlinking, int iq, int id);
     ~Npc();
     Npc(const Npc& other);
+
+signals:
+    void constructBullet(/*ovde dodaj sve parametre koje treba bullet da ima*/);
 
 public slots:
     void onCollision();
@@ -19,6 +23,7 @@ public:
 private:
     int _iq;
     bool _blinking;
+    QTimer _shootTimer;
 };
 
 #endif // NPC_H

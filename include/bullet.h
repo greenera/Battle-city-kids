@@ -9,9 +9,9 @@ class Bullet: public QGraphicsItem
 public:
 
     // Constructor
-    Bullet(int x, int y, int parent, qreal speed, int direction);
+    Bullet(qreal x, qreal y, int parent, qreal speed, int direction);
     //~Bullet();
-    Bullet(const Bullet& other) = delete;
+   // Bullet(const Bullet& other);
 
     // Overrides from QGraphicsItem
     QRectF boundingRect() const override;
@@ -31,8 +31,8 @@ private:
     int _parent; // Player or npc
     qreal _speed;
     int _direction;
-    int pos_x;
-    int pos_y;
+    qreal pos_x;
+    qreal pos_y;
     QPixmap _texture = QPixmap(":/blocks/bullet.png");
 };
 
