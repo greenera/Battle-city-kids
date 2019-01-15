@@ -1,9 +1,8 @@
 #include "include/gameproxy.h"
 
-GameProxy::GameProxy(QWidget *parrent)
-    :QObject(parrent)
+GameProxy::GameProxy(GameWidget* gameWidget)
 {
-    _gameWidget = new GameWidget(parrent);
+    _gameWidget = gameWidget;
 
     QObject::connect(_gameWidget, &GameWidget::endOfLevel,
                      this, &GameProxy::onEndOfLevel);
@@ -13,11 +12,6 @@ GameProxy::GameProxy(QWidget *parrent)
 
     QObject::connect(_gameWidget->getGameScene(), &GameScene::exitRequested,
                      this, &GameProxy::exitToMainMenu);
-}
-
-GameWidget *GameProxy::getGameWidget() const
-{
-    return _gameWidget;
 }
 
 void GameProxy::initializeGame(int numOfPlayers)
@@ -40,7 +34,7 @@ void GameProxy::changeLifes()
         updateScore(0); //!< only add for level reached
         saveScore();
         _gameWidget->abort();
-        emit this->gameOver();
+        emit gameOver();
     }
     _gameWidget->setLifeInformation(_numOfLives);
 }
@@ -50,7 +44,7 @@ void GameProxy::exitToMainMenu()
     updateScore(0);
     saveScore();
     _gameWidget->abort();
-    emit this->gameOver();
+    emit gameOver();
 
 }
 

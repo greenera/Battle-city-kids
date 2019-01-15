@@ -7,7 +7,6 @@
 #include "include/gameproxy.h"
 #include "include/help.h"
 #include <QSoundEffect>
-#include "include/pause.h"
 
 namespace Ui {
 class MainWindow;
@@ -46,16 +45,15 @@ private slots:
     void hidePause();
 
 private:
-    bool _inGame;
+    bool _inGame; //TODO: move to gameWraper, and make function for taking this info
 
-    Help *_help;
-    Pause* _pause;
-    Menu *_menu;
-    GameWidget *_gameWidget;
-    GameProxy *_gameWrapper;
+    Help _help;
+    Menu _menu;
+    GameWidget _gameWidget;
+    GameProxy _gameWrapper;
+    QSoundEffect _levelStarter; //TODO: prebaci u gameScene pa tamo pozivaj pri pocetku svakog nivoa
 
     Ui::MainWindow *_ui;
-    QSoundEffect _testEfekat;
 
 protected:
     /*!

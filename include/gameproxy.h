@@ -13,8 +13,8 @@ class GameProxy : public QObject
     Q_OBJECT
 
 public:
-    GameProxy(QWidget *parent);
-    GameWidget *getGameWidget() const;
+    GameProxy(GameWidget* gameWidget);
+
     /**
      * @brief initializeGame function for game initialization
      */

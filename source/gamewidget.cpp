@@ -97,7 +97,7 @@ void GameWidget::resetTimeLabel()
 
 void GameWidget::setTimeLabel()
 {
-    if (this->isHidden())
+    if (isHidden())
         return ;
 
     ++_sec;

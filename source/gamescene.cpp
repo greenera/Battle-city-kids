@@ -17,7 +17,7 @@ GameScene::GameScene(QGraphicsView* parrent)
     _parrent = parrent;
     _parrent->setFocusPolicy(Qt::StrongFocus);
 
-    this->setSceneRect(0, 0, _sizeOfScene, _sizeOfScene);
+    setSceneRect(0, 0, _sizeOfScene, _sizeOfScene);
     setBackgroundBrush(QColor(0, 0, 0));
 
     _levelTicker.setInterval(50);
@@ -66,7 +66,7 @@ void GameScene::abort()
     _npcs.clear();
     bullets.clear();
 
-    this->clear();
+    clear();
 }
 
 void GameScene::resume()
@@ -94,13 +94,13 @@ void GameScene::initializeLevel(int level, int numOfPlayers)
     {
         _npcVector[i]--;
         _npcs.append(new Npc(i * 300, 0, i+1));
-        this->addItem(_npcs.back());
+        addItem(_npcs.back());
 
         emit npcCreated(20 - i);
     }
     Player *igrac1 = new Player(1);
     _players[0] = igrac1;
-    this->addItem(igrac1);
+    addItem(igrac1);
 
     igrac1->setDown(false);
     igrac1->setUp(false);
@@ -116,7 +116,7 @@ void GameScene::initializeLevel(int level, int numOfPlayers)
     if (--numOfPlayers > 0)
     {
         Player *igrac2 = new Player(2);
-        this->addItem(igrac2);
+        addItem(igrac2);
         _players[1] = igrac2;
 
         igrac2->setDown(false);
@@ -190,7 +190,7 @@ void GameScene::update()
             b->setX(-100);
             b->setY(-100);
             foreach(QGraphicsItem* i , list) {
-                this->removeItem(i);
+                removeItem(i);
                 if (i == _phoenix)
                     emit exitRequested();
                 
@@ -230,25 +230,25 @@ void GameScene::printMap(const QVector<QVector<int>> matrixOfLevel)
         {
             if (matrixOfLevel[i][j] == 1) {
                 Block *b = new Block(25*j, 25*i, true, Block::Material::brick, ":/blocks/brick.png");
-                this->addItem(b);
+                addItem(b);
             }
             else if (matrixOfLevel[i][j] == 2) {
                 Block *b = new Block(25*j, 25*i, true, Block::Material::stone, ":/blocks/stone.png");
-                this->addItem(b);
+                addItem(b);
             }
             else if (matrixOfLevel[i][j] == 3) {
                 Block *b = new Block(25*j, 25*i, true, Block::Material::stone, ":/blocks/water.png");
-                this->addItem(b);
+                addItem(b);
             }
             else if (matrixOfLevel[i][j] == 4) {
                 Block *b = new Block(25*j, 25*i, true, Block::Material::stone, ":/blocks/bush.png");
-                this->addItem(b);
+                addItem(b);
             }
         }
     }
     // Add phoenix to the scene
     _phoenix = new Block(300, 600, ":/blocks/phoenix.png");
-    this->addItem(_phoenix);
+    addItem(_phoenix);
 }
 
 int GameScene::roulet()
@@ -295,7 +295,7 @@ void GameScene::npcFactory()
     //napravi npc na toj poziciji
     Npc * b = new Npc(baza * 300, 0, 2 + npcType);
     _npcs.append(b);
-    this->addItem(b);
+    addItem(b);
 //    b->_shootTimer.start();
 
     //emituj hajdovanje labele
@@ -326,7 +326,7 @@ void GameScene::moveNpcs()
     {
         if (n->shootingEnabled == true) {
             bullets.append(n->shoot());
-            this->addItem(bullets.back());
+            addItem(bullets.back());
         }
         if(n != nullptr)
         {
@@ -379,7 +379,7 @@ void GameScene::showBoost()
     _boost->setY(rand()%(25*26));
     _boost->generateRandomPowerup();
     _boost->setTexture(_boost->getPowerup());
-    this->addItem(_boost);
+    addItem(_boost);
 }
 
 
@@ -410,7 +410,7 @@ void GameScene::keyPressEvent(QKeyEvent *event)
             if (_players[0]->shootingEnabled == true) {
                 _shooting1.start();
                 bullets.append(_players[0]->shoot());
-                this->addItem(bullets.back());
+                addItem(bullets.back());
             }
         }
     }
@@ -440,7 +440,7 @@ void GameScene::keyPressEvent(QKeyEvent *event)
             if (_players[1]->shootingEnabled == true) {
                 _shooting2.start();
                 bullets.append(_players[1]->shoot());
-                this->addItem(bullets.back());
+                addItem(bullets.back());
             }
         }
     }
