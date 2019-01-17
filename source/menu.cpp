@@ -11,13 +11,13 @@ Menu::Menu(QWidget *parent) :
     _ui->label_2->setPixmap(QPixmap(":/main_menu/battle-city-name.png"));
     _ui->highscore_label->setText(loadScore());
 
-    connectSlotsAndSignals();
+    connect(_ui->exit_button, SIGNAL(clicked()), this, SLOT(exitProgram()));
 }
 
-//Menu::~Menu()
-//{
-//    delete _ui;
-//}
+Menu::~Menu()
+{
+    delete _ui;
+}
 
 QPushButton *Menu::getStartButton()
 {
@@ -38,10 +38,6 @@ void Menu::keyPressEvent(QKeyEvent* event)
     }
 }
 
-void Menu::startGame(){
-
-}
-
 void Menu::exitProgram()
 {
     exit(EXIT_SUCCESS);
@@ -52,10 +48,4 @@ QString Menu::loadScore() {
     file.open(QIODevice::ReadOnly);
     QString score = file.readLine().trimmed();
     return "HIGHSCORE: " + score;
-}
-
-void Menu::connectSlotsAndSignals()
-{
-    connect(_ui->exit_button, SIGNAL(clicked()), this, SLOT(exitProgram()));
-    connect(_ui->play_button, SIGNAL(clicked()), this, SLOT(startGame()));
 }

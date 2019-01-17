@@ -45,14 +45,17 @@ private slots:
     void hidePause();
 
 private:
+    /*!
+     * \brief connect Connect signals and slots
+     */
+    void connect();
+
     bool _inGame; //TODO: move to gameWraper, and make function for taking this info
-
-    Help _help;
-    Menu _menu;
-    GameWidget _gameWidget;
-    GameProxy _gameWrapper;
+    Help _help; //!< widget that shows help
+    Menu _menu; //!< widget with menu
+    GameWidget _gameWidget; //!< widget with game
+    GameProxy _gameProxy; //!< proxy for widget game, separate logic from gameWidget
     QSoundEffect _levelStarter; //TODO: prebaci u gameScene pa tamo pozivaj pri pocetku svakog nivoa
-
     Ui::MainWindow *_ui;
 
 protected:

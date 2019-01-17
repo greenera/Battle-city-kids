@@ -45,7 +45,6 @@ void GameProxy::exitToMainMenu()
     saveScore();
     _gameWidget->abort();
     emit gameOver();
-
 }
 
 void GameProxy::updateScore(double bonus)
@@ -63,7 +62,7 @@ void GameProxy::saveScore()
         file.open(QIODevice::ReadWrite | QIODevice::Truncate | QIODevice::Text);
         QTextStream out(&file);
         out << _score << endl;
-        }
+    }
     file.close();
 }
 

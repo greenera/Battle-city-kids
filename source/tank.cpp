@@ -10,6 +10,7 @@ Tank::Tank(int id)
 {
     for (int i = 0; i < 27; i++)
         grid[i] = i*25;
+
     //uploading icons
     QString iconName(":/tanks/");
     if(id > 2)
@@ -21,6 +22,8 @@ Tank::Tank(int id)
     _icons.insert("Down", QPixmap(iconName + "Down.png"));
     _icons.insert("Right", QPixmap(iconName + "Right.png"));
     _icons.insert("Left", QPixmap(iconName + "Left.png"));
+
+    setPos(_x, _y);
 }
 
 void Tank::onShot()
@@ -112,7 +115,7 @@ void Tank::colisionDetection()
 
 QRectF Tank::boundingRect() const
 {
-    return QRectF(_x, _y, _size, _size);
+    return QRectF(0, 0, _size, _size);
 }
 
 void Tank::paint(QPainter *painter,
@@ -120,9 +123,8 @@ void Tank::paint(QPainter *painter,
                  QWidget*)
 {
     painter->setPen(Qt::NoPen);
-    QRectF source(0.0, 0.0, _size, _size);
-    QRectF target(_x, _y, _size, _size);
-    painter->drawPixmap(target, _icons[_activeIcon], source);
+    painter->setBrush(QBrush(_icons[_activeIcon].scaledToHeight(_size)));
+    painter->drawRect(0, 0, _size, _size);
 }
 
 
@@ -136,6 +138,8 @@ void Tank::move()
         _y += _speed;
     else if (_movingLeft)
         _x -= _speed;
+
+    setPos(_x, _y);
 }
 
 void Tank::reMoving()

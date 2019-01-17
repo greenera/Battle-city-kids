@@ -2,14 +2,47 @@
 
 
 Bullet::Bullet(int x, int y, int parent, qreal speed, int direction)
-    :_parent(parent), _speed(speed), _direction(direction), pos_x(x), pos_y(y)
-    {
+    : _parent(parent),
+      _speed(speed),
+      _direction(direction),
+      _x(x),
+      _y(y)
+{
+    _speed = 16;
+}
+
+
+void Bullet::moveBullet()
+{
+
+    switch (_direction) {
+    case 1:
+        _y -= _speed;
+        break;
+    case 2:
+        _x += _speed;
+        break;
+    case 3:
+        _y += _speed;
+        break;
+    case 4:
+        _x -= _speed;
+        break;
     }
-Bullet::~Bullet() = default;
+
+    if(_x > 600 || _x < 0 || _y > 600 || _y < 0)
+       // delete this;
+    setPos(_x, _y);
+}
+
+void Bullet::coliding()
+{
+    QList<QGraphicsItem*> list = collidingItems();
+}
 
 QRectF Bullet::boundingRect() const
 {
-    return QRectF(pos_x, pos_y, size, size);
+    return QRectF(0, 0, _size, _size);
 }
 
 void Bullet::paint(QPainter *painter,
@@ -17,55 +50,6 @@ void Bullet::paint(QPainter *painter,
                    QWidget *)
 {
     painter->setPen(Qt::NoPen);
-    painter->setBrush(QBrush(_texture.scaledToHeight(size)));
-    painter->drawRect(pos_x, pos_y, size, size);
-}
-
-QPainterPath Bullet::shape() const
-{
-
-    QPainterPath path;
-    path.addRect(pos_x, pos_y, size, size);
-    return path;
-}
-
-// Getters
-int Bullet::getX() const
-{
-    return pos_x;
-}
-int Bullet::getY() const
-{
-    return pos_y;
-}
-
-void Bullet::setX(const int& x) {
-    pos_x = x;
-}
-void Bullet::setY(const int& y) {
-    pos_y = y;
-}
-
-void Bullet::moveBullet()
-{
-    if (_moving) {
-        switch (_direction) {
-            case 1:
-                pos_y -= _speed;
-                break;
-            case 2:
-                pos_x += _speed;
-                break;
-            case 3:
-                pos_y += _speed;
-                break;
-            case 4:
-                pos_x -= _speed;
-                break;
-        }
-    }
-}
-
-void Bullet::coliding() {
-    QList<QGraphicsItem*> list = collidingItems();
+    painter->setBrush(QBrush(_texture.scaledToHeight(_size)));
+    painter->drawRect(0, 0, _size, _size);
 }

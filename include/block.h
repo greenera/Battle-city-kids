@@ -5,12 +5,17 @@
 #include <QPainter>
 #include <QGraphicsObject>
 
-// Class for obstacles
-
+/*!
+ * \brief The Block class, represents the
+ * static object on scene.
+ */
 class Block: public QGraphicsObject
 {
 public:
-    // Defines type of obstacle
+    /*!
+     * \brief The Material enum
+     * Defines type of obstacle.
+     */
     enum Material {
         brick,
         stone,
@@ -19,30 +24,35 @@ public:
         base
     };
 
+    /*!
+     * \brief Block constructor
+     * \param x
+     * \param y
+     * \param collidable
+     * \param m
+     * \param texture
+     */
     Block(int x, int y, bool collidable, Material m, QString texture);
 
-    // Constructor used for creating phoenix
+    /*!
+     * \brief Block constructor used for creating phoenix
+     * \param x
+     * \param y
+     * \param texture
+     */
     Block(int x, int y, QString texture);
-    ~Block() override = default;
-    Block(const Block& other) = delete;
 
-    // Overrides from QGraphicsObject
     QRectF boundingRect() const override;
     void paint(QPainter *painter,
                        const QStyleOptionGraphicsItem *option,
                        QWidget *widget) override;
-    QPainterPath shape() const override;
-
-    qreal getX() const;
-    qreal getY() const;
 
 private:
-    int size = 25;
-    qreal pos_x;
-    qreal pos_y;
-    bool _collidable;
-    Material _m;
-    QPixmap _texture;
+    int _size = 25; //!<-- size of all blocks except phoenix
+    bool _collidable; //!<-- should stop the tank
+    //TODO: dodaj treba li da zaustavi bullet
+    Material _material; //!<-- tells the behavior of block on colision
+    QPixmap _texture; //!<-- for painting
 };
 
 #endif // BLOCK_H

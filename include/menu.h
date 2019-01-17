@@ -16,10 +16,10 @@ class Menu : public QWidget
 
 public:
     explicit Menu(QWidget *parent = nullptr);
-    ~Menu() override = default;
+    ~Menu();
 
-    Menu(const Menu&) = delete;
-    Menu& operator = (const Menu&) = delete;
+/*    Menu(const Menu&) = delete;
+    Menu& operator = (const Menu&) = delete;*/
 
     QPushButton *getStartButton();
     QPushButton *getStartButton2();
@@ -28,24 +28,12 @@ public:
 
 private slots:
     /**
-     * @brief startGame begins new game
-     */
-    void startGame();
-
-    /**
      * @brief exitProgram exits program
      */
     void exitProgram();
 
-
-
 private:
     Ui::Menu *_ui;
-
-    /**
-     * @brief connectSlotsAndSignals enables program function to catch actions
-     */
-    void connectSlotsAndSignals();
     QString loadScore();
 };
 

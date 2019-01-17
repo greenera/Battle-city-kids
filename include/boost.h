@@ -13,75 +13,46 @@ class Boost: public QGraphicsItem
 public:
     /*!
      * \brief BoostType enum
-     * defines types of powerups
+     * defines types of powerup
      !*/
-
     enum BoostType{
         gun_boost,
-        fenix_shield,
+        phoenix_shield,
         tank_shield,
         freeze,
-        bomb
+        bomb,
+        star
     };
+
     /**
      * @brief Boost consturctor of a random powerup at a random place
      */
     Boost();
-
-    /**
-     * @brief Boost consturctor of a random powerup at (x, y) position
-     * @param x
-     * @param y
-     */
-    Boost(qreal x, qreal y);
-
-    Boost(const Boost& other) = delete;
-
     ~Boost() override = default;
 
     QRectF boundingRect() const override;
     void paint(QPainter *painter,
                const QStyleOptionGraphicsItem *option,
                QWidget *widget) override;
-    QPainterPath shape() const override;
 
+    /*!
+     * \brief getPowerup
+     * \return type of powerup
+     * TODO: razmotri da se vraca samo pokazivac na
+     * fju koja se poziva ako dodje do kolizije sa tim bustom
+     */
+    BoostType getPowerup() const;
+
+private:
+    qreal _size = 50; //!<-- size of powerup
+    BoostType _powerup = BoostType::phoenix_shield; //!<-- default powerup
+    QPixmap _texture; //!<-- for painting
 
     /**
      * @brief setTexture assigns value to _texture variable
      * @param t
      */
     void setTexture(const BoostType& t);
-
-    /**
-     * @brief generateRandomPowerup generates random powerup
-     */
-    void generateRandomPowerup();
-
-    /*!
-     * \brief setters and getters...
-     */
-
-    void setPowerup(const BoostType& value);
-    BoostType getPowerup() const;
-
-    void setX(const int& value);
-    qreal getX() const;
-
-    void setY(const int& value);
-    qreal getY() const;
-
-protected:
-
-    /*!
-     * \brief pos_x horisontal position
-     * \brief pos_y vertical position
-     */
-    qreal _size = 50;
-    qreal pos_x, pos_y;
-
-    BoostType _powerup = BoostType::fenix_shield;
-
-    QPixmap _texture;
 };
 
 #endif // BOOST_H

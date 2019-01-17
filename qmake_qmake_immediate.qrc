@@ -1,0 +1,5 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/">
+<file alias="resources/music.wav">/home/greenera/Desktop/projekti/kids game/Battle-city-kids/resources/music.wav</file>
+</qresource>
+</RCC>

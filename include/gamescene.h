@@ -49,8 +49,6 @@ private:
     void movePlayers();
     void moveBullets();
     void moveNpcs();
-	
-    void showBoost();
 
     //boost earning
     void onStar(int idPlayer);
@@ -61,9 +59,6 @@ private:
      * \return random value
      */
     int roulet();
-
-
-    void deleteAllVectors();
 
     /*!
      * \brief loadLevel opens file for activeLevel
@@ -91,17 +86,13 @@ private:
     void countBonusScore(int typeOfKilledEnemy);
     long _bonusScore;
 
-    QVector<Npc*> _npcs; //!< live npcs
-    QVector<int> _npcVector;
+    QVector<Npc*> _npcs; //!<-- live npcs
+    QVector<int> _npcVector; //!<-- indicate how many enemies of what kind should be in one level
     QTimer _npcCreating;
 
-    QTimer _boostShowerInterval;
-    Boost* _boost;
-
     Player* _players[2]; //!< live players (max 2)
-    QVector<Boost> _powerups;
 
-    QVector<Bullet*> bullets; // Empty at the end of every level
+    QVector<Bullet*> _bullets; // Empty at the end of every level
     QTimer _shooting1;
     QTimer _shooting2;
 

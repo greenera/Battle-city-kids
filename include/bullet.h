@@ -1,42 +1,41 @@
 #ifndef BULLET_H
 #define BULLET_H
 
-#include <QGraphicsItem>
+#include <QGraphicsObject>
 #include <QPainter>
 
-class Bullet: public QGraphicsItem
+class Bullet: public QGraphicsObject
 {
+    Q_OBJECT
+
 public:
 
-    // Constructor
+    /*!
+     * \brief Bullet constructor
+     * \param x starting x coordinate
+     * \param y starting y coordinate
+     * \param parent
+     * \param speed
+     * \param direction
+     */
     Bullet(int x, int y, int parent, qreal speed, int direction);
-    ~Bullet() override;
-    Bullet(const Bullet& other) = delete;
 
-    // Overrides from QGraphicsItem
+    Bullet(const Bullet& other) = default;
+
+    void moveBullet();
+    void coliding();
+
     QRectF boundingRect() const override;
     void paint(QPainter *painter,
                        const QStyleOptionGraphicsItem *option,
                        QWidget *widget) override;
-    QPainterPath shape() const override;
-
-    // Getters
-    int getX() const;
-    int getY() const;
-    void setX(const int& x);
-    void setY(const int& y);
-
-    void moveBullet();
-    void coliding();
-    bool _moving = true;
-
 private:
-    int size = 10;
+    int _size = 10;
     int _parent; // Player or npc
     qreal _speed;
     int _direction;
-    int pos_x;
-    int pos_y;
+    int _x;
+    int _y;
     QPixmap _texture = QPixmap(":/blocks/bullet.png");
 };
 

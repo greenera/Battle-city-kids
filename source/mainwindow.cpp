@@ -20,11 +20,12 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    _ui(new Ui::MainWindow),
+    _inGame(false),
+    _help(),
     _menu(),
     _gameWidget(),
-    _gameWrapper(&_gameWidget),
-    _help()
+    _gameProxy(&_gameWidget),
+  _ui(new Ui::MainWindow)
 {
     _ui->setupUi(this);
 
@@ -35,51 +36,17 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //set sound effect
     _levelStarter.setSource(QUrl::fromLocalFile("resources/music.wav"));
+
     _levelStarter.setLoopCount(1);
 
     //connect
-    QObject::connect(&_gameWrapper, &GameProxy::gameOver,
-                     this, [&] () {
-        _gameWidget.setHidden(true);
-        _menu.setHidden(false);
-        _inGame = false;
-    });
-
-    QObject::connect(_menu.getStartButton(), &QPushButton::clicked,
-                     this, [&] (){
-        _levelStarter.play();
-        _gameWrapper.initializeGame(1);
-        _gameWidget.setHidden(false);
-        _menu.setHidden(true);
-        _inGame = true;
-    });
-
-    QObject::connect(_menu.getStartButton2(), &QPushButton::clicked,
-                     this, [&] (){
-        _levelStarter.play();
-        _gameWrapper.initializeGame(2);
-        _gameWidget.setHidden(false);
-        _menu.setHidden(true);
-        _inGame = true;
-    });
-
-    QObject::connect(_gameWidget.getGameScene(), &GameScene::helpRequested,
-                     this, [&](){
-        setFocus();
-        showHelp();
-    });
-
-    QObject::connect(_gameWidget.getGameScene(), &GameScene::pauseRequested,
-                     this, [&](){
-        setFocus();
-        showPause();
-    });
+    connect();
 
     //set current state
     _gameWidget.setHidden(true);
     _help.setHidden(true);
 
-    _inGame = false;
+    _levelStarter.play();
 
     setStyleSheet("background-color:black; color:orange;");
     setFocus(); //!< this is important for responding to keyboard
@@ -127,6 +94,46 @@ void MainWindow::hidePause()
     {
         _gameWidget.getGameScene()->resume();
     }
+}
+
+void MainWindow::connect()
+{
+    QObject::connect(&_gameProxy, &GameProxy::gameOver,
+                     this, [&] () {
+        _gameWidget.setHidden(true);
+        _menu.setHidden(false);
+        _inGame = false;
+    });
+
+    QObject::connect(_menu.getStartButton(), &QPushButton::clicked,
+                     this, [&] (){
+        _levelStarter.play();
+        _gameProxy.initializeGame(1);
+        _gameWidget.setHidden(false);
+        _menu.setHidden(true);
+        _inGame = true;
+    });
+
+    QObject::connect(_menu.getStartButton2(), &QPushButton::clicked,
+                     this, [&] (){
+        _levelStarter.play();
+        _gameProxy.initializeGame(2);
+        _gameWidget.setHidden(false);
+        _menu.setHidden(true);
+        _inGame = true;
+    });
+
+    QObject::connect(_gameWidget.getGameScene(), &GameScene::helpRequested,
+                     this, [&](){
+        setFocus();
+        showHelp();
+    });
+
+    QObject::connect(_gameWidget.getGameScene(), &GameScene::pauseRequested,
+                     this, [&](){
+        setFocus();
+        showPause();
+    });
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
