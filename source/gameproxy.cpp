@@ -61,7 +61,7 @@ void GameProxy::saveScore()
         file.close();
         file.open(QIODevice::ReadWrite | QIODevice::Truncate | QIODevice::Text);
         QTextStream out(&file);
-        out << _score << endl;
+        out << _score << Qt::endl;
     }
     file.close();
 }
