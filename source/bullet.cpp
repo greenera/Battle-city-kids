@@ -31,7 +31,8 @@ void Bullet::moveBullet()
     }
 
     if(_x > 600 || _x < 0 || _y > 600 || _y < 0)
-       // delete this;
+        return;
+
     setPos(_x, _y);
 }
 
