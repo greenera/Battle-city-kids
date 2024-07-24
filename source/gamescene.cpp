@@ -188,7 +188,7 @@ void GameScene::update()
             }
             delete b;
             if(index < _bullets.length())
-                _bullets.remove(index);
+                _bullets.remove(index--);
         }
         index++;
     }
