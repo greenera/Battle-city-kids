@@ -125,15 +125,20 @@ void GameScene::loadLevel(int levelNum)
     QString path = QStringLiteral(":/levels/%1.txt").arg(levelNum);
     QFile file(path);
     file.open(QIODevice::ReadOnly);
-    char c;
+    char c = '\n';
     for(int i=0;i<26;i++)
     {
+        while (c != '\n') {
+            file.read(&c,sizeof(char));
+        }
+
         for(int j=0;j<26;j++)
         {
             file.read(&c,sizeof(char));
-            if(c == '\n') {
-                j--;
-                continue;
+
+            // if level definition is missing fill with blank space
+            if(c == '\n' || c == '\r') {
+                c = '0';
             }
             matrixOfLevel[i][j] = c - '0'; // Write data into matrix
         }
