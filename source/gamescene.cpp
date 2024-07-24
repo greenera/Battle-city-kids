@@ -131,9 +131,10 @@ void GameScene::loadLevel(int levelNum)
         for(int j=0;j<26;j++)
         {
             file.read(&c,sizeof(char));
-            if(c == '\n') {
-                j--;
-                continue;
+
+            if(c == '\n' || c == '\r') {
+               j--;
+               continue;
             }
             matrixOfLevel[i][j] = c - '0'; // Write data into matrix
         }
